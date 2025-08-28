@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get in Touch | Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg"> <!-- Favicon added -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap'); /* Added for stylish font */
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+            background-color: #ffffff; /* Default background */
+            color: #333333; /* Default text color */
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Updated Gradient Backgrounds and Text */
+        .gradient-bg {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Header Styles */
+        .header-logo {
+            height: 50px;
+            transition: transform 0.3s ease;
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        .header-logo:hover {
+            transform: scale(1.05) !important;
+        }
+        .nav-link {
+            position: relative;
+            padding: 8px 0;
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .libaas-studio-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #e1a083, #a07b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        .hamburger-icon {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+            /* MODIFIED: Ensure hamburger icon is visible by default */
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .hamburger-icon span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #000000;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger-icon.open span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+        }
+        .hamburger-icon.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-icon.open span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+        }
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        .mobile-menu-item {
+            transition: all 0.3s ease;
+            transform: translateX(20px);
+            opacity: 0;
+        }
+        .mobile-menu-item:hover {
+            background: rgba(160, 123, 107, 0.1);
+            padding-left: 25px;
+        }
+
+        /* Animations */
+        @keyframes fadeUpEnter {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeDownEnter {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        @keyframes bounce-once {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+        .animate-bounce-once {
+            animation: bounce-once 1s ease;
+        }
+
+        /* Custom Colors for Page Theme */
+        :root {
+            --page-primary: #e1a083; /* Used for price text */
+            --button-color: #a07b6b; /* New button color */
+            --button-color-dark: #8f6e60; /* Darker shade for hover */
+            --color-whatsapp: #25D366; /* WhatsApp green */
+            --color-whatsapp-dark: #128C7E;
+        }
+
+        /* Contact Page Specific Styles */
+        .heading-font {
+            font-family: 'Lora', serif;
+        }
+        
+        .contact-card {
+            transition: all 0.3s ease;
+            border: 1px solid #e5e5e5;
+            background-color: #fdfdfd; /* Slightly off-white for cards */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Soft initial shadow */
+            transform: translateZ(0); /* Enable 3D acceleration */
+        }
+        
+        .contact-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1); /* More pronounced shadow on hover */
+            transform: translateY(-5px) scale(1.01) translateZ(10px) rotateY(5deg); /* Lift, scale, 3D feel, and slight Y-rotation */
+        }
+        
+        .form-input {
+            border: 1px solid #e5e5e5;
+            transition: all 0.3s ease;
+            background-color: #ffffff;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); /* Inner shadow for depth */
+        }
+        
+        .form-input:focus {
+            border-color: var(--page-primary); /* Theme color on focus */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(225, 160, 131, 0.3); /* Soft glow on focus */
+        }
+        
+        .submit-btn {
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            background-color: var(--button-color); /* Theme button color */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transform: translateZ(0);
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--button-color-dark); /* Darker theme color on hover */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transform: translateY(-2px) translateZ(5px); /* Lift and give 3D feel */
+        }
+        
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(225, 160, 131, 0.1); /* Light theme color background */
+            color: var(--page-primary); /* Theme color for icons */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .map-container {
+            height: 300px;
+            background-color: #f5f5f5;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateZ(0);
+            perspective: 1000px; /* Added for map image 3D effect */
+        }
+        .map-container img {
+            transition: transform 0.5s ease;
+            transform-origin: center center; /* Ensure rotation is from center */
+        }
+        .map-container:hover img {
+            transform: scale(1.05) rotateX(5deg); /* Slight zoom and X-axis rotation on map hover */
+        }
+
+        /* Slide animation for heading */
+        @keyframes slideInFromLeft {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .animated-heading {
+            animation: slideInFromLeft 1s ease-out forwards;
+            opacity: 0; /* Start hidden */
+        }
+
+        /* General 3D effect for sections */
+        .section-3d {
+            perspective: 1000px; /* Define perspective for 3D transforms */
+        }
+        .section-3d > div {
+            transform-style: preserve-3d; /* Children participate in 3D space */
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+            background-color: #128C7E; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300" id="main-header">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <!-- Logo Image -->
+                    <img src="image/h-logo.png" alt="Libaas Studio Logo" class="header-logo animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s">
+
+                    <span class="libaas-studio-text hidden md:block animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s">Libaas Studio</span>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html#home" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.3s">Home</a>
+                    <a href="product.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.4s">Products</a>
+                    <a href="index.html#about" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.5s">About</a>
+                    <a href="contact.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.6s">Contact</a>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleSearch()" class="text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.5s">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                    <button onclick="toggleAuth()" class="text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.6s">
+                        <i class="fas fa-user text-xl"></i>
+                    </button>
+                    <a href="index.html" class="relative text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.7s">
+                        <i class="fas fa-home text-xl"></i>
+                    </a>
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700">
+                        <!-- MODIFIED: Removed data-animation and data-delay -->
+                        <div id="hamburger-icon" class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div id="search-bar" class="hidden mt-4 transition-all duration-300 ease-in-out">
+                <div class="relative">
+                    <input type="text" placeholder="Search for suits..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a07b6b] shadow-sm">
+                    <button class="absolute right-3 top-2 text-gray-500 hover:text-[#a07b6b] transition duration-200">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-white z-40 pt-16 px-4 md:hidden">
+        <div class="flex flex-col space-y-4 py-4">
+            <a href="index.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.2s">Home</a>
+            <a href="product.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.3s">Products</a>
+            <a href="about.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.4s">About</a>
+            <a href="contact.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.5s">Contact</a>
+            <a href="#" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleAuth(); toggleMobileMenu()" data-animation="slideInRight" data-delay="0.6s">Login / Signup</a>
+            <a href="index.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.7s">Home</a>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-16 max-w-6xl section-3d">
+        <!-- Simple Header -->
+        <header class="text-center mb-12">
+            <h1 class="heading-font text-3xl md:text-4xl font-medium text-gray-800 mb-4 animated-heading">Get In Touch</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.8s">Our team is always ready to assist you with your inquiries and appointments.</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Contact Information -->
+            <div class="space-y-6">
+                <!-- Location Card -->
+                <div class="contact-card p-6 rounded-lg animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">
+                    <div class="flex items-start gap-4">
+                        <div class="icon-circle rounded-full flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-lg text-gray-800 mb-2">Our Location</h3>
+                            <p class="text-gray-600"> ADDRESS<br>CITY</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Card -->
+                <div class="contact-card p-6 rounded-lg animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.4s">
+                    <div class="flex items-start gap-4">
+                        <div class="icon-circle rounded-full flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-lg text-gray-800 mb-2">Contact Details</h3>
+                            <p class="text-gray-600"><strong>Phone:</strong> [YOUR NUMBER]</p>
+                            <p class="text-gray-600"><strong>Email:</strong> YOURMAIL@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hours Card -->
+                <div class="contact-card p-6 rounded-lg animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.6s">
+                    <div class="flex items-start gap-4">
+                        <div class="icon-circle rounded-full flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-lg text-gray-800 mb-2">Working Hours</h3>
+                            <div class="text-gray-600 space-y-1">
+                                <p class="flex justify-between"><span>Monday - Friday:</span> <span>10 AM - 8 PM</span></p>
+                                <p class="flex justify-between"><span>Saturday:</span> <span>10 AM - 7 PM</span></p>
+                                <p class="flex justify-between"><span>Sunday:</span> <span>11 AM - 5 PM</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Map Placeholder -->
+                <div class="map-container rounded-lg overflow-hidden mt-6 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.8s">
+                    <img src="image/favicon.jpg" alt="Map location of Elegance Salon at 123 Beauty Plaza, New Delhi" class="w-full h-full object-cover"/>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div>
+                <div class="contact-card p-8 rounded-lg animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">
+                    <h2 class="font-medium text-2xl text-gray-800 mb-6">Send Us a Message</h2>
+                    <form id="contactForm">
+                        <div class="mb-6">
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                            <input type="text" id="name" name="name" class="form-input w-full px-4 py-3 rounded focus:outline-none" placeholder="Enter your name" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-input w-full px-4 py-3 rounded focus:outline-none" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-input w-full px-4 py-3 rounded focus:outline-none" placeholder="Enter your phone number">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="service" class="block text-sm font-medium text-gray-700 mb-2">Service Interest</label>
+                            <select id="service" name="service" class="form-input w-full px-4 py-3 rounded focus:outline-none">
+                                <option value="">Select a service</option>
+                                <option value="hair">Hair Services</option>
+                                <option value="spa">Spa Treatments</option>
+                                <option value="makeup">Bridal Makeup</option>
+                                <option value="other">Other Inquiry</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
+                            <textarea id="message" name="message" rows="4" class="form-input w-full px-4 py-3 rounded focus:outline-none" placeholder="How can we help you?" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn w-full py-3 px-6 rounded text-white font-medium uppercase mt-4">
+                            Submit Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.1s">
+                    <h3 class="text-2xl font-bold mb-4">Libaas Studio</h3>
+                    <p class="text-gray-400">Premium ladies suits crafted with love and tradition.</p>
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s"><a href="index.html" class="hover:text-white transition duration-200">Home</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s"><a href="product.html" class="hover:text-white transition duration-200">Products</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s"><a href="about.html" class="hover:text-white transition duration-200">About</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s"><a href="contact.html" class="hover:text-white transition duration-200">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">
+                    <h4 class="text-lg font-semibold mb-4">Categories</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s"><a href="index.html#html" class="hover:text-white transition duration-200">Formal Suits</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s"><a href="index.html#html" class="hover:text-white transition duration-200">Casual Wear</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s"><a href="index.html#html" class="hover:text-white transition duration-200">Bridal Collection</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s"><a href="index.html#html" class="hover:text-white transition duration-200">Party Wear</a></li>
+                    </ul>
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.4s">
+                    <h4 class="text-lg font-semibold mb-4">Customer Service</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s"><a href="shipping.html" class="hover:text-white transition duration-200">Shipping Info</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s"><a href="return.html" class="hover:text-white transition duration-200">Returns</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s"><a href="sizeguide.html" class="hover:text-white transition duration-200">Size Guide</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s"><a href="faqs.html" class="hover:text-white transition duration-200">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.5s">
+                <p>© 2025 Libaas Studio | All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold">Your Shopping Cart</h3>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be added here -->
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-semibold">Total:</span>
+                    <span id="cart-total" class="text-xl font-bold text-[#a07b6b]">$0.00</span>
+                </div>
+                <button class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md transform transition-all duration-300 scale-95 opacity-0">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="auth-title" class="text-2xl font-bold">Login</h3>
+                <button onclick="toggleAuth()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="login-form">
+                <form>
+                    <div class="mb-4">
+                        <input type="email" placeholder="Email" class="contact-input">
+                    </div>
+                    <div class="mb-6">
+                        <input type="password" placeholder="Password" class="contact-input">
+                    </div>
+                    <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Login</button>
+                </form>
+                <p class="text-center mt-4 text-gray-600">
+                    Don't have an account? 
+                    <button onclick="switchToSignup()" class="text-[#a07b6b] hover:underline transition duration-200">Sign up</button>
+                </p>
+            </div>
+            <div id="signup-form" class="hidden">
+                <form>
+                    <div class="mb-4">
+                        <input type="text" placeholder="Full Name" class="contact-input">
+                    </div>
+                    <div class="mb-4">
+                        <input type="email" placeholder="Email" class="contact-input">
+                    </div>
+                    <div class="mb-6">
+                        <input type="password" placeholder="Password" class="contact-input">
+                    </div>
+                    <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Sign Up</button>
+                </form>
+                <p class="text-center mt-4 text-gray-600">
+                    Already have an account? 
+                    <button onclick="switchToLogin()" class="text-[#a07b6b] hover:underline transition duration-200">Login</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/97433795577?text=Hello%20Libaas%20Studio,%20I%27m%20interested%20in%20your%20suits!" class="whatsapp-button" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Dummy product data for cart functionality (not used for product display on this page)
+        const products = [
+            { id: 1, name: "Royal Elegance Formal Suit", price: 299.99, category: "formal", image: "image/1.jpg", alt: "Luxurious navy blue Pakistani formal suit with intricate silver embroidery and beadwork on the neckline and sleeves", description: "Exquisite formal suit with intricate embroidery perfect for special occasions.", inStock: true },
+            { id: 2, name: "Classic Black Formal Suit", price: 349.99, category: "formal", image: "image/2.jpg", alt: "Elegant black formal Pakistani suit with gold embroidery and a modern silhouette", description: "A timeless black formal suit, perfect for evening events.", inStock: true },
+            // Add more dummy products if needed for cart testing
+        ];
+
+        let cart = []; // Initialize cart for this page
+
+        // Intersection Observer for scroll animations
+        const animateOnScrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const animation = element.dataset.animation;
+                    const delay = element.dataset.delay || '0s';
+
+                    element.style.animation = `${animation} 0.6s ease forwards ${delay}`;
+                    observer.unobserve(element);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Observe elements for scroll animations
+            document.querySelectorAll('.animate-on-scroll').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+            updateCartUI(); // Initialize cart count
+        });
+
+        // Cart functions (simplified for contact.html, ideally shared via a global state or local storage)
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartCountMobile = document.getElementById('cart-count-mobile');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            // cartCount.textContent = totalItems; // Removed as shopping cart icon is replaced
+            if (cartCountMobile) {
+                cartCountMobile.textContent = totalItems;
+            }
+
+            cartItemsContainer.innerHTML = ''; // Clear existing cart items
+            let total = 0;
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-center text-gray-500 py-4">Your cart is empty</p>';
+            } else {
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                    cartItemsContainer.innerHTML += `
+                        <div class="flex items-center justify-between py-4 border-b last:border-b-0">
+                            <div class="flex items-center space-x-4">
+                                <img src="${item.image}" alt="${item.alt}" class="w-16 h-16 object-cover rounded">
+                                <div>
+                                    <h4 class="font-medium text-gray-800">${item.name}</h4>
+                                    <p class="text-sm text-gray-500">$${item.price.toFixed(2)}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button onclick="updateQuantityInCart(${item.id}, -1)" class="text-gray-500 hover:text-red-500">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="w-6 text-center">${item.quantity}</span>
+                                <button onclick="updateQuantityInCart(${item.id}, 1)" class="text-gray-500 hover:text-green-500">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 ml-2">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function updateQuantityInCart(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                }
+                updateCartUI(); // Always update UI after quantity change
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // Modal functions
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = modal.querySelector('div');
+            
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            } else {
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        function toggleCart() {
+            toggleModal('cart-modal');
+        }
+
+        function toggleAuth() {
+            toggleModal('auth-modal');
+        }
+
+        function toggleSearch() {
+            const searchBar = document.getElementById('search-bar');
+            searchBar.classList.toggle('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+
+            mobileMenu.classList.toggle('open');
+            hamburgerIcon.classList.toggle('open');
+            
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+
+            if (mobileMenu.classList.contains('open')) {
+                mobileMenu.querySelectorAll('.mobile-menu-item').forEach((item, index) => {
+                    item.style.animation = `slideInRight 0.4s ease forwards ${0.1 * index + 0.1}s`;
+                });
+            } else {
+                mobileMenu.querySelectorAll('.mobile-menu-item').forEach(item => {
+                    item.style.animation = 'none';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(20px)';
+                });
+            }
+        }
+
+        function switchToSignup() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('signup-form').classList.remove('hidden');
+            document.getElementById('auth-title').textContent = 'Sign Up';
+        }
+
+        function switchToLogin() {
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('auth-title').textContent = 'Login';
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const cartModal = document.getElementById('cart-modal');
+            const authModal = document.getElementById('auth-modal');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+
+            if (event.target === cartModal) {
+                toggleModal('cart-modal');
+            }
+            if (event.target === authModal) {
+                toggleModal('auth-modal');
+            }
+            if (mobileMenu.classList.contains('open') && !mobileMenu.contains(event.target) && !hamburgerIcon.contains(event.target)) {
+                toggleMobileMenu();
+            }
+        }
+
+        // Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple form validation
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            
+            if (!name || !email) {
+                alert('Please fill in all required fields (Name and Email).');
+                return;
+            }
+            
+            // In a real app, this would submit to your server
+            alert(`Thank you ${name}! We've received your message and will contact you soon.`);
+            this.reset(); // Clear the form
+        });
+    </script>
+</body>
+</html>

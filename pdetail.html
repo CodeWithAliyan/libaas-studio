@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg"> <!-- Favicon added -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap'); /* Added for stylish font */
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+            background-color: #f8f4f2; /* Lighter, warmer background */
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Updated Gradient Backgrounds and Text */
+        .gradient-bg {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Header Styles (Copied from index.html) */
+        .header-logo {
+            height: 50px;
+            transition: transform 0.3s ease;
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        .header-logo:hover {
+            transform: scale(1.05) !important;
+        }
+        .nav-link {
+            position: relative;
+            padding: 8px 0;
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .libaas-studio-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #e1a083, #a07b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        .hamburger-icon {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+            /* MODIFIED: Ensure hamburger icon is visible by default */
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .hamburger-icon span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #000000;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger-icon.open span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+        }
+        .hamburger-icon.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-icon.open span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+        }
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        .mobile-menu-item {
+            transition: all 0.3s ease;
+            transform: translateX(20px);
+            opacity: 0;
+        }
+        .mobile-menu-item:hover {
+            background: rgba(160, 123, 107, 0.1);
+            padding-left: 25px;
+        }
+
+        /* Animations (Copied from index.html) */
+        @keyframes fadeUpEnter {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeDownEnter {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        @keyframes bounce-once {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+        .animate-bounce-once {
+            animation: bounce-once 1s ease;
+        }
+
+        /* Custom Colors for Page Theme */
+        :root {
+            --page-primary: #e1a083; /* Used for price text */
+            --button-color: #a07b6b; /* New button color */
+            --button-color-dark: #8f6e60; /* Darker shade for hover */
+            --color-whatsapp: #25D366; /* WhatsApp green */
+            --color-whatsapp-dark: #128C7E;
+        }
+
+        .product-container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 2rem;
+            background-color: #ffffff; /* White background for the product card */
+            border-radius: 1rem; /* More rounded corners */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Softer, larger shadow */
+            padding: 2.5rem; /* Increased padding */
+            animation: fadeUpEnter 0.8s ease-out forwards; /* Initial animation for the container */
+        }
+        .product-gallery {
+            width: 50%;
+            position: relative;
+            overflow: hidden; /* Ensure image doesn't overflow rounded corners */
+            border-radius: 0.75rem; /* Slightly rounded image corners */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Shadow for the image */
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+        }
+        .product-gallery:hover {
+            transform: scale(1.03); /* Slightly more pronounced scale */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        .product-gallery img {
+            display: block; /* Remove extra space below image */
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s ease; /* Smooth zoom on hover */
+        }
+        .product-gallery:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            width: 50%;
+            padding-left: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute content vertically */
+        }
+        .product-info h1 {
+            font-size: 3.5rem; /* Larger product title */
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: #333;
+            animation: slideInLeft 0.7s ease-out forwards 0.2s;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .product-info .price-text {
+            font-size: 3.8rem; /* Larger price */
+            font-weight: 700;
+            color: var(--page-primary);
+            animation: fadeUpEnter 0.7s ease-out forwards 0.4s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .product-info .text-green-600 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            animation: fadeUpEnter 0.7s ease-out forwards 0.5s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .product-info p.leading-relaxed {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 2rem;
+            animation: fadeUpEnter 0.7s ease-out forwards 0.6s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Quantity Selector Styling */
+        .quantity-selector {
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            display: inline-flex; /* Keep it inline with label */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            animation: scaleIn 0.7s ease-out forwards 0.7s;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        .quantity-selector button {
+            background-color: #f0f0f0;
+            color: #555;
+            padding: 0.75rem 1.25rem;
+            font-size: 1.2rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .quantity-selector button:hover {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        .quantity-selector input {
+            border: none;
+            background-color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            padding: 0.75rem 0;
+        }
+        .quantity-selector label {
+            animation: slideInLeft 0.7s ease-out forwards 0.7s;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        /* Common button styling for consistent size and new animation */
+        .common-button {
+            padding: 1rem 2rem; /* px-8 py-4 equivalent */
+            border-radius: 0.5rem; /* Initial rounded-lg equivalent */
+            font-weight: 600; /* font-semibold equivalent */
+            font-size: 1.125rem; /* text-lg equivalent */
+            color: white; /* Default text color for all buttons */
+            width: 100%; /* Make buttons take full width */
+            text-align: center;
+            /* New animation properties */
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-out, box-shadow 0.3s ease-out, border-radius 0.3s ease-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Initial subtle shadow */
+            position: relative; /* For pseudo-elements */
+            overflow: hidden; /* Hide overflow for hover effects */
+            z-index: 1; /* Ensure button content is above pseudo-element */
+        }
+        .common-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1); /* Light overlay */
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease-out;
+            z-index: -1; /* Behind button content */
+        }
+        .common-button:hover::before {
+            transform: scaleX(1);
+        }
+        .common-button:hover {
+            transform: translateY(-5px) scale(1.02); /* Lift and slightly scale up */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+            border-radius: 1.5rem; /* More rounded on hover */
+        }
+
+        /* Specific button colors */
+        .buy-now-button {
+            background-color: var(--button-color);
+            animation: fadeUpEnter 0.7s ease-out forwards 0.8s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .buy-now-button:hover {
+            background-color: var(--button-color-dark);
+        }
+
+        .whatsapp-button {
+            background-color: var(--color-whatsapp); /* Keeping WhatsApp green */
+            animation: fadeUpEnter 0.7s ease-out forwards 0.9s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .whatsapp-button:hover {
+            background-color: var(--color-whatsapp-dark);
+        }
+
+        /* Price text color remains from page theme */
+        .price-text {
+            color: var(--page-primary);
+        }
+
+        /* Vertical buttons */
+        .button-group {
+            display: flex;
+            flex-direction: column; /* Changed to column for vertical layout */
+            gap: 1rem; /* Space between buttons */
+            margin-top: 2rem; /* Add some space above buttons */
+            align-items: center; /* Center buttons horizontally */
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            .product-gallery, .product-info {
+                width: 100%;
+                padding-left: 0;
+            }
+            .product-info h1 {
+                font-size: 2.5rem; /* Adjust for smaller screens */
+            }
+            .product-info .price-text {
+                font-size: 3rem; /* Adjust for smaller screens */
+            }
+            /* Buttons will naturally stack vertically due to flex-direction: column */
+            .button-group {
+                flex-wrap: nowrap; /* Prevent wrapping if it somehow happens */
+                justify-content: flex-start; /* Align to start if needed, but align-items handles centering */
+            }
+            .common-button {
+                min-width: auto; /* Remove min-width constraint for full width */
+                margin-bottom: 0; /* Remove extra margin if not wrapping */
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300" id="main-header">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <!-- Logo Image -->
+                    <img src="image/h-logo.png" alt="Libaas Studio Logo" class="header-logo animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s">
+
+                    <span class="libaas-studio-text hidden md:block animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s">Libaas Studio</span>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.3s">Home</a>
+                    <a href="product.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.4s">Products</a>
+                    <a href="about.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.5s">About</a>
+                    <a href="contact.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.6s">Contact</a>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleSearch()" class="text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.5s">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                    <!-- Replaced User icon with Home icon and linked to index.html -->
+                    <a href="index.html" class="text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.6s">
+                        <i class="fas fa-home text-xl"></i>
+                    </a>
+                    <button onclick="toggleCart()" class="relative text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.7s">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700">
+                        <!-- MODIFIED: Removed data-animation and data-delay -->
+                        <div id="hamburger-icon" class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div id="search-bar" class="hidden mt-4 transition-all duration-300 ease-in-out">
+                <div class="relative">
+                    <input type="text" placeholder="Search for suits..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a07b6b] shadow-sm">
+                    <button class="absolute right-3 top-2 text-gray-500 hover:text-[#a07b6b] transition duration-200">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-white z-40 pt-16 px-4 md:hidden">
+        <div class="flex flex-col space-y-4 py-4">
+            <a href="index.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.2s">Home</a>
+            <a href="products.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.3s">Products</a>
+            <a href="about.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.4s">About</a>
+            <a href="contact.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.5s">Contact</a>
+            <!-- Removed Login/Signup from mobile menu as per user icon removal -->
+            <a href="#" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleCart(); toggleMobileMenu()" data-animation="slideInRight" data-delay="0.7s">Cart (<span id="cart-count-mobile">0</span>)</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="product-container bg-white p-6 rounded-lg shadow-xl">
+            <!-- Product Image on Left -->
+            <div class="product-gallery">
+                <img src="" alt="" class="w-full rounded-lg shadow-md">
+            </div>
+
+            <!-- Product Info on Right -->
+            <div class="product-info">
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-3"></h1>
+                
+                <div class="mb-4 flex items-baseline">
+                    <span class="text-4xl font-bold price-text"></span>
+                    <span class="text-green-600 ml-4 text-lg font-semibold">In Stock</span>
+                </div>
+                
+                <div class="mb-6">
+                    <p class="text-gray-700 leading-relaxed"></p>
+                </div>
+                
+                <!-- Quantity Selector -->
+                <div class="mb-8 flex items-center">
+                    <label for="quantity" class="text-lg font-medium text-gray-800 mr-4">Quantity:</label>
+                    <div class="quantity-selector flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                        <button onclick="decreaseQuantity()" class="bg-gray-100 text-gray-700 px-4 py-2 hover:bg-gray-200 transition-colors duration-200">-</button>
+                        <input id="quantity" type="number" value="1" min="1" max="10" 
+                               class="w-20 text-center border-l border-r border-gray-300 py-2 text-lg font-semibold focus:outline-none">
+                        <button onclick="increaseQuantity()" class="bg-gray-100 text-gray-700 px-4 py-2 hover:bg-gray-200 transition-colors duration-200">+</button>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button onclick="buyNow()" class="common-button buy-now-button">
+                        Buy Now
+                    </button>
+                    <!-- Add to Cart button for pdetail.html -->
+                    <button onclick="addToCartCurrentProduct()" 
+                            class="common-button buy-now-button">
+                        Add to Cart
+                    </button>
+                    <!-- WhatsApp Button -->
+                    <button onclick="whatsappOrder()" 
+                            class="common-button whatsapp-button">
+                        <i class="fab fa-whatsapp mr-2"></i> Order on WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.1s">
+                    <h3 class="text-2xl font-bold mb-4">Libaas Studio</h3>
+                    <p class="text-gray-400">Premium ladies suits crafted with love and tradition.</p>
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s"><a href="index.html" class="hover:text-white transition duration-200">Home</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s"><a href="product.html" class="hover:text-white transition duration-200">Products</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s"><a href="index.html#about" class="hover:text-white transition duration-200">About</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s"><a href="contact.html" class="hover:text-white transition duration-200">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">
+                    <h4 class="text-lg font-semibold mb-4">Categories</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s"><a href="products.html#formalsuits" class="hover:text-white transition duration-200">Formal Suits</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s"><a href="products.html#casualwear" class="hover:text-white transition duration-200">Casual Wear</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s"><a href="products.html#bridalcollection" class="hover:text-white transition duration-200">Bridal Collection</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s"><a href="products.html#partywear" class="hover:text-white transition duration-200">Party Wear</a></li>
+                    </ul>
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.4s">
+                    <h4 class="text-lg font-semibold mb-4">Customer Service</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s"><a href="shipping.html" class="hover:text-white transition duration-200">Shipping Info</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s"><a href="return.html" class="hover:text-white transition duration-200">Returns</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s"><a href="sizeguide.html" class="hover:text-white transition duration-200">Size Guide</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s"><a href="faqs.html" class="hover:text-white transition duration-200">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.5s">
+                <p>© 2025 Libaas Studio | All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold">Your Shopping Cart</h3>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be added here -->
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-semibold">Total:</span>
+                    <span id="cart-total" class="text-xl font-bold text-[#a07b6b]">$0.00</span>
+                </div>
+                <button class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md transform transition-all duration-300 scale-95 opacity-0">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="auth-title" class="text-2xl font-bold">Login</h3>
+                <button onclick="toggleAuth()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="login-form">
+                <form>
+                    <div class="mb-4">
+                        <input type="email" placeholder="Email" class="contact-input">
+                    </div>
+                    <div class="mb-6">
+                        <input type="password" placeholder="Password" class="contact-input">
+                    </div>
+                    <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Login</button>
+                </form>
+                <p class="text-center mt-4 text-gray-600">
+                    Don't have an account? 
+                    <button onclick="switchToSignup()" class="text-[#a07b6b] hover:underline transition duration-200">Sign up</button>
+                </p>
+            </div>
+            <div id="signup-form" class="hidden">
+                <form>
+                    <div class="mb-4">
+                        <input type="text" placeholder="Full Name" class="contact-input">
+                    </div>
+                    <div class="mb-4">
+                        <input type="email" placeholder="Email" class="contact-input">
+                    </div>
+                    <div class="mb-6">
+                        <input type="password" placeholder="Password" class="contact-input">
+                    </div>
+                    <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Sign Up</button>
+                </form>
+                <p class="text-center mt-4 text-gray-600">
+                    Already have an account? 
+                    <button onclick="switchToLogin()" class="text-[#a07b6b] hover:underline transition duration-200">Login</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Product data (full list copied from product.html)
+        const products = [
+            { id: 1, name: "Luxury Embroidered Lawn Suit – Rose Glow", price: 12.99, category: "formal", image: "image/1.jpg", alt: "Luxurious navy blue Pakistani formal suit with intricate silver embroidery and beadwork on the neckline and sleeves", description: "Exquisite lawn suit with delicate embroidery and chiffon dupatta, perfect for summer occasions." },
+            { id: 2, name: "Ocean Breeze Printed Lawn Suit", price: 11.49, category: "formal", image: "image/2.jpg", alt: "Elegant black formal Pakistani suit with gold embroidery and a modern silhouette", description: "A timeless black formal suit, perfect for evening events." },
+            { id: 3, name: "Emerald Green Formal Dress", price: 15.99, category: "formal", image: "image/3.jpg", alt: "Vibrant emerald green formal Pakistani suit with intricate silver detailing", description: "Stunning emerald green suit, ideal for grand celebrations." },
+            { id: 4, name: "Regal Blue Formal Ensemble", price: 14.25, category: "formal", image: "image/4.jpg", alt: "Royal blue formal Pakistani suit with heavy golden embroidery and traditional design", description: "A majestic blue suit, designed for a regal look." },
+            { id: 5, name: "Casual Comfort Cotton Suit", price: 10.99, category: "casual", image: "image/5.jpg", alt: "Light peach colored casual cotton Pakistani suit with minimal white embroidery and comfortable straight-cut design", description: "Comfortable cotton suit ideal for everyday wear with elegant simplicity." },
+            { id: 6, name: "Summer Breeze Casual Suit", price: 13.75, category: "casual", image: "image/6.jpg", alt: "Light blue casual Pakistani suit with delicate floral prints and breathable fabric", description: "Perfect for summer, this light and airy casual suit offers ultimate comfort." },
+            { id: 7, name: "Everyday Chic Casual Wear", price: 11.89, category: "casual", image: "image/7.jpg", alt: "Stylish grey casual Pakistani suit with simple embroidery and modern cut", description: "A versatile casual suit that combines comfort with contemporary style." },
+            { id: 8, name: "Floral Delight Casual Suit", price: 12.59, category: "casual", image: "image/8.jpg", alt: "White casual Pakistani suit with vibrant floral patterns and a relaxed fit", description: "Embrace the beauty of nature with this charming floral casual suit." },
+            { id: 9, name: "Bridal Dreams Collection", price: 16.99, category: "bridal", image: "image/9.jpg", alt: "Stunning red bridal Pakistani suit with heavy golden embroidery, sequins, mirror work and traditional patterns", description: "Stunning bridal ensemble with heavy embellishments and traditional craftsmanship." },
+            { id: 10, name: "Golden Glow Bridal Lehenga", price: 17.00, category: "bridal", image: "image/10.jpg", alt: "Luxurious golden bridal lehenga with intricate zardozi work and heavy dupatta", description: "A magnificent bridal lehenga designed to make you shine on your special day." },
+            { id: 11, name: "Ivory Elegance Bridal Gown", price: 15.49, category: "bridal", image: "image/11.jpg", alt: "Graceful ivory bridal gown with delicate silver embroidery and flowing silhouette", description: "An ethereal ivory gown, perfect for a sophisticated bridal look." },
+            { id: 12, name: "Crimson Charm Bridal Dress", price: 16.25, category: "bridal", image: "image/12.jpg", alt: "Deep crimson bridal dress with rich gold and maroon embroidery and traditional motifs", description: "A captivating crimson dress, embodying traditional bridal charm." },
+            { id: 13, name: "Party Glamour Suit", price: 13.25, category: "party", image: "image/13.jpg", alt: "Sparkly black party wear Pakistani suit with silver sequins and modern cut perfect for evening events", description: "Glamorous party wear with modern cuts and sparkling details." },
+            { id: 14, name: "Midnight Blue Party Dress", price: 12.75, category: "party", image: "image/14.jpg", alt: "Elegant midnight blue party wear Pakistani suit with subtle embellishments and a sleek design", description: "A sophisticated blue dress, ideal for any evening party." },
+            { id: 15, name: "Rose Gold Party Ensemble", price: 14.49, category: "party", image: "image/15.jpg", alt: "Chic rose gold party wear Pakistani suit with contemporary design and light embroidery", description: "Trendy rose gold outfit for a fashionable party look." },
+            { id: 16, name: "Vibrant Purple Party Suit", price: 13.99, category: "party", image: "image/16.jpg", alt: "Bold purple party wear Pakistani suit with unique patterns and a festive feel", description: "Stand out with this vibrant purple party suit, perfect for celebrations." },
+            { id: 17, name: "Pastel Dream Printed Lawn Suit", price: 11.75, category: "casual", image: "image/17.jpg", alt: "Light pastel printed Pakistani lawn suit with floral accents", description: "Light pastel printed lawn suit with floral accents, airy and chic summer wear." },
+            { id: 18, name: "Black Beauty Embroidered Chiffon Suit", price: 15.25, category: "formal", image: "image/18.jpg", alt: "Classic black chiffon embroidered Pakistani suit with golden detail", description: "Classic black chiffon embroidered suit with golden detail, ideal festive attire." },
+            { id: 19, name: "Coral Breeze Digital Lawn Suit", price: 12.49, category: "casual", image: "image/19.jpg", alt: "Vibrant coral Pakistani lawn suit with digital prints", description: "Vibrant coral lawn suit with digital prints, trendy and refreshing summer staple." },
+            { id: 20, name: "Emerald Green Luxury Chiffon Suit", price: 16.49, category: "formal", image: "image/20.jpg", alt: "Elegant emerald chiffon Pakistani suit with sequins and embroidery", description: "Elegant emerald chiffon with sequins and embroidery, designed for festive occasions." },
+            { id: 21, name: "Peach Glow Cotton Casual Suit", price: 10.99, category: "casual", image: "image/21.jpg", alt: "Simple peach cotton Pakistani suit with minimal detailing", description: "Simple peach cotton suit with minimal detailing, stylish everyday wardrobe pick." },
+            { id: 22, name: "Violet Grace Embroidered Lawn Suit", price: 14.15, category: "formal", image: "image/22.jpg", alt: "Elegant violet embroidered Pakistani lawn suit with chiffon dupatta", description: "Elegant violet embroidered lawn suit with chiffon dupatta, semi-formal fashion choice." },
+            { id: 23, name: "Floral Fantasy Printed Lawn Suit", price: 12.29, category: "casual", image: "image/23.jpg", alt: "Bright floral printed Pakistani lawn suit with soft dupatta", description: "Bright floral printed lawn suit with soft dupatta, perfect for summer freshness." },
+            { id: 24, name: "Gold Dust Party Chiffon Suit", price: 16.25, category: "party", image: "image/24.jpg", alt: "Golden chiffon Pakistani suit with intricate embroidery", description: "Golden chiffon suit with intricate embroidery, a glamorous choice for festive nights." },
+            { id: 25, name: "Modern Lines Digital Cotton Suit", price: 11.95, category: "casual", image: "image/25.jpg", alt: "Trendy digitally printed Pakistani cotton suit with geometric designs", description: "Trendy digitally printed cotton suit with geometric designs for modern chic style." },
+            { id: 26, name: "Lavender Bliss Embroidered Lawn Suit", price: 13.89, category: "formal", image: "image/26.jpg", alt: "Soft lavender embroidered Pakistani lawn suit with chiffon dupatta", description: "Soft lavender embroidered lawn with chiffon dupatta, a graceful outfit for summer." },
+            { id: 27, name: "Sapphire Glow Chiffon Embroidered Suit", price: 15.50, category: "formal", image: "image/27.jpg", alt: "Deep sapphire chiffon Pakistani suit with rich embroidery", description: "Deep sapphire chiffon outfit with rich embroidery, elegant for evening occasions." },
+            { id: 28, name: "Candy Pink Printed Lawn Suit", price: 11.25, category: "casual", image: "image/28.jpg", alt: "Playful pink printed Pakistani lawn suit with floral dupatta", description: "Playful pink printed lawn with floral dupatta, a cheerful summer essential." },
+            { id: 29, name: "Bridal Elegance Embroidered Net Suit", price: 17.00, category: "bridal", image: "image/29.jpg", alt: "Heavily embroidered bridal-style net Pakistani suit with sequins", description: "Heavily embroidered bridal-style net suit with sequins, perfect for wedding festivities." },
+            { id: 30, name: "Olive Green Cotton Casual Suit", price: 10.50, category: "casual", image: "image/30.jpg", alt: "Comfortable olive green Pakistani cotton suit with minimal prints", description: "Comfortable olive green cotton with minimal prints, everyday essential with style." },
+            { id: 31, name: "Burgundy Charm Embroidered Lawn Suit", price: 14.79, category: "formal", image: "image/31.jpg", alt: "Burgundy embroidered Pakistani lawn suit with chiffon dupatta", description: "Burgundy embroidered lawn suit with chiffon dupatta, graceful attire for festive evenings." },
+            { id: 32, name: "Fresh Meadow Printed Lawn Suit", price: 12.15, category: "casual", image: "image/32.jpg", alt: "Green floral printed Pakistani lawn suit with soft dupatta", description: "Green floral printed lawn with soft dupatta, a refreshing summer wardrobe pick." }
+        ];
+
+        // Initialize cart by trying to load from localStorage, otherwise start empty
+        let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+        let currentProduct = null; // To store the product currently displayed on this page
+
+        // Intersection Observer for scroll animations
+        const animateOnScrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const animation = element.dataset.animation;
+                    const delay = element.dataset.delay || '0s';
+
+                    // Apply animation directly via style for more control
+                    element.style.animation = `${animation} 0.6s ease forwards ${delay}`;
+                    element.style.opacity = '1'; // Ensure it's visible after animation
+                    element.style.transform = 'translateY(0) translateX(0) scale(1)'; // Reset transform
+                    observer.unobserve(element);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Observe elements for scroll animations
+            document.querySelectorAll('.animate-on-scroll').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+            loadProductDetails(); // Load product details based on URL
+            updateCartUI(); // Initialize cart count and display cart items
+        });
+
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
+
+        function loadProductDetails() {
+            const productId = parseInt(getUrlParameter('id')); // Get product ID from URL
+            const product = products.find(p => p.id === productId); // Find product in array
+
+            if (product) {
+                currentProduct = product; // Set the current product for other functions
+
+                // Update product image
+                document.querySelector('.product-gallery img').src = product.image;
+                document.querySelector('.product-gallery img').alt = product.alt;
+
+                // Update product name
+                document.querySelector('.product-info h1').textContent = product.name;
+
+                // Update product price
+                document.querySelector('.product-info .price-text').textContent = `$${product.price.toFixed(2)}`;
+
+                // Update product description
+                document.querySelector('.product-info p.leading-relaxed').textContent = product.description;
+
+            } else {
+                // Handle case where product is not found
+                document.querySelector('.product-info').innerHTML = '<h1 class="text-4xl font-extrabold text-gray-900 mb-3">Product Not Found</h1><p class="text-gray-700">The product you are looking for does not exist. Please go back to the <a href="product.html" class="text-[#a07b6b] hover:underline">Products page</a>.</p>';
+                document.querySelector('.product-gallery').innerHTML = ''; // Clear image
+                // Hide quantity selector and buttons if product not found
+                document.querySelector('.mb-8.flex.items-center').style.display = 'none';
+                document.querySelector('.button-group').style.display = 'none';
+            }
+        }
+
+        // Quantity functions
+        function increaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            let quantity = parseInt(quantityInput.value);
+            if (quantity < 10) {
+                quantityInput.value = quantity + 1;
+            }
+        }
+
+        function decreaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            let quantity = parseInt(quantityInput.value);
+            if (quantity > 1) {
+                quantityInput.value = quantity - 1;
+            }
+        }
+
+        // Action functions
+        function buyNow() {
+            if (!currentProduct) {
+                alert('No product selected to buy.');
+                return;
+            }
+            const quantity = parseInt(document.getElementById('quantity').value);
+
+            // Create a temporary object with necessary product details
+            const itemToBuy = {
+                id: currentProduct.id,
+                name: currentProduct.name,
+                price: currentProduct.price,
+                img: currentProduct.image, // Use 'image' property for the image URL
+                desc: currentProduct.description,
+                quantity: quantity // Include the selected quantity
+            };
+
+            // Store the product data in localStorage
+            localStorage.setItem('buyNowItem', JSON.stringify(itemToBuy));
+
+            // Redirect to buynow.html
+            window.location.href = 'buynow.html';
+        }
+
+        // Function to handle WhatsApp order with dynamic product details
+        function whatsappOrder() {
+            // Check if a product is currently displayed on the page
+            if (!currentProduct) {
+                alert('No product selected for WhatsApp order.');
+                return; // Exit the function if no product is selected
+            }
+
+            // Define your WhatsApp number in international format (without '+' or '00')
+            const whatsappNumber = '97433795577'; // IMPORTANT: Replace with your actual WhatsApp number
+
+            // Get product details from the 'currentProduct' object
+            const productName = currentProduct.name;
+            const productPrice = currentProduct.price.toFixed(2); // Format price to 2 decimal places
+            const quantity = document.getElementById('quantity').value; // Get quantity from input
+            
+            // Construct the full image URL. 
+            // This assumes your 'image/' folder is at the root of your website.
+            // Adjust 'window.location.origin + '/' + currentProduct.image' if your image paths are different.
+            const productImageURL = window.location.origin + '/' + currentProduct.image; 
+            
+            // Construct the pre-filled message for WhatsApp
+            // %0A is the URL-encoded newline character
+            const message = `Hello! 👋%0A` +
+                            `I am interested in this product:%0A` +
+                            `🛒 Name: ${productName}%0A` +
+                            `💵 Price: $${productPrice}%0A` +
+                            `🔢 Quantity: ${quantity}%0A` +
+                            `📸 Image: ${productImageURL}%0A%0A` +
+                            `Is this available?`;
+
+            // Encode the message to be URL-safe
+            const encodedMessage = encodeURIComponent(message);
+
+            // Construct the full WhatsApp URL using the wa.me format
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Cart functions (simplified for pdetail.html, ideally shared via a global state or local storage)
+        function addToCartCurrentProduct() {
+            if (!currentProduct) {
+                alert('No product selected to add to cart.');
+                return;
+            }
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const productToAdd = { ...currentProduct, quantity: quantity }; // Include quantity from input
+
+            const existingItemIndex = cart.findIndex(item => item.id === productToAdd.id);
+
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                cart.push(productToAdd);
+            }
+            saveCart(); // Save cart to localStorage after adding
+            updateCartUI();
+            const cartCount = document.getElementById('cart-count');
+            cartCount.classList.add('animate-bounce-once');
+            setTimeout(() => {
+                cartCount.classList.remove('animate-bounce-once');
+            }, 1000);
+            alert(`${quantity} of ${currentProduct.name} added to cart!`);
+        }
+
+        function updateQuantityInCart(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                }
+                saveCart(); // Save cart to localStorage after updating quantity
+                updateCartUI(); // Always update UI after quantity change
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            saveCart(); // Save cart to localStorage after removing item
+            updateCartUI();
+        }
+
+        // New function to save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartCountMobile = document.getElementById('cart-count-mobile');
+            const cartItemsContainer = document.getElementById('cart-items'); // Renamed to avoid conflict
+            const cartTotal = document.getElementById('cart-total');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            if (cartCountMobile) {
+                cartCountMobile.textContent = totalItems;
+            }
+
+            // Populate cart modal (copied from product.html for full functionality)
+            cartItemsContainer.innerHTML = ''; // Clear existing cart items
+            let total = 0;
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-center text-gray-500 py-4">Your cart is empty</p>';
+            } else {
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                    cartItemsContainer.innerHTML += `
+                        <div class="flex items-center justify-between py-4 border-b last:border-b-0">
+                            <div class="flex items-center space-x-4">
+                                <img src="${item.image}" alt="${item.alt}" class="w-16 h-16 object-cover rounded">
+                                <div>
+                                    <h4 class="font-medium text-gray-800">${item.name}</h4>
+                                    <p class="text-sm text-gray-500">$${item.price.toFixed(2)}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button onclick="updateQuantityInCart(${item.id}, -1)" class="text-gray-500 hover:text-red-500">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="w-6 text-center">${item.quantity}</span>
+                                <button onclick="updateQuantityInCart(${item.id}, 1)" class="text-gray-500 hover:text-green-500">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 ml-2">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+
+        // Modal functions (copied from index.html)
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = modal.querySelector('div');
+            
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            } else {
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        function toggleCart() {
+            toggleModal('cart-modal');
+            // The cart content is now dynamically populated by updateCartUI()
+        }
+
+        function toggleAuth() {
+            // This function is no longer directly called by a button in the main header,
+            // but it's still used by the mobile menu.
+            toggleModal('auth-modal');
+        }
+
+        function toggleSearch() {
+            const searchBar = document.getElementById('search-bar');
+            searchBar.classList.toggle('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+
+            mobileMenu.classList.toggle('open');
+            hamburgerIcon.classList.toggle('open');
+            
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+
+            if (mobileMenu.classList.contains('open')) {
+                mobileMenu.querySelectorAll('.mobile-menu-item').forEach((item, index) => {
+                    item.style.animation = `slideInRight 0.4s ease forwards ${0.1 * index + 0.1}s`;
+                });
+            } else {
+                mobileMenu.querySelectorAll('.mobile-menu-item').forEach(item => {
+                    item.style.animation = 'none';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(20px)';
+                });
+            }
+        }
+
+        function switchToSignup() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('signup-form').classList.remove('hidden');
+            document.getElementById('auth-title').textContent = 'Sign Up';
+        }
+
+        function switchToLogin() {
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('auth-title').textContent = 'Login';
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const cartModal = document.getElementById('cart-modal');
+            const authModal = document.getElementById('auth-modal');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+
+            if (event.target === cartModal) {
+                toggleModal('cart-modal');
+            }
+            if (event.target === authModal) {
+                toggleModal('auth-modal');
+            }
+            if (mobileMenu.classList.contains('open') && !mobileMenu.contains(event.target) && !hamburgerIcon.contains(event.target)) {
+                toggleMobileMenu();
+            }
+        }
+    </script>
+</body>
+</html>

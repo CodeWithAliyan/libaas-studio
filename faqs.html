@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions - Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom CSS variables to match index.html theme */
+        :root {
+            --primary-light-brown: #e1a083;
+            --primary-dark-brown: #a07b6b;
+            --text-color: #374151; /* Keeping a dark grey for general text */
+            --light-bg: #f9fafb;
+            --border-color: #e5e7eb;
+            --hover-bg-light: #f5f0ed; /* A lighter shade for hover effects */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif; /* Matching font from index.html */
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif; /* Matching font from index.html */
+        }
+
+        /* Gradient background for hero section and buttons */
+        .gradient-bg-theme {
+            background: linear-gradient(135deg, var(--primary-light-brown) 0%, var(--primary-dark-brown) 100%);
+        }
+
+        /* General animation classes (from index.html) */
+        @keyframes fadeUpEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .animate-on-scroll[data-animation="scaleIn"].is-visible {
+            transform: scale(1);
+        }
+        .animate-on-scroll[data-animation="slideInLeft"].is-visible {
+            transform: translateX(0);
+        }
+        .animate-on-scroll[data-animation="slideInRight"].is-visible {
+            transform: translateX(0);
+        }
+
+        /* Accordion Item Styling */
+        .accordion-item {
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
+            background-color: white;
+            border-radius: 8px; /* Rounded corners */
+            margin-bottom: 1rem; /* Space between items */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Subtle shadow */
+            overflow: hidden; /* For content animation */
+            transform: translateY(20px); /* Initial state for animation */
+            opacity: 0;
+        }
+        .accordion-item:last-child {
+            border-bottom: none; /* No border on last item */
+        }
+        .accordion-item:hover {
+            transform: translateY(-5px); /* Lift effect */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Enhanced shadow */
+        }
+
+        .accordion-header {
+            padding: 1.5rem; /* Increased padding */
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600; /* Bolder text */
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            color: var(--primary-dark-brown); /* Hover color */
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out; /* Smooth expand/collapse */
+            padding: 0 1.5rem; /* Initial padding */
+        }
+
+        .accordion-content.active {
+            max-height: 500px; /* Adjust as needed for content */
+            padding-bottom: 1.5rem; /* Padding when active */
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.2rem; /* Larger icon */
+            color: var(--primary-dark-brown); /* Icon color */
+        }
+
+        .accordion-icon.active {
+            transform: rotate(180deg);
+        }
+
+        /* Search Box Styling */
+        .search-box {
+            transition: all 0.3s ease;
+            border: 2px solid transparent; /* Initial transparent border */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Subtle shadow */
+        }
+
+        .search-box:focus {
+            border-color: var(--primary-dark-brown); /* Border on focus */
+            box-shadow: 0 0 0 4px rgba(160, 123, 107, 0.2); /* Glow effect */
+        }
+
+        /* Category Button Styling */
+        .category-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid var(--primary-dark-brown); /* Matching border color */
+            color: var(--primary-dark-brown); /* Matching text color */
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 30px; /* Pill shape */
+            font-weight: 500;
+            margin: 0 4px 8px 4px; /* Spacing */
+            transform: translateY(0); /* Initial state for animation */
+            opacity: 0;
+        }
+
+        .category-btn:hover {
+            background-color: var(--hover-bg-light); /* Lighter shade for hover */
+            transform: translateY(-3px); /* Slight lift on hover */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-btn.active {
+            background: linear-gradient(135deg, var(--primary-light-brown) 0%, var(--primary-dark-brown) 100%); /* Gradient for active */
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 6px rgba(225, 160, 131, 0.5); /* Adjusted shadow to match new gradient start color */
+            transform: translateY(-1px); /* Keep slightly lifted when active */
+        }
+
+        /* Icon colors matching theme */
+        .icon-theme-color {
+            color: var(--primary-dark-brown);
+        }
+
+        /* Link color matching theme */
+        .link-theme-color {
+            color: var(--primary-dark-brown);
+        }
+        .link-theme-color:hover {
+            text-decoration: underline;
+        }
+
+        /* CTA button colors */
+        .cta-button-primary {
+            background: linear-gradient(135deg, var(--primary-light-brown) 0%, var(--primary-dark-brown) 100%);
+            color: white;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .cta-button-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .cta-button-primary:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .cta-button-primary:hover::before {
+            left: 100%;
+        }
+
+        .cta-button-secondary {
+            border: 2px solid var(--primary-dark-brown);
+            color: var(--primary-dark-brown);
+            background-color: white;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .cta-button-secondary:hover {
+            background: linear-gradient(135deg, var(--primary-light-brown) 0%, var(--primary-dark-brown) 100%);
+            color: white;
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Section Heading Styling */
+        .section-heading {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 40px;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(20px);
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; /* Initial width for animation */
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-light-brown), var(--primary-dark-brown));
+            border-radius: 3px;
+            transition: width 0.6s ease 0.3s; /* Transition for width */
+        }
+        .animate-heading.is-visible .section-heading::after {
+            width: 80px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+            .faq-container {
+                padding: 0 1rem;
+            }
+            .accordion-header {
+                padding: 1rem;
+            }
+            .accordion-content {
+                padding: 0 1rem;
+            }
+            .accordion-content.active {
+                padding-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Hero Section -->
+    <section class="hero-section gradient-bg-theme text-white py-16 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.1s">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">Frequently Asked Questions</h1>
+            <p class="text-xl md:text-2xl opacity-90 mb-8 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.5s">Find answers to common questions about shopping with us</p>
+            
+            <!-- Search Box -->
+            <div class="max-w-2xl mx-auto animate-on-scroll" data-animation="scaleIn" data-delay="0.7s">
+                <div class="relative">
+                    <input type="text" placeholder="Search for questions..." 
+                           class="w-full px-6 py-4 rounded-lg border-0 text-gray-800 focus:outline-none search-box">
+                    <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- Category Filters -->
+        <div class="flex flex-wrap gap-2 mb-8 justify-center">
+            <button class="category-btn px-4 py-2 rounded-full text-sm font-medium active animate-on-scroll" data-animation="slideInLeft" data-delay="0.1s">
+                All Questions
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full text-sm font-medium animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s">
+                Shipping
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full text-sm font-medium animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s">
+                Returns
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full text-sm font-medium animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s">
+                Payments
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full text-sm font-medium animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s">
+                Products
+            </button>
+        </div>
+
+        <!-- FAQ Accordion -->
+        <div class="max-w-4xl mx-auto faq-container">
+            <!-- Shipping Questions -->
+            <div class="mb-8 animate-on-scroll animate-heading" data-animation="fadeUpEnter" data-delay="0.1s">
+                <h2 class="section-heading text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-truck mr-3 icon-theme-color"></i>
+                    Shipping & Delivery
+                </h2>
+                
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">How long does shipping take?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>Standard shipping typically takes 3-5 business days within the continental US. Express shipping options are available at checkout for 1-2 business day delivery. International shipping times vary by destination but generally take 7-14 business days.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">Do you offer free shipping?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>Yes! We offer free standard shipping on all orders over $50. For orders under $50, a flat shipping rate of $4.99 applies. Free shipping is automatically applied at checkout when your order qualifies.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.4s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">Can I track my order?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>Absolutely! Once your order ships, you'll receive a confirmation email with your tracking number. You can also track your order by logging into your account and visiting the "Order History" section.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Returns & Exchanges -->
+            <div class="mb-8 animate-on-scroll animate-heading" data-animation="fadeUpEnter" data-delay="0.1s">
+                <h2 class="section-heading text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-exchange-alt mr-3 icon-theme-color"></i>
+                    Returns & Exchanges
+                </h2>
+                
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">What is your return policy?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>We offer a 30-day return policy from the date of delivery. Items must be unused, in original condition, and with all tags attached. Returns are free for US customers - we'll provide a prepaid shipping label.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">How do I initiate a return?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>To initiate a return, please log into your account, go to "Order History," select the item(s) you wish to return, and follow the prompts. If you checked out as a guest, use our <a href="#" class="link-theme-color hover:underline">Return Portal</a> with your order number and email address.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.4s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">When will I receive my refund?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>Refunds are processed within 3-5 business days after we receive your return. The refund will be issued to your original payment method. Please allow additional time for your bank or credit card company to process the refund.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Questions -->
+            <div class="mb-8 animate-on-scroll animate-heading" data-animation="fadeUpEnter" data-delay="0.1s">
+                <h2 class="section-heading text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-credit-card mr-3 icon-theme-color"></i>
+                    Payment & Security
+                </h2>
+                
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">What payment methods do you accept?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>We accept all major credit cards (Visa, MasterCard, American Express, Discover), PayPal, Apple Pay, Google Pay, and Shop Pay. All payments are processed through secure, encrypted channels to ensure your information is protected.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">Is my payment information secure?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>Yes, your security is our top priority. We use industry-standard SSL encryption to protect your personal and payment information. We are PCI DSS compliant and never store your complete credit card information on our servers.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.4s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">Do you offer installment payments?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>Yes! We offer installment payment options through Klarna and Afterpay. These options are available at checkout for qualifying orders. You can split your payment into 4 interest-free installments paid every two weeks.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Questions -->
+            <div class="mb-8 animate-on-scroll animate-heading" data-animation="fadeUpEnter" data-delay="0.1s">
+                <h2 class="section-heading text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-tag mr-3 icon-theme-color"></i>
+                    Product Information
+                </h2>
+                
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">Are your products authentic?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>Yes, we guarantee that all products sold on our website are 100% authentic. We work directly with brands and authorized distributors to ensure product authenticity and quality. Every item comes with manufacturer warranties where applicable.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">How do I know what size to order?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>We provide detailed size charts for each product category. You can find these charts on product pages under the "Size Guide" tab. If you're between sizes, we recommend sizing up. Remember, we offer free returns if the fit isn't perfect!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.4s">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-semibold">Do you offer product warranties?</h3>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="pb-6 text-gray-600">
+                                <p>Most of our products come with manufacturer warranties that range from 30 days to lifetime coverage, depending on the brand and product type. Warranty information is provided on product pages and included with your purchase documentation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact CTA -->
+        <div class="text-center mt-16 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.1s">
+            <div class="bg-gray-100 rounded-2xl p-8 md:p-12 shadow-lg">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Still have questions?</h2>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">Our customer support team is here to help you with any additional questions you might have.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#" class="cta-button-primary px-8 py-3 rounded-lg font-semibold">
+                        <i class="fas fa-envelope mr-2"></i>Email Support
+                    </a>
+                    <a href="#" class="cta-button-secondary px-8 py-3 rounded-lg font-semibold">
+                        <i class="fas fa-phone mr-2"></i>Call Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const animateOnScrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const animation = element.dataset.animation;
+                    const delay = element.dataset.delay || '0s';
+
+                    // Apply animation
+                    element.style.animation = `${animation} 0.6s ease forwards ${delay}`;
+                    element.classList.add('is-visible'); // Add class to keep state
+
+                    // Special handling for section headings to animate the ::after pseudo-element
+                    if (element.classList.contains('animate-heading')) {
+                        element.classList.add('is-visible'); // Trigger ::after animation
+                    }
+
+                    observer.unobserve(element); // Stop observing once animated
+                }
+            });
+        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+
+        // Initialize animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Observe elements for scroll animations
+            document.querySelectorAll('.animate-on-scroll').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+
+            // Initialize first accordion as open
+            const firstAccordionHeader = document.querySelector('.accordion-item .accordion-header');
+            if (firstAccordionHeader) {
+                toggleAccordion(firstAccordionHeader);
+            }
+        });
+
+        // Accordion functionality
+        function toggleAccordion(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.accordion-icon');
+            const parentItem = element.closest('.accordion-item');
+            
+            // Toggle active class
+            content.classList.toggle('active');
+            icon.classList.toggle('active');
+            parentItem.classList.toggle('active'); // Add active class to item for potential styling
+
+            // Close other accordions in the same category
+            const categoryContainer = element.closest('.bg-white'); // The div containing accordion items for a category
+            if (categoryContainer) {
+                const allContents = categoryContainer.querySelectorAll('.accordion-content');
+                const allIcons = categoryContainer.querySelectorAll('.accordion-icon');
+                const allItems = categoryContainer.querySelectorAll('.accordion-item');
+                
+                allContents.forEach((itemContent, index) => {
+                    if (itemContent !== content && itemContent.classList.contains('active')) {
+                        itemContent.classList.remove('active');
+                        allIcons[index].classList.remove('active');
+                        allItems[index].classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-box');
+        
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const allAccordionItems = document.querySelectorAll('.accordion-item');
+
+            allAccordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const question = header.querySelector('h3').textContent.toLowerCase();
+                const content = item.querySelector('.accordion-content').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || content.includes(searchTerm)) {
+                    item.style.display = 'block'; // Show the accordion item
+                } else {
+                    item.style.display = 'none'; // Hide the accordion item
+                }
+            });
+
+            // After filtering items, check if categories should be hidden
+            document.querySelectorAll('.faq-container > div').forEach(categoryDiv => {
+                const visibleItems = categoryDiv.querySelectorAll('.accordion-item[style="display: block;"]');
+                if (visibleItems.length === 0 && searchTerm !== '') { // Only hide if search term is active
+                    categoryDiv.style.display = 'none';
+                } else {
+                    categoryDiv.style.display = 'block';
+                }
+            });
+        });
+
+        // Category filter functionality
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const faqCategorySections = document.querySelectorAll('.faq-container > div'); // Select the div containing h2 and bg-white
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const categoryText = this.textContent.trim();
+                
+                faqCategorySections.forEach(section => {
+                    const sectionTitleElement = section.querySelector('h2');
+                    if (sectionTitleElement) {
+                        const sectionTitle = sectionTitleElement.textContent.trim();
+                        
+                        if (categoryText === 'All Questions') {
+                            section.style.display = 'block';
+                            // Ensure all accordion items within are visible
+                            section.querySelectorAll('.accordion-item').forEach(item => item.style.display = 'block');
+                        } else if (sectionTitle.includes(categoryText)) {
+                            section.style.display = 'block';
+                            // Ensure all accordion items within are visible
+                            section.querySelectorAll('.accordion-item').forEach(item => item.style.display = 'block');
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    }
+                });
+                // Clear search input when category filter is applied
+                searchInput.value = '';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Our Products | Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Updated Gradient Backgrounds and Text */
+        .gradient-bg {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Updated product-card for full-card clickability */
+        .product-card {
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            position: relative;
+            transform: translateY(20px); /* Initial state for animation */
+            opacity: 0; /* Initial state for animation */
+            display: block; /* Make the anchor tag behave like a block */
+            text-decoration: none; /* Remove underline from link */
+            color: inherit; /* Inherit text color */
+            cursor: pointer; /* Indicate it's clickable */
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-10px) !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+        .product-card img {
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+        .product-card:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.05);
+        }
+
+        .price-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 2;
+            transform: scale(0); /* Initial state for animation */
+            opacity: 0; /* Initial state for animation */
+        }
+
+        .category-filter {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #a07b6b;
+            color: #a07b6b;
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            margin: 0 8px 8px 0;
+            transform: translateX(-20px); /* Initial state for animation */
+            opacity: 0; /* Initial state for animation */
+        }
+        .category-filter:hover {
+            background: #f5f0ed;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .category-filter.active {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 6px rgba(225, 160, 131, 0.5);
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4));
+        }
+        .hero-button {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            color: #a07b6b;
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px); /* Initial state for animation */
+            opacity: 0; /* Initial state for animation */
+        }
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .hero-button:hover {
+            transform: translateY(-5px) scale(1.05) !important;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        .hero-button:hover::before {
+            left: 100%;
+        }
+
+        .section-heading {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 40px;
+            transform: translateY(20px); /* Initial state for animation */
+            opacity: 0; /* Initial state for animation */
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            border-radius: 3px;
+            transition: width 0.6s ease 0.3s;
+        }
+        .animate-heading .section-heading::after {
+            width: 80px;
+        }
+
+        .feature-card {
+            transition: all 0.4s ease;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transform: translateY(30px); /* Initial state for animation */
+            opacity: 0; /* Initial state for animation */
+        }
+        .feature-card:hover {
+            transform: translateY(-10px) !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card img {
+            transition: transform 0.5s ease;
+        }
+        .feature-card:hover img {
+            transform: scale(1.1);
+        }
+        .feature-card .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover .overlay {
+            transform: translateY(0);
+        }
+
+        .contact-input {
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            transform: translateY(10px); /* Initial state for animation */
+            opacity: 0; /* Initial state for animation */
+        }
+        .contact-input:focus {
+            border-color: #a07b6b;
+            box-shadow: 0 0 0 3px rgba(160, 123, 107, 0.2);
+        }
+
+        .whatsapp-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            z-index: 100;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite, bounceIn 0.8s ease forwards 1s; /* Combined animations */
+        }
+        .whatsapp-button:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Header Styles */
+        .header-logo {
+            height: 50px;
+            transition: transform 0.3s ease;
+            transform: translateX(-20px); /* Initial state for animation */
+            opacity: 0; /* Initial state for animation */
+        }
+        .header-logo:hover {
+            transform: scale(1.05) !important;
+        }
+        .nav-link {
+            position: relative;
+            padding: 8px 0;
+            transform: translateY(-10px); /* Initial state for animation */
+            opacity: 0; /* Initial state for animation */
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeUpEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeDownEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Utility class for scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px); /* Default initial state for fadeUpEnter */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Menu Specific Styles */
+        .mobile-menu {
+            transform: translateX(100%); /* Initial state for slide-in */
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        .mobile-menu-item {
+            transition: all 0.3s ease;
+            transform: translateX(20px); /* Initial state for staggered animation */
+            opacity: 0; /* Initial state for staggered animation */
+        }
+        .mobile-menu-item:hover {
+            background: rgba(160, 123, 107, 0.1);
+            padding-left: 25px;
+        }
+
+        /* Libaas Studio Text Styling */
+        .libaas-studio-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #e1a083, #a07b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: translateX(-20px); /* Initial state for animation */
+            opacity: 0; /* Initial state for animation */
+        }
+
+        /* Hamburger Icon Styling */
+        .hamburger-icon {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+            /* Initial state for animation */
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #000000;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-icon.open span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+        }
+
+        .hamburger-icon.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-icon.open span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+        }
+
+        /* Product Modal Specific Styles and Animations */
+        .product-modal-content {
+            transform: scale(0.95) translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .product-modal-content.is-visible {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .product-modal-image {
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        .product-modal-content.is-visible .product-modal-image {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .product-modal-details > * {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(1) { transition-delay: 0.1s; }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(2) { transition-delay: 0.2s; }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(3) { transition-delay: 0.3s; }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(4) { transition-delay: 0.4s; }
+
+        /* Auth Modal Specific Styles */
+        .auth-modal-content {
+            transform: scale(0.95) translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .auth-modal-content.is-visible {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        /* NEW: Cart Modal Specific Styles */
+        .cart-modal-content {
+            transform: scale(0.95) translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .cart-modal-content.is-visible {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        /* Enhanced Social Login Buttons - Modern Stylish Design */
+        .social-login-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .social-login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: 1;
+        }
+
+        .social-login-button:hover::before {
+            left: 100%;
+        }
+
+        .social-login-button i {
+            margin-right: 12px;
+            font-size: 1.2em;
+            z-index: 2;
+        }
+
+        /* Google Button - Matching Website Theme with Custom Gradient */
+        .social-login-button.google {
+            background: linear-gradient(135deg, #DB4437 0%, #EA4335 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(219, 68, 55, 0.3);
+        }
+
+        .social-login-button.google:hover {
+            background: linear-gradient(135deg, #C23321 0%, #DB4437 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(219, 68, 55, 0.4);
+        }
+
+        /* Facebook Button - Matching Website Theme with Custom Gradient */
+        .social-login-button.facebook {
+            background: linear-gradient(135deg, #3b5998 0%, #4c70ba 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 89, 152, 0.3);
+        }
+
+        .social-login-button.facebook:hover {
+            background: linear-gradient(135deg, #2d4373 0%, #3b5998 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 89, 152, 0.4);
+        }
+
+        /* Apple Button - Matching Website Theme with Stylish Gradient */
+        .social-login-button.apple {
+            background: linear-gradient(135deg, #000000 0%, #333333 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-login-button.apple:hover {
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Social Login Container */
+        .social-login-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300" id="main-header">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <!-- Logo Image -->
+                    <img src="image/h-logo.png" alt="Libaas Studio Logo" class="header-logo h-12 animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s">
+
+                    <span class="libaas-studio-text hidden md:block animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s">Libaas Studio</span> <!-- Applied new styles -->
+                </div>
+                
+              <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.3s">Home</a>
+                <a href="products.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.4s">Products</a>
+                <a href="about.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.5s">About</a>
+                <a href="contact.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.6s">Contact</a>
+              </nav>
+
+                
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleSearch()" class="text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.5s">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                    <button onclick="toggleAuth()" class="text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.6s">
+                        <i class="fas fa-user text-xl"></i>
+                    </button>
+                    <button onclick="toggleCart()" class="relative text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.7s">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700"> <!-- Removed animate-on-scroll -->
+                        <div id="hamburger-icon" class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div id="search-bar" class="hidden mt-4 transition-all duration-300 ease-in-out">
+                <div class="relative">
+                    <input type="text" placeholder="Search for suits..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a07b6b] shadow-sm">
+                    <button class="absolute right-3 top-2 text-gray-500 hover:text-[#a07b6b] transition duration-200">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="mobile-menu fixed inset-0 bg-white z-40 pt-16 px-4 md:hidden">
+  <div class="flex flex-col space-y-4 py-4">
+    <a href="index.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.2s">Home</a>
+    <a href="products.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.3s">Products</a>
+    <a href="about.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.4s">About</a>
+    <a href="contact.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.5s">Contact</a>
+    
+    <a href="#" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleAuth(); toggleMobileMenu()" data-animation="slideInRight" data-delay="0.6s">Login / Signup</a>
+    <a href="#" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleCart(); toggleMobileMenu()" data-animation="slideInRight" data-delay="0.7s">Cart (<span id="cart-count-mobile">0</span>)</a>
+  </div>
+</div>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-heading text-4xl font-bold text-center text-gray-800 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0s">Our Full Collection</h2>
+            
+            <!-- Category Filters -->
+            <div class="flex flex-wrap justify-center mb-12">
+                <button onclick="filterProducts('all')" class="category-filter active animate-on-scroll" data-animation="slideInRight" data-delay="0.1s">All</button>
+                <button onclick="filterProducts('formal')" class="category-filter animate-on-scroll" data-animation="slideInRight" data-delay="0.2s">Formal</button>
+                <button onclick="filterProducts('casual')" class="category-filter animate-on-scroll" data-animation="slideInRight" data-delay="0.3s">Casual</button>
+                <button onclick="filterProducts('bridal')" class="category-filter animate-on-scroll" data-animation="slideInRight" data-delay="0.4s">Bridal</button>
+                <button onclick="filterProducts('party')" class="category-filter animate-on-scroll" data-animation="slideInRight" data-delay="0.5s">Party Wear</button>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.1s">
+                    <h3 class="text-2xl font-bold mb-4">Libaas Studio</h3>
+                    <p class="text-gray-400">Premium ladies suits crafted with love and tradition.</p>
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s"><a href="index.html#home" class="hover:text-white transition duration-200">Home</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s"><a href="products.html" class="hover:text-white transition duration-200">Products</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s"><a href="index.html#about" class="hover:text-white transition duration-200">About</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s"><a href="index.html#contact" class="hover:text-white transition duration-200">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">
+                    <h4 class="text-lg font-semibold mb-4">Categories</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s"><a href="#" class="hover:text-white transition duration-200">Formal Suits</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s"><a href="#" class="hover:text-white transition duration-200">Casual Wear</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s"><a href="#" class="hover:text-white transition duration-200">Bridal Collection</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s"><a href="#" class="hover:text-white transition duration-200">Party Wear</a></li>
+                    </ul>
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.4s">
+                    <h4 class="text-lg font-semibold mb-4">Customer Service</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s"><a href="shipping.html" class="hover:text-white transition duration-200">Shipping Info</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s"><a href="return.html" class="hover:text-white transition duration-200">Returns</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s"><a href="sizeguide.html" class="hover:text-white transition duration-200">Size Guide</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s"><a href="faqs.html" class="hover:text-white transition duration-200">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.5s">
+                <p>© 2025 Libaas Studio | All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto **cart-modal-content**">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold">Your Shopping Cart</h3>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be added here -->
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-semibold">Total:</span>
+                    <span id="cart-total" class="text-xl font-bold text-[#a07b6b]">$0.00</span>
+                </div>
+                <button class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-3xl max-h-[90vh] overflow-y-auto product-modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 id="modal-title" class="text-3xl font-bold text-gray-800"></h3>
+                <button onclick="closeProductModal()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div class="product-modal-image">
+                    <img id="modal-image" src="" alt="" class="w-full h-auto rounded-lg shadow-lg object-cover">
+                </div>
+                <div class="product-modal-details flex flex-col justify-between h-full">
+                    <div>
+                        <!-- Added text-black class for description color -->
+                        <p id="modal-description" class="text-black text-lg leading-relaxed mb-6"></p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold text-[#a07b6b]" id="modal-price"></span>
+                        </div>
+                    </div>
+                    <button onclick="addToCartFromModal()" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md auth-modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="auth-title" class="text-2xl font-bold">Login</h3>
+                <button onclick="toggleAuth()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="login-form">
+                <form>
+                    <div class="mb-4">
+                        <input type="email" placeholder="Email" class="contact-input w-full">
+                    </div>
+                    <div class="mb-6">
+                        <input type="password" placeholder="Password" class="contact-input w-full">
+                    </div>
+                    <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Login</button>
+                </form>
+                <div class="my-6 text-center text-gray-500">Or continue with</div>
+                <div class="social-login-container">
+                    <button class="social-login-button google w-full">
+                        <i class="fab fa-google"></i> Continue with Google
+                    </button>
+                    <button class="social-login-button facebook w-full">
+                        <i class="fab fa-facebook-f"></i> Continue with Facebook
+                    </button>
+                    <button class="social-login-button apple w-full">
+                        <i class="fab fa-apple"></i> Continue with Apple
+                    </button>
+                </div>
+                <p class="text-center mt-4 text-gray-600">
+                    Don't have an account? 
+                    <button onclick="switchToSignup()" class="text-[#a07b6b] hover:underline transition duration-200">Sign up</button>
+                </p>
+            </div>
+            <div id="signup-form" class="hidden">
+                <form>
+                    <div class="mb-4">
+                        <input type="text" placeholder="Full Name" class="contact-input w-full">
+                    </div>
+                    <div class="mb-4">
+                        <input type="email" placeholder="Email" class="contact-input w-full">
+                    </div>
+                    <div class="mb-6">
+                        <input type="password" placeholder="Password" class="contact-input w-full">
+                    </div>
+                    <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Sign Up</button>
+                </form>
+                <div class="my-6 text-center text-gray-500">Or continue with</div>
+                <div class="social-login-container">
+                    <button class="social-login-button google w-full">
+                        <i class="fab fa-google"></i> Continue with Google
+                    </button>
+                    <button class="social-login-button facebook w-full">
+                        <i class="fab fa-facebook-f"></i> Continue with Facebook
+                    </button>
+                    <button class="social-login-button apple w-full">
+                        <i class="fab fa-apple"></i> Continue with Apple
+                    </button>
+                </div>
+                <p class="text-center mt-4 text-gray-600">
+                    Already have an account? 
+                    <button onclick="switchToLogin()" class="text-[#a07b6b] hover:underline transition duration-200">Login</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/97433795577?text=Hello%20Libaas%20Studio,%20I%27m%20interested%20in%20your%20suits!" class="whatsapp-button" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+const products = [
+  { id: 1, name: "Luxury Embroidered Lawn Suit – Rose Glow", price: 12.99, category: "formal", image: "image/1.jpg", alt: "Luxurious navy blue Pakistani formal suit with intricate silver embroidery and beadwork on the neckline and sleeves", description: "Exquisite lawn suit with delicate embroidery and chiffon dupatta, perfect for summer occasions." },
+  { id: 2, name: "Ocean Breeze Printed Lawn Suit", price: 11.49, category: "formal", image: "image/2.jpg", alt: "Elegant black formal Pakistani suit with gold embroidery and a modern silhouette", description: "A timeless black formal suit, perfect for evening events." },
+  { id: 3, name: "Emerald Green Formal Dress", price: 15.99, category: "formal", image: "image/3.jpg", alt: "Vibrant emerald green formal Pakistani suit with intricate silver detailing", description: "Stunning emerald green suit, ideal for grand celebrations." },
+  { id: 4, name: "Regal Blue Formal Ensemble", price: 14.25, category: "formal", image: "image/4.jpg", alt: "Royal blue formal Pakistani suit with heavy golden embroidery and traditional design", description: "A majestic blue suit, designed for a regal look." },
+  { id: 5, name: "Casual Comfort Cotton Suit", price: 10.99, category: "casual", image: "image/5.jpg", alt: "Light peach colored casual cotton Pakistani suit with minimal white embroidery and comfortable straight-cut design", description: "Comfortable cotton suit ideal for everyday wear with elegant simplicity." },
+  { id: 6, name: "Summer Breeze Casual Suit", price: 13.75, category: "casual", image: "image/6.jpg", alt: "Light blue casual Pakistani suit with delicate floral prints and breathable fabric", description: "Perfect for summer, this light and airy casual suit offers ultimate comfort." },
+  { id: 7, name: "Everyday Chic Casual Wear", price: 11.89, category: "casual", image: "image/7.jpg", alt: "Stylish grey casual Pakistani suit with simple embroidery and modern cut", description: "A versatile casual suit that combines comfort with contemporary style." },
+  { id: 8, name: "Floral Delight Casual Suit", price: 12.59, category: "casual", image: "image/8.jpg", alt: "White casual Pakistani suit with vibrant floral patterns and a relaxed fit", description: "Embrace the beauty of nature with this charming floral casual suit." },
+  { id: 9, name: "Bridal Dreams Collection", price: 16.99, category: "bridal", image: "image/9.jpg", alt: "Stunning red bridal Pakistani suit with heavy golden embroidery, sequins, mirror work and traditional patterns", description: "Stunning bridal ensemble with heavy embellishments and traditional craftsmanship." },
+  { id: 10, name: "Golden Glow Bridal Lehenga", price: 17.00, category: "bridal", image: "image/10.jpg", alt: "Luxurious golden bridal lehenga with intricate zardozi work and heavy dupatta", description: "A magnificent bridal lehenga designed to make you shine on your special day." },
+  { id: 11, name: "Ivory Elegance Bridal Gown", price: 15.49, category: "bridal", image: "image/11.jpg", alt: "Graceful ivory bridal gown with delicate silver embroidery and flowing silhouette", description: "An ethereal ivory gown, perfect for a sophisticated bridal look." },
+  { id: 12, name: "Crimson Charm Bridal Dress", price: 16.25, category: "bridal", image: "image/12.jpg", alt: "Deep crimson bridal dress with rich gold and maroon embroidery and traditional motifs", description: "A captivating crimson dress, embodying traditional bridal charm." },
+  { id: 13, name: "Party Glamour Suit", price: 13.25, category: "party", image: "image/13.jpg", alt: "Sparkly black party wear Pakistani suit with silver sequins and modern cut perfect for evening events", description: "Glamorous party wear with modern cuts and sparkling details." },
+  { id: 14, name: "Midnight Blue Party Dress", price: 12.75, category: "party", image: "image/14.jpg", alt: "Elegant midnight blue party wear Pakistani suit with subtle embellishments and a sleek design", description: "A sophisticated blue dress, ideal for any evening party." },
+  { id: 15, name: "Rose Gold Party Ensemble", price: 14.49, category: "party", image: "image/15.jpg", alt: "Chic rose gold party wear Pakistani suit with contemporary design and light embroidery", description: "Trendy rose gold outfit for a fashionable party look." },
+  { id: 16, name: "Vibrant Purple Party Suit", price: 13.99, category: "party", image: "image/16.jpg", alt: "Bold purple party wear Pakistani suit with unique patterns and a festive feel", description: "Stand out with this vibrant purple party suit, perfect for celebrations." },
+  { id: 17, name: "Pastel Dream Printed Lawn Suit", price: 11.75, category: "casual", image: "image/17.jpg", alt: "Light pastel printed Pakistani lawn suit with floral accents", description: "Light pastel printed lawn suit with floral accents, airy and chic summer wear." },
+  { id: 18, name: "Black Beauty Embroidered Chiffon Suit", price: 15.25, category: "formal", image: "image/18.jpg", alt: "Classic black chiffon embroidered Pakistani suit with golden detail", description: "Classic black chiffon embroidered suit with golden detail, ideal festive attire." },
+  { id: 19, name: "Coral Breeze Digital Lawn Suit", price: 12.49, category: "casual", image: "image/19.jpg", alt: "Vibrant coral Pakistani lawn suit with digital prints", description: "Vibrant coral lawn suit with digital prints, trendy and refreshing summer staple." },
+  { id: 20, name: "Emerald Green Luxury Chiffon Suit", price: 16.49, category: "formal", image: "image/20.jpg", alt: "Elegant emerald chiffon Pakistani suit with sequins and embroidery", description: "Elegant emerald chiffon with sequins and embroidery, designed for festive occasions." },
+  { id: 21, name: "Peach Glow Cotton Casual Suit", price: 10.99, category: "casual", image: "image/21.jpg", alt: "Simple peach cotton Pakistani suit with minimal detailing", description: "Simple peach cotton suit with minimal detailing, stylish everyday wardrobe pick." },
+  { id: 22, name: "Violet Grace Embroidered Lawn Suit", price: 14.15, category: "formal", image: "image/22.jpg", alt: "Elegant violet embroidered Pakistani lawn suit with chiffon dupatta", description: "Elegant violet embroidered lawn suit with chiffon dupatta, semi-formal fashion choice." },
+  { id: 23, name: "Floral Fantasy Printed Lawn Suit", price: 12.29, category: "casual", image: "image/23.jpg", alt: "Bright floral printed Pakistani lawn suit with soft dupatta", description: "Bright floral printed lawn suit with soft dupatta, perfect for summer freshness." },
+  { id: 24, name: "Gold Dust Party Chiffon Suit", price: 16.25, category: "party", image: "image/24.jpg", alt: "Golden chiffon Pakistani suit with intricate embroidery", description: "Golden chiffon suit with intricate embroidery, a glamorous choice for festive nights." },
+  { id: 25, name: "Modern Lines Digital Cotton Suit", price: 11.95, category: "casual", image: "image/25.jpg", alt: "Trendy digitally printed Pakistani cotton suit with geometric designs", description: "Trendy digitally printed cotton suit with geometric designs for modern chic style." },
+  { id: 26, name: "Lavender Bliss Embroidered Lawn Suit", price: 13.89, category: "formal", image: "image/26.jpg", alt: "Soft lavender embroidered Pakistani lawn suit with chiffon dupatta", description: "Soft lavender embroidered lawn with chiffon dupatta, a graceful outfit for summer." },
+  { id: 27, name: "Sapphire Glow Chiffon Embroidered Suit", price: 15.50, category: "formal", image: "image/27.jpg", alt: "Deep sapphire chiffon Pakistani suit with rich embroidery", description: "Deep sapphire chiffon outfit with rich embroidery, elegant for evening occasions." },
+  { id: 28, name: "Candy Pink Printed Lawn Suit", price: 11.25, category: "casual", image: "image/28.jpg", alt: "Playful pink printed Pakistani lawn suit with floral dupatta", description: "Playful pink printed lawn with floral dupatta, a cheerful summer essential." },
+  { id: 29, name: "Bridal Elegance Embroidered Net Suit", price: 17.00, category: "bridal", image: "image/29.jpg", alt: "Heavily embroidered bridal-style net Pakistani suit with sequins", description: "Heavily embroidered bridal-style net suit with sequins, perfect for wedding festivities." },
+  { id: 30, name: "Olive Green Cotton Casual Suit", price: 10.50, category: "casual", image: "image/30.jpg", alt: "Comfortable olive green Pakistani cotton suit with minimal prints", description: "Comfortable olive green cotton with minimal prints, everyday essential with style." },
+  { id: 31, name: "Burgundy Charm Embroidered Lawn Suit", price: 14.79, category: "formal", image: "image/31.jpg", alt: "Burgundy embroidered Pakistani lawn suit with chiffon dupatta", description: "Burgundy embroidered lawn suit with chiffon dupatta, graceful attire for festive evenings." },
+  { id: 32, name: "Fresh Meadow Printed Lawn Suit", price: 12.15, category: "casual", image: "image/32.jpg", alt: "Green floral printed Pakistani lawn suit with soft dupatta", description: "Green floral printed lawn with soft dupatta, a refreshing summer wardrobe pick." }
+];
+
+
+        let cart = [];
+        let currentFilter = 'all';
+
+        // Intersection Observer for scroll animations
+        const animateOnScrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const animation = element.dataset.animation;
+                    const delay = element.dataset.delay || '0s';
+
+                    element.style.animation = `${animation} 0.6s ease forwards ${delay}`;
+                    
+                    // Special handling for section heading underline animation
+                    if (element.classList.contains('section-heading')) {
+                        element.parentElement.classList.add('animate-heading');
+                    }
+
+                    // Special handling for price tag animation within product cards
+                    if (element.classList.contains('product-card')) {
+                        const priceTag = element.querySelector('.price-tag');
+                        if (priceTag) {
+                            // Ensure price tag animates after the card itself
+                            priceTag.style.animation = `scaleIn 0.3s ease forwards ${parseFloat(delay) + 0.6}s`;
+                        }
+                    }
+
+                    observer.unobserve(element); // Stop observing once animated
+                }
+            });
+        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCartFromLocalStorage(); // Load cart on page load
+            displayProducts(products);
+            updateCartUI();
+            
+            // Observe all elements with animate-on-scroll class
+            document.querySelectorAll('.animate-on-scroll').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+
+            // Observe dynamically added product cards
+            document.querySelectorAll('.product-card').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+
+            // Observe category filter buttons
+            document.querySelectorAll('.category-filter').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+
+            // Observe footer items for animation
+            document.querySelectorAll('.footer-item').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+            document.querySelectorAll('.footer-list-item').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+        });
+
+        // Function to save cart to localStorage
+        function saveCartToLocalStorage() {
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+        }
+
+        // Function to load cart from localStorage
+        function loadCartFromLocalStorage() {
+            const storedCart = localStorage.getItem('shoppingCart');
+            if (storedCart) {
+                cart = JSON.parse(storedCart);
+            }
+        }
+
+        function displayProducts(productsToShow) {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = ''; // Clear existing products
+            
+            productsToShow.forEach((product, index) => {
+                const delay = `${0.1 * index}s`; // Stagger animation delay
+                const productCard = `
+                    <div class="product-card animate-on-scroll" data-animation="fadeUpEnter" data-delay="${delay}">
+                        <a href="pdetail.html?id=${product.id}" class="relative overflow-hidden block">
+                            <img src="${product.image}" alt="${product.alt}" class="w-full h-64 object-cover rounded-t-lg shadow-md">
+                            <div class="price-tag animate-on-scroll" data-animation="scaleIn" data-delay="${parseFloat(delay) + 0.6}s"></div>
+                        </a>
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold mb-2 text-gray-800">${product.name}</h3>
+                            <p class="text-gray-600 text-sm mb-4">${product.description}</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xl font-bold text-[#a07b6b]">$${product.price.toFixed(2)}</span>
+                                <button type="button" onclick="event.stopPropagation(); addToCart(${product.id})" class="bg-[#a07b6b] text-white py-2 px-4 rounded-lg font-medium hover:bg-[#8a6a5c] transition duration-300">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += productCard;
+            });
+
+            // Re-observe newly added product cards for animation
+            document.querySelectorAll('#products-grid .product-card').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+        }
+
+        function filterProducts(category) {
+            currentFilter = category;
+            
+            // Update active state for category buttons
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(category)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
+            displayProducts(filteredProducts);
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            updateCartUI();
+            saveCartToLocalStorage(); // Save cart after adding
+            
+            // Animate cart count icon
+            const cartCount = document.getElementById('cart-count');
+            cartCount.classList.add('animate-bounce-once');
+            setTimeout(() => {
+                cartCount.classList.remove('animate-bounce-once');
+            }, 1000);
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartCountMobile = document.getElementById('cart-count-mobile');
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            if (cartCountMobile) {
+                cartCountMobile.textContent = totalItems;
+            }
+            
+            cartItems.innerHTML = ''; // Clear existing cart items
+            let total = 0;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-center text-gray-500 py-4">Your cart is empty</p>';
+            } else {
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                    cartItems.innerHTML += `
+                        <div class="flex items-center justify-between py-4 border-b last:border-b-0">
+                            <div class="flex items-center space-x-4">
+                                <img src="${item.image}" alt="${item.alt}" class="w-16 h-16 object-cover rounded">
+                                <div>
+                                    <h4 class="font-medium text-gray-800">${item.name}</h4>
+                                    <p class="text-sm text-gray-500">$${item.price.toFixed(2)}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="text-gray-500 hover:text-red-500">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="w-6 text-center">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="text-gray-500 hover:text-green-500">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 ml-2">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                    saveCartToLocalStorage(); // Save cart after updating quantity
+                }
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+            saveCartToLocalStorage(); // Save cart after removing item
+        }
+
+        // Generic modal toggle function with animation
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            let content; // Declare content here
+
+            // Select the correct inner content div based on modalId
+            if (modalId === 'cart-modal') {
+                content = modal.querySelector('.cart-modal-content');
+            } else if (modalId === 'auth-modal') {
+                content = modal.querySelector('.auth-modal-content');
+            } else if (modalId === 'product-modal') { // Added for product modal
+                content = modal.querySelector('.product-modal-content');
+            } else {
+                // Fallback if modalId is unexpected or uses a generic class
+                content = modal.querySelector('.transform'); 
+            }
+            
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                // Add a class to trigger the animation
+                setTimeout(() => {
+                    if (content) { // Ensure content is found before adding class
+                        content.classList.add('is-visible');
+                    }
+                }, 10);
+            } else {
+                // Remove the class to reverse the animation
+                if (content) { // Ensure content is found before removing class
+                    content.classList.remove('is-visible');
+                }
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 400); // Match this duration with the CSS transition duration
+            }
+        }
+
+        function toggleCart() {
+            toggleModal('cart-modal');
+            // Ensure cart UI is updated when the modal is opened
+            const cartModal = document.getElementById('cart-modal');
+            if (!cartModal.classList.contains('hidden')) { // Check if the modal is about to be shown
+                updateCartUI();
+            }
+        }
+
+        function toggleAuth() {
+            toggleModal('auth-modal');
+        }
+
+        function toggleSearch() {
+            const searchBar = document.getElementById('search-bar');
+            searchBar.classList.toggle('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+
+            mobileMenu.classList.toggle('open');
+            hamburgerIcon.classList.toggle('open');
+            
+            // Prevent body scrolling when mobile menu is open
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+
+            // Staggered animation for mobile menu items
+            if (mobileMenu.classList.contains('open')) {
+                mobileMenu.querySelectorAll('.mobile-menu-item').forEach((item, index) => {
+                    item.style.animation = `slideInRight 0.4s ease forwards ${0.1 * index + 0.1}s`;
+                });
+            } else {
+                // Reset animation properties when closing
+                mobileMenu.querySelectorAll('.mobile-menu-item').forEach(item => {
+                    item.style.animation = 'none';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(20px)';
+                });
+            }
+        }
+
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            const modal = document.getElementById('product-modal');
+            // The toggleModal function will handle the 'is-visible' class for product-modal-content
+            
+            document.getElementById('modal-title').textContent = product.name;
+            document.getElementById('modal-image').src = product.image;
+            document.getElementById('modal-image').alt = product.alt;
+            // Ensure the description is set and its color is black
+            document.getElementById('modal-description').textContent = product.description;
+            document.getElementById('modal-description').classList.add('text-black'); // Add class for black color
+            document.getElementById('modal-price').textContent = `$${product.price.toFixed(2)}`;
+            
+            modal.dataset.productId = productId;
+            
+            toggleModal('product-modal'); // Use toggleModal to open and animate
+        }
+
+        function closeProductModal() {
+            toggleModal('product-modal'); // Use toggleModal to close and animate
+        }
+
+        function addToCartFromModal() {
+            const modal = document.getElementById('product-modal');
+            const productId = parseInt(modal.dataset.productId);
+            addToCart(productId);
+            closeProductModal();
+        }
+
+        function switchToSignup() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('signup-form').classList.remove('hidden');
+            document.getElementById('auth-title').textContent = 'Sign Up';
+        }
+
+        function switchToLogin() {
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('auth-title').textContent = 'Login';
+        }
+
+        // Close modals/menus when clicking outside
+        window.onclick = function(event) {
+            const cartModal = document.getElementById('cart-modal');
+            const authModal = document.getElementById('auth-modal');
+            const productModal = document.getElementById('product-modal');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon'); // Get hamburger icon
+
+            // Check if the click is outside the modal content itself
+            // We need to check if the modal is visible first, then if the click is inside its content
+            const isClickInsideCartModalContent = cartModal && !cartModal.classList.contains('hidden') && cartModal.querySelector('.cart-modal-content').contains(event.target);
+            const isClickInsideAuthModalContent = authModal && !authModal.classList.contains('hidden') && authModal.querySelector('.auth-modal-content').contains(event.target);
+            const isClickInsideProductModalContent = productModal && !productModal.classList.contains('hidden') && productModal.querySelector('.product-modal-content').contains(event.target);
+
+
+            if (event.target === cartModal && !isClickInsideCartModalContent) {
+                toggleModal('cart-modal');
+            }
+            if (event.target === authModal && !isClickInsideAuthModalContent) {
+                toggleModal('auth-modal');
+            }
+            if (event.target === productModal && !isClickInsideProductModalContent) {
+                closeProductModal(); // Use closeProductModal for its specific animations
+            }
+            // Close mobile menu if click is outside the menu and not on the hamburger icon
+            if (mobileMenu.classList.contains('open') && !mobileMenu.contains(event.target) && !hamburgerIcon.contains(event.target)) {
+                toggleMobileMenu();
+            }
+        }
+
+        // Add bounce-once animation for cart icon
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce-once {
+                0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+                40% {transform: translateY(-10px);}
+                60% {transform: translateY(-5px);}
+            }
+            .animate-bounce-once {
+                animation: bounce-once 1s ease;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

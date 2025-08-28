@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap'); /* New font for a modern touch */
+
+
+        /* Base Styles */
+        body {
+            font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
+            background-color: #1a202c; /* Dark background */
+            color: #e2e8f0; /* Light text */
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Utility Classes */
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .p-4 { padding: 1rem; }
+        .md\:p-8 { /* For medium screens and up */ padding: 2rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .font-bold { font-weight: 700; }
+        .text-center { text-align: center; }
+        .mb-8 { margin-bottom: 2rem; }
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .lg\:grid-cols-2 { /* For large screens and up */ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .gap-8 { gap: 2rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .font-semibold { font-weight: 600; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .md\:flex-row { /* For medium screens and up */ flex-direction: row; }
+        .items-center { align-items: center; }
+        .md\:items-start { /* For medium screens and up */ align-items: flex-start; }
+        .gap-6 { gap: 1.5rem; }
+        .w-32 { width: 8rem; }
+        .h-32 { height: 8rem; }
+        .object-cover { object-fit: cover; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+        .flex-grow { flex-grow: 1; }
+        .text-xl { font-size: 1.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .text-gray-300 { color: #cbd5e0; }
+        .text-sm { font-size: 0.875rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .text-lg { font-size: 1.125rem; }
+        .my-6 { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .justify-between { justify-content: space-between; }
+        .mt-4 { margin-top: 1rem; }
+        .text-right { text-align: right; }
+        .space-y-4 > *:not(:last-child) { margin-bottom: 1rem; }
+        .lg\:col-span-2 { /* For large screens and up */ grid-column: span 2 / span 2; }
+        .flex-wrap { flex-wrap: wrap; }
+        .gap-4 { gap: 1rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .gap-2 { gap: 0.5rem; }
+        .mt-8 { margin-top: 2rem; }
+        .flex-row { flex-direction: row; }
+        .sm\:flex-row { /* For small screens and up */ flex-direction: row; }
+        .mr-2 { margin-right: 0.5rem; }
+        .hidden { display: none; }
+        .relative { position: relative; }
+        .fixed { position: fixed; }
+        .bottom-8 { bottom: 2rem; }
+        .left-1\/2 { left: 50%; }
+        .-translate-x-1\/2 { transform: translateX(-50%); }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .opacity-0 { opacity: 0; }
+        .opacity-100 { opacity: 1; }
+        .transition-opacity { transition-property: opacity; transition-duration: 300ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        .z-50 { z-index: 50; }
+
+
+        /* Custom Styles */
+
+        /* Gradient Text for Titles */
+        .gradient-text {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 5s ease infinite alternate; /* Added animation */
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08); /* Slightly transparent white */
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Added background transition */
+        }
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.01); /* More pronounced lift and slight scale */
+            box-shadow: 0 15px 45px 0 rgba(0, 0, 0, 0.55); /* Stronger shadow */
+            background: rgba(255, 255, 255, 0.12); /* Slightly more opaque on hover */
+        }
+
+        /* Input Fields */
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            color: #e2e8f0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .input-field::placeholder {
+            color: #a0aec0;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #e1a083;
+            box-shadow: 0 0 0 4px rgba(225, 160, 131, 0.4); /* Slightly larger shadow */
+            background: rgba(255, 255, 255, 0.15); /* Slightly lighter on focus */
+        }
+
+        /* Quantity Selector */
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .quantity-selector button {
+            background: rgba(255, 255, 255, 0.15);
+            color: #e2e8f0;
+            padding: 0.5rem 1rem;
+            font-size: 1.25rem;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease; /* Added transform */
+        }
+        .quantity-selector button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05); /* Slight scale on hover */
+        }
+        .quantity-selector input {
+            width: 60px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            -moz-appearance: textfield; /* Firefox */
+        }
+        .quantity-selector input::-webkit-outer-spin-button,
+        .quantity-selector input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Payment Chips */
+        .payment-chip {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2rem;
+            color: #e2e8f0;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease, transform 0.2s ease; /* Added transform */
+        }
+        .payment-chip:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #e1a083;
+            transform: translateY(-3px); /* Slight lift on hover */
+        }
+        .payment-chip.active {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            border-color: #e1a083;
+            box-shadow: 0 4px 15px rgba(225, 160, 131, 0.4);
+            transform: scale(1.02); /* Slight scale when active */
+        }
+
+        /* Action Buttons */
+        .action-button {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease, transform 0.2s ease; /* Added transform */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .primary-button {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(225, 160, 131, 0.4);
+        }
+        .primary-button:hover {
+            opacity: 0.95; /* Slightly less opacity change */
+            transform: translateY(-4px) scale(1.01); /* More pronounced lift */
+            box-shadow: 0 6px 20px rgba(225, 160, 131, 0.6); /* Stronger shadow on hover */
+        }
+        .secondary-button {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.25); /* More pronounced background change */
+            transform: translateY(-4px) scale(1.01); /* More pronounced lift */
+            border-color: #e1a083; /* Highlight border on hover */
+        }
+
+        /* Icon Button */
+        .icon-button {
+            background: transparent;
+            border: none;
+            color: #e2e8f0;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.2s ease; /* Added transform */
+        }
+        .icon-button:hover {
+            color: #e1a083;
+            transform: rotate(15deg) scale(1.1); /* Rotate and scale on hover */
+        }
+
+        /* Dashed Divider */
+        .dashed-divider {
+            border-top: 1px dashed rgba(255, 255, 255, 0.3);
+        }
+
+        /* Toast Notification Animation */
+        #toast {
+            animation: slideInFadeOut 3s forwards; /* Animation for toast */
+        }
+
+        @keyframes slideInFadeOut {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 50px); /* Start lower */
+            }
+            10% {
+                opacity: 1;
+                transform: translate(-50%, 0); /* Slide up */
+            }
+            90% {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -20px); /* Fade out and slight lift */
+            }
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 1.5rem;
+            }
+            .action-button {
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+            .md\:p-8 { padding: 1rem; } /* Override for smaller screens */
+            .md\:flex-row { flex-direction: column; }
+            .md\:items-start { align-items: center; }
+            .lg\:grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)); } /* Stack columns on smaller screens */
+            .lg\:col-span-2 { grid-column: span 1 / span 1; } /* Reset span for smaller screens */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <div class="container mx-auto p-4 md:p-8">
+        <h1 class="text-4xl font-bold text-center mb-8 gradient-text">SECURE CHECKOUT</h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Product Details & Quantity -->
+            <div class="glass-card">
+                <h2 class="text-2xl font-semibold mb-6">Product Details</h2>
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-6 mb-6">
+                    <img id="product-image" src="" alt="Product Image" class="w-32 h-32 object-cover rounded-lg shadow-md">
+                    <div class="flex-grow">
+                        <h3 id="product-name" class="text-xl font-bold mb-2"></h3>
+                        <p id="product-description" class="text-gray-300 text-sm mb-3"></p>
+                        <p class="text-lg font-semibold">Unit Price: <span id="unit-price">0.00</span> $</p>
+                    </div>
+                </div>
+                <div class="dashed-divider my-6"></div>
+                <div class="flex items-center justify-between">
+                    <label for="quantity" class="text-lg font-medium">Quantity:</label>
+                    <div class="quantity-selector">
+                        <button onclick="decreaseQuantity()">-</button>
+                        <input type="number" id="quantity" value="1" min="1" max="10">
+                        <button onclick="increaseQuantity()">+</button>
+                    </div>
+                </div>
+                <div class="text-right mt-4">
+                    <p class="text-xl font-bold">Subtotal: <span id="subtotal">0.00</span> $</p>
+                </div>
+            </div>
+
+            <!-- Customer Information -->
+            <div class="glass-card">
+                <h2 class="text-2xl font-semibold mb-6">Customer Information</h2>
+                <div class="space-y-4">
+                    <input type="text" id="fullName" placeholder="Full Name" class="input-field" required>
+                    <input type="text" id="fullAddress" placeholder="Full Address" class="input-field" required>
+                    <input type="tel" id="phoneNumber" placeholder="Phone Number (e.g., +1234567890)" class="input-field" required>
+                    <input type="tel" id="extraPhoneNumber" placeholder="Extra Phone Number (Optional)" class="input-field">
+                    <input type="email" id="email" placeholder="Email (Optional)" class="input-field">
+                </div>
+            </div>
+
+            <!-- Payment Options -->
+            <div class="glass-card lg:col-span-2">
+                <h2 class="text-2xl font-semibold mb-6">Payment Method</h2>
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <button class="payment-chip active" data-method="paypal">PayPal</button>
+                    <button class="payment-chip" data-method="card">Visa/MasterCard</button>
+                    <button class="payment-chip" data-method="bank">Bank Transfer</button>
+                </div>
+
+                <div id="payment-panels" class="space-y-4">
+                    <!-- PayPal Panel -->
+                    <div id="paypal-panel" class="payment-panel">
+                        <input type="email" id="paypalEmail" placeholder="PayPal Email" class="input-field" required>
+                    </div>
+                    <!-- Card Panel -->
+                    <div id="card-panel" class="payment-panel hidden">
+                        <input type="text" id="cardNumber" placeholder="Card Number" class="input-field" required>
+                        <input type="text" id="cardName" placeholder="Name on Card" class="input-field" required>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" id="cardExpiry" placeholder="MM/YY" class="input-field" required>
+                            <input type="text" id="cardCVV" placeholder="CVV" class="input-field" required>
+                        </div>
+                    </div>
+                    <!-- Bank Transfer Panel -->
+                    <div id="bank-panel" class="payment-panel hidden">
+                        <input type="text" id="bankName" placeholder="Bank Name" class="input-field" required>
+                        <input type="text" id="accountTitle" placeholder="Account Title" class="input-field" required>
+                        <input type="text" id="iban" placeholder="IBAN/Account Number" class="input-field" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary & Actions -->
+            <div class="glass-card lg:col-span-2">
+                <h2 class="text-2xl font-semibold mb-6">Order Summary</h2>
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-medium">Order Number:</span>
+                    <div class="flex items-center gap-2">
+                        <span id="order-number" class="text-xl font-bold">ORD-YYYYMMDD-ABCDE</span>
+                        <button onclick="generateOrderNumber()" class="icon-button" title="Generate New Order Number">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="dashed-divider my-6"></div>
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-medium">Total Amount:</span>
+                    <span id="total-amount" class="text-2xl font-bold gradient-text">0.00 $</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                    <button onclick="copySummary()" class="action-button secondary-button">
+                        <i class="fas fa-copy mr-2"></i> Copy Summary
+                    </button>
+                    <button onclick="placeOrder()" class="action-button primary-button">
+                        <i class="fas fa-check-circle mr-2"></i> Place Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg opacity-0 transition-opacity duration-300 z-50">
+        Message goes here
+    </div>
+
+    <script>
+        let productData = {};
+        let selectedPaymentMethod = 'paypal'; // Default payment method
+
+        // Utility function for toast notifications
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            // Reset animation by removing and re-adding the class
+            toast.classList.remove('opacity-100', 'opacity-0');
+            toast.style.animation = 'none'; // Temporarily remove animation
+            void toast.offsetWidth; // Trigger reflow
+            toast.style.animation = null; // Re-enable animation
+
+            toast.classList.add('opacity-100'); // Start visible for animation
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0');
+            }, duration);
+        }
+
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // 1. Pull product data from localStorage or URL params
+        function loadProductData() {
+            const storedItem = localStorage.getItem('buyNowItem');
+            if (storedItem) {
+                try {
+                    productData = JSON.parse(storedItem);
+                    console.log("Product data loaded from localStorage:", productData);
+                } catch (e) {
+                    console.error("Error parsing buyNowItem from localStorage:", e);
+                    productData = {}; // Fallback to empty if parsing fails
+                }
+            }
+
+            // Fallback to URL parameters if localStorage is empty or invalid
+            if (!productData || Object.keys(productData).length === 0 || !productData.name) { // Added !productData.name check
+                productData = {
+                    id: getUrlParameter('id') || 'N/A',
+                    name: getUrlParameter('name') || 'Default Product',
+                    price: parseFloat(getUrlParameter('price')) || 0.00, // Price is now in dollars
+                    img: getUrlParameter('img') || 'https://via.placeholder.com/150',
+                    desc: getUrlParameter('desc') || 'A wonderful product with great features.'
+                };
+                console.log("Product data loaded from URL parameters:", productData);
+            }
+
+            // Update UI with product data
+            document.getElementById('product-image').src = productData.img;
+            document.getElementById('product-image').alt = productData.name;
+            document.getElementById('product-name').textContent = productData.name;
+            document.getElementById('product-description').textContent = productData.desc;
+            document.getElementById('unit-price').textContent = productData.price.toFixed(2);
+            
+            // Set the quantity input value from stored data, or default to 1
+            document.getElementById('quantity').value = productData.quantity || 1;
+
+
+            updateSubtotal(); // Calculate initial subtotal
+            generateOrderNumber(); // Generate initial order number
+        }
+
+        // 2. Quantity input and auto-calculated subtotal
+        function updateSubtotal() {
+            const quantityInput = document.getElementById('quantity');
+            let quantity = parseInt(quantityInput.value);
+
+            // Ensure quantity is within bounds
+            if (isNaN(quantity) || quantity < 1) {
+                quantity = 1;
+            } else if (quantity > 10) {
+                quantity = 10;
+            }
+            quantityInput.value = quantity; // Update input field with corrected value
+
+            const unitPrice = productData.price;
+            const subtotal = quantity * unitPrice;
+
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('total-amount').textContent = subtotal.toFixed(2) + ' $'; // Changed to $
+        }
+
+        function increaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            let quantity = parseInt(quantityInput.value);
+            if (quantity < 10) { // Max quantity limit
+                quantityInput.value = quantity + 1;
+                updateSubtotal();
+            }
+        }
+
+        function decreaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            let quantity = parseInt(quantityInput.value);
+            if (quantity > 1) { // Min quantity limit
+                quantityInput.value = quantity - 1;
+                updateSubtotal();
+            }
+        }
+
+        // 3. Generate and regenerate order number
+        function generateOrderNumber() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const randomChars = Math.random().toString(36).substring(2, 7).toUpperCase(); // 5 random chars
+            const orderNum = `ORD-${year}${month}${day}-${randomChars}`;
+            document.getElementById('order-number').textContent = orderNum;
+        }
+
+        // 5. Payment options as selectable chips with panels
+        function setupPaymentMethodSwitching() {
+            const paymentChips = document.querySelectorAll('.payment-chip');
+            const paymentPanels = document.querySelectorAll('.payment-panel');
+
+            paymentChips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    // Deactivate all chips and hide all panels
+                    paymentChips.forEach(c => c.classList.remove('active'));
+                    paymentPanels.forEach(p => p.classList.add('hidden'));
+
+                    // Activate clicked chip and show corresponding panel
+                    chip.classList.add('active');
+                    selectedPaymentMethod = chip.dataset.method;
+                    document.getElementById(`${selectedPaymentMethod}-panel`).classList.remove('hidden');
+                });
+            });
+        }
+
+        // 6. "Copy Summary" button
+        function copySummary() {
+            const orderNumber = document.getElementById('order-number').textContent;
+            const productName = document.getElementById('product-name').textContent;
+            const quantity = document.getElementById('quantity').value;
+            const unitPrice = productData.price.toFixed(2);
+            const subtotal = document.getElementById('subtotal').textContent;
+            const totalAmount = document.getElementById('total-amount').textContent;
+
+            const fullName = document.getElementById('fullName').value;
+            const fullAddress = document.getElementById('fullAddress').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const extraPhoneNumber = document.getElementById('extraPhoneNumber').value;
+            const email = document.getElementById('email').value;
+
+            let paymentDetails = "";
+            if (selectedPaymentMethod === 'paypal') {
+                paymentDetails = `PayPal Email: ${document.getElementById('paypalEmail').value}`;
+            } else if (selectedPaymentMethod === 'card') {
+                paymentDetails = `Card Number: ${document.getElementById('cardNumber').value}\n` +
+                                 `Name on Card: ${document.getElementById('cardName').value}\n` +
+                                 `Expiry: ${document.getElementById('cardExpiry').value}\n` +
+                                 `CVV: ${document.getElementById('cardCVV').value}`;
+            } else if (selectedPaymentMethod === 'bank') {
+                paymentDetails = `Bank Name: ${document.getElementById('bankName').value}\n` +
+                                 `Account Title: ${document.getElementById('accountTitle').value}\n` +
+                                 `IBAN/Account: ${document.getElementById('iban').value}`;
+            }
+
+            const summary = `--- Order Summary ---\n` +
+                            `Order Number: ${orderNumber}\n\n` +
+                            `Product: ${productName}\n` +
+                            `Unit Price: ${unitPrice} $\n` + // Changed to $
+                            `Quantity: ${quantity}\n` +
+                            `Subtotal: ${subtotal}\n\n` + // Subtotal already has $
+                            `Customer Information:\n` +
+                            `Full Name: ${fullName}\n` +
+                            `Full Address: ${fullAddress}\n` +
+                            `Phone: ${phoneNumber}\n` +
+                            (extraPhoneNumber ? `Extra Phone: ${extraPhoneNumber}\n` : '') +
+                            (email ? `Email: ${email}\n` : '') +
+                            `\nPayment Method: ${selectedPaymentMethod.toUpperCase()}\n` +
+                            `${paymentDetails}\n\n` +
+                            `Total Amount: ${totalAmount}\n` + // Total amount already has $
+                            `--------------------`;
+
+            navigator.clipboard.writeText(summary)
+                .then(() => showToast('Order summary copied to clipboard!'))
+                .catch(err => showToast('Failed to copy summary.', 5000));
+        }
+
+        // 6. "Place Order" button with validation
+        function placeOrder() {
+            // Basic validation for required fields
+            const fullName = document.getElementById('fullName').value;
+            const fullAddress = document.getElementById('fullAddress').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+
+            if (!fullName || !fullAddress || !phoneNumber) {
+                showToast('Please fill in all required customer information fields.', 4000);
+                return;
+            }
+
+            // Payment method specific validation
+            let paymentValid = true;
+            if (selectedPaymentMethod === 'paypal') {
+                const paypalEmail = document.getElementById('paypalEmail').value;
+                if (!paypalEmail || !paypalEmail.includes('@')) {
+                    showToast('Please enter a valid PayPal email.', 4000);
+                    paymentValid = false;
+                }
+            } else if (selectedPaymentMethod === 'card') {
+                const cardNumber = document.getElementById('cardNumber').value;
+                const cardName = document.getElementById('cardName').value;
+                const cardExpiry = document.getElementById('cardExpiry').value;
+                const cardCVV = document.getElementById('cardCVV').value;
+                if (!cardNumber || !cardName || !cardExpiry || !cardCVV) {
+                    showToast('Please fill in all required card details.', 4000);
+                    paymentValid = false;
+                }
+            } else if (selectedPaymentMethod === 'bank') {
+                const bankName = document.getElementById('bankName').value;
+                const accountTitle = document.getElementById('accountTitle').value;
+                const iban = document.getElementById('iban').value;
+                if (!bankName || !accountTitle || !iban) {
+                    showToast('Please fill in all required bank transfer details.', 4000);
+                    paymentValid = false;
+                }
+            }
+
+            if (!paymentValid) {
+                return;
+            }
+
+            // If all validations pass, show demo alert
+            const orderNumber = document.getElementById('order-number').textContent;
+            const totalAmount = document.getElementById('total-amount').textContent;
+            alert(`DEMO ORDER PLACED!\n\nOrder Number: ${orderNumber}\nTotal: ${totalAmount}\n\n(This is a demo. No real transaction occurred.)`);
+            showToast('Order placed successfully! (Demo)', 5000);
+
+            // In a real application, you would send this data to a backend server
+            // and integrate with a payment gateway.
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProductData();
+            setupPaymentMethodSwitching();
+
+            // Add event listener for quantity input changes
+            document.getElementById('quantity').addEventListener('change', updateSubtotal);
+            document.getElementById('quantity').addEventListener('keyup', updateSubtotal); // For real-time updates
+        });
+    </script>
+</body>
+</html>

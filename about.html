@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Libaas Studio</title> <!-- Title updated -->
+    <link rel="icon" type="image/png" href="image/favicon.jpg"> <!-- Favicon added -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap'); /* Added for stylish font */
+
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Updated Gradient Backgrounds and Text */
+        .gradient-bg {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Enhanced Product Card */
+        .product-card {
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            position: relative;
+            /* Initial state for animation */
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            /* Updated Product Card Hover Effect */
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-10px) !important; /* Added !important to override animation transform */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+        .product-card img {
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+        .product-card:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.05);
+        }
+
+        /* Price Tag */
+        .price-tag {
+            /* Removed background, color, padding, border-radius, font-weight, font-size, box-shadow */
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 2;
+            /* Initial state for animation */
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        /* Updated Category Filters */
+        .category-filter {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #a07b6b; /* Changed from #a78bfa */
+            color: #a07b6b; /* Changed from #8b5cf6 */
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            margin: 0 8px 8px 0;
+            /* Initial state for animation */
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        .category-filter:hover {
+            background: #f5f0ed; /* A lighter shade of the new colors */
+            transform: translateY(-3px) !important; /* Added !important to override animation transform */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .category-filter.active {
+            /* Updated Category Filter Active State */
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            color: white;
+            border-color: transparent;
+            /* Updated Category Filter Active Shadow */
+            box-shadow: 0 4px 6px rgba(225, 160, 131, 0.5); /* Adjusted shadow to match new gradient start color */
+        }
+
+        /* Hero Section */
+        .hero-overlay {
+            background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4));
+        }
+        .hero-button {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            /* Updated Hero Button Color */
+            color: #a07b6b; /* Changed from #764ba2 */
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            /* Initial state for animation */
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .hero-button:hover {
+            transform: translateY(-5px) scale(1.05) !important; /* Added !important to override animation transform */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        .hero-button:hover::before {
+            left: 100%;
+        }
+
+        /* Section Headings */
+        .section-heading {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 40px;
+            /* Initial state for animation */
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; /* Initial width for animation */
+            height: 3px;
+            /* Updated Section Heading Underline */
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            border-radius: 3px;
+            transition: width 0.6s ease 0.3s; /* Transition for width */
+        }
+        /* Class to trigger heading underline animation */
+        .animate-heading .section-heading::after {
+            width: 80px;
+        }
+
+        /* Feature Card */
+        .feature-card {
+            transition: all 0.4s ease;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            /* Initial state for animation */
+            transform: translateY(30px);
+            opacity: 0;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px) !important; /* Added !important to override animation transform */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card img {
+            transition: transform 0.5s ease;
+        }
+        .feature-card:hover img {
+            transform: scale(1.1);
+        }
+        .feature-card .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover .overlay {
+            transform: translateY(0);
+        }
+
+        /* Contact Form */
+        .contact-input {
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            /* Initial state for animation */
+            transform: translateY(10px);
+            opacity: 0;
+        }
+        .contact-input:focus {
+            /* Updated Contact Input Focus */
+            border-color: #a07b6b; /* Changed from #a78bfa */
+            box-shadow: 0 0 0 3px rgba(160, 123, 107, 0.2); /* Adjusted shadow to match new border color */
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            z-index: 100;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite, bounceIn 0.8s ease forwards 1s; /* Added bounceIn animation */
+        }
+        .whatsapp-button:hover {
+            transform: scale(1.1) !important; /* Added !important to override animation transform */
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Header Styles */
+        .header-logo {
+            height: 50px;
+            transition: transform 0.3s ease;
+            /* Initial state for animation */
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        .header-logo:hover {
+            transform: scale(1.05) !important; /* Added !important to override animation transform */
+        }
+        .nav-link {
+            position: relative;
+            padding: 8px 0;
+            /* Initial state for animation */
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            /* Updated Navigation Link Hover Effect */
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Animations */
+        /* General fade in from bottom */
+        @keyframes fadeUpEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* General fade in from top */
+        @keyframes fadeDownEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* General slide in from left */
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        /* General slide in from right */
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        /* General scale in */
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        /* Bounce in for elements like WhatsApp button */
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Specific animation classes for elements */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        .mobile-menu-item {
+            transition: all 0.3s ease;
+            /* Initial state for animation */
+            transform: translateX(20px);
+            opacity: 0;
+        }
+        .mobile-menu-item:hover {
+            /* Updated Mobile Menu Item Hover */
+            background: rgba(160, 123, 107, 0.1); /* A lighter shade of the new colors */
+            padding-left: 25px;
+        }
+
+        /* Libaas Studio Text Styling */
+        .libaas-studio-text {
+            font-family: 'Great Vibes', cursive; /* Stylish font */
+            font-size: 2.5rem; /* Larger size */
+            /* Updated Libaas Studio Text Gradient */
+            background: linear-gradient(45deg, #e1a083, #a07b6b); /* Changed from #764ba2 */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Initial state for animation */
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+
+        /* Hamburger Icon Styles */
+        .hamburger-icon {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+            /* MODIFIED: Ensure hamburger icon is visible by default */
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #000000; /* Changed to black */
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-icon.open span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+        }
+
+        .hamburger-icon.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-icon.open span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+        }
+
+        /* Product Modal Specific Styles and Animations */
+        .product-modal-content {
+            transform: scale(0.95) translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .product-modal-content.is-visible {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .product-modal-image {
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        .product-modal-content.is-visible .product-modal-image {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .product-modal-details > * {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(1) { transition-delay: 0.1s; }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(2) { transition-delay: 0.2s; }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(3) { transition-delay: 0.3s; }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(4) { transition-delay: 0.4s; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300" id="main-header">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <!-- Logo Image -->
+                    <img src="image/h-logo.png" alt="Libaas Studio Logo" class="header-logo animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s">
+
+                    <span class="libaas-studio-text hidden md:block animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s">Libaas Studio</span> <!-- Applied new styles -->
+                </div>
+                
+              <nav class="hidden md:flex space-x-8">
+  <a href="index.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.3s">Home</a>
+  <a href="products.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.4s">Products</a>
+  <a href="about.html" class="nav-link text-[#a07b6b] font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.5s">About</a> <!-- Active link -->
+  <a href="contact.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.6s">Contact</a>
+</nav>
+
+                
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleSearch()" class="text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.5s">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                    <button onclick="toggleAuth()" class="text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.6s">
+                        <i class="fas fa-user text-xl"></i>
+                    </button>
+                    <!-- Replaced Shopping Cart with Home Icon -->
+                    <a href="index.html" class="text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.7s">
+                        <i class="fas fa-home text-xl"></i>
+                    </a>
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700"> 
+                        <!-- MODIFIED: Removed data-animation and data-delay -->
+                        <div id="hamburger-icon" class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div id="search-bar" class="hidden mt-4 transition-all duration-300 ease-in-out">
+                <div class="relative">
+                    <input type="text" placeholder="Search for suits..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a07b6b] shadow-sm">
+                    <button class="absolute right-3 top-2 text-gray-500 hover:text-[#a07b6b] transition duration-200">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="mobile-menu fixed inset-0 bg-white z-40 pt-16 px-4 md:hidden">
+  <div class="flex flex-col space-y-4 py-4">
+    <a href="index.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.2s">Home</a>
+    <a href="products.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.3s">Products</a>
+    <a href="about.html" class="mobile-menu-item py-3 px-4 rounded-lg text-[#a07b6b] font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.4s">About</a> <!-- Active link -->
+    <a href="contact.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.5s">Contact</a>
+    
+    <a href="login.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.6s">Login / Signup</a>
+    <a href="#" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleCart(); toggleMobileMenu()" data-animation="slideInRight" data-delay="0.7s">Cart (<span id="cart-count-mobile">0</span>)</a>
+  </div>
+</div>
+
+    <!-- Hero Section -->
+  <section class="bg-center bg-no-repeat bg-cover py-20 md:py-28" 
+         style="background-image: url('image/fbbaner.jpg'); height: 600px;">
+    <div class="container mx-auto px-6 text-center">
+        <!-- Text removed -->
+    </div>
+</section>
+
+
+    <!-- About Us -->
+    <section class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
+            <div class="about-img-container w-full md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                <img src="image/favicon.jpg" alt="Modern office space with collaborative team working on digital projects" 
+                     class="rounded-lg shadow-lg w-full">
+            </div>
+            <div class="w-full md:w-1/2">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Our Story</h2>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                   Founded in 2015, Libaas Studio began with a passion for creating elegant ladies’ suits that celebrate tradition with a modern touch. Today, we are proud to be a trusted name in fashion, offering timeless designs that bring style and confidence to every woman.
+                </p>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    Our mission is simple: to design elegant, high-quality ladies’ suits that combine timeless tradition with modern style, while ensuring comfort, confidence, and lasting value for every customer.
+                </p>
+                <button class="mt-4 px-8 py-3 bg-[#a07b6b] text-white rounded-lg hover:bg-[#8a6a5c] transition transform hover:-translate-y-1">
+                    Learn More
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-16 md:py-24 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Meet Our Team</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Team Member 1 -->
+                <div class="team-card bg-white rounded-xl shadow-md overflow-hidden transition duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d727b7fb-9875-452d-82c4-5116227631b4.png" alt="Sarah Johnson, CEO - professional portrait of a confident female executive" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800">Sarah Johnson</h3>
+                        <p class="text-[#a07b6b] mb-4">CEO & Founder</p>
+                        <p class="text-gray-600">Visionary leader with 15+ years in tech industry</p>
+                    </div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="team-card bg-white rounded-xl shadow-md overflow-hidden transition duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7761fda2-54ee-4e6c-99b6-3e8300574827.png" alt="Michael Chen, CTO - smiling asian male engineer reviewing code on laptop" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800">Michael Chen</h3>
+                        <p class="text-[#a07b6b] mb-4">Chief Technology Officer</p>
+                        <p class="text-gray-600">Tech enthusiast passionate about scalable solutions</p>
+                    </div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="team-card bg-white rounded-xl shadow-md overflow-hidden transition duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-85cc-36bccacb97df.png" alt="Emma Rodriguez, Design Lead - creative professional working on a digital tablet" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800">Emma Rodriguez</h3>
+                        <p class="text-[#a07b6b] mb-4">Design Lead</p>
+                        <p class="text-gray-600">Transforming complex ideas into beautiful experiences</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.1s">
+                    <h3 class="text-2xl font-bold mb-4">Libaas Studio</h3>
+                    <p class="text-gray-400">Premium ladies suits crafted with love and tradition.</p>
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                  <ul class="space-y-2 text-gray-400">
+  <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s">
+    <a href="index.html" class="hover:text-white transition duration-200">Home</a>
+  </li>
+  <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s">
+    <a href="products.html" class="hover:text-white transition duration-200">Products</a>
+  </li>
+  <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s">
+    <a href="about.html" class="hover:text-white transition duration-200">About</a>
+  </li>
+  <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s">
+    <a href="contact.html" class="hover:text-white transition duration-200">Contact</a>
+  </li>
+</ul>
+
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">
+                    <h4 class="text-lg font-semibold mb-4">Categories</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s"><a href="#products" onclick="filterProducts('formal');" class="hover:text-white transition duration-200">Formal Suits</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s"><a href="#products" onclick="filterProducts('casual');" class="hover:text-white transition duration-200">Casual Wear</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s"><a href="#products" onclick="filterProducts('bridal');" class="hover:text-white transition duration-200">Bridal Collection</a></li>
+                        <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s"><a href="#products" onclick="filterProducts('party');" class="hover:text-white transition duration-200">Party Wear</a></li>
+                    </ul>
+                </div>
+                <div class="footer-item animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.4s">
+                    <h4 class="text-lg font-semibold mb-4">Customer Service</h4>
+                  <ul class="space-y-2 text-gray-400">
+  <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s">
+    <a href="shipping.html" class="hover:text-white transition duration-200">Shipping Info</a>
+  </li>
+  <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s">
+    <a href="returns.html" class="hover:text-white transition duration-200">Returns</a>
+  </li>
+  <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s">
+    <a href="size-guide.html" class="hover:text-white transition duration-200">Size Guide</a>
+  </li>
+  <li class="footer-list-item animate-on-scroll" data-animation="slideInLeft" data-delay="0.5s">
+    <a href="faq.html" class="hover:text-white transition duration-200">FAQ</a>
+  </li>
+</ul>
+
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.5s">
+                <p>© 2025 Libaas Studio | All Rights Reserved/p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold">Your Shopping Cart</h3>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be added here -->
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-semibold">Total:</span>
+                    <span id="cart-total" class="text-xl font-bold text-[#a07b6b]">$0.00</span>
+                </div>
+                <button class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-3xl max-h-[90vh] overflow-y-auto product-modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 id="modal-title" class="text-3xl font-bold text-gray-800"></h3>
+                <button onclick="closeProductModal()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div class="product-modal-image">
+                    <img id="modal-image" src="" alt="" class="w-full h-auto rounded-lg shadow-lg object-cover">
+                </div>
+                <div class="product-modal-details flex flex-col justify-between h-full">
+                    <div>
+                        <p id="modal-description" class="text-gray-700 text-lg leading-relaxed mb-6"></p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold text-[#a07b6b]" id="modal-price"></span>
+                        </div>
+                    </div>
+                    <button onclick="addToCartFromModal()" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md transform transition-all duration-300 scale-95 opacity-0">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="auth-title" class="text-2xl font-bold">Login</h3>
+                <button onclick="toggleAuth()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="login-form">
+                <form>
+                    <div class="mb-4">
+                        <input type="email" placeholder="Email" class="contact-input">
+                    </div>
+                    <div class="mb-6">
+                        <input type="password" placeholder="Password" class="contact-input">
+                    </div>
+                    <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Login</button>
+                </form>
+                <p class="text-center mt-4 text-gray-600">
+                    Don't have an account? 
+                    <button onclick="switchToSignup()" class="text-[#a07b6b] hover:underline transition duration-200">Sign up</button>
+                </p>
+            </div>
+            <div id="signup-form" class="hidden">
+                <form>
+                    <div class="mb-4">
+                        <input type="text" placeholder="Full Name" class="contact-input">
+                    </div>
+                    <div class="mb-4">
+                        <input type="email" placeholder="Email" class="contact-input">
+                    </div>
+                    <div class="mb-6">
+                        <input type="password" placeholder="Password" class="contact-input">
+                    </div>
+                    <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Sign Up</button>
+                </form>
+                <p class="text-center mt-4 text-gray-600">
+                    Already have an account? 
+                    <button onclick="switchToLogin()" class="text-[#a07b6b] hover:underline transition duration-200">Login</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/97433795577?text=Hello%20Libaas%20Studio,%20I%27m%20interested%20in%20your%20suits!" class="whatsapp-button" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Product data (This data is not directly used in about.html but is needed for the copied JS functions)
+        const products = [
+            {
+                id: 1,
+                name: "Royal Elegance Formal Suit",
+                price: 299.99,
+                category: "formal",
+                image: "image/1.jpg",
+                alt: "Luxurious navy blue Pakistani formal suit with intricate silver embroidery and beadwork on the neckline and sleeves",
+                description: "Exquisite formal suit with intricate embroidery perfect for special occasions."
+            },
+            {
+                id: 2,
+                name: "Classic Black Formal Suit",
+                price: 349.99,
+                category: "formal",
+                image: "image/2.jpg",
+                alt: "Elegant black formal Pakistani suit with gold embroidery and a modern silhouette",
+                description: "A timeless black formal suit, perfect for evening events."
+            },
+            {
+                id: 3,
+                name: "Emerald Green Formal Dress",
+                price: 319.99,
+                category: "formal",
+                image: "image/3.jpg",
+                alt: "Vibrant emerald green formal Pakistani suit with intricate silver detailing",
+                description: "Stunning emerald green suit, ideal for grand celebrations."
+            },
+            {
+                id: 4,
+                name: "Regal Blue Formal Ensemble",
+                price: 379.99,
+                category: "formal",
+                image: "image/4.jpg",
+                alt: "Royal blue formal Pakistani suit with heavy golden embroidery and traditional design",
+                description: "A majestic blue suit, designed for a regal look."
+            },
+            {
+                id: 5,
+                name: "Casual Comfort Cotton Suit",
+                price: 149.99,
+                category: "casual",
+                image: "image/5.jpg",
+                alt: "Light peach colored casual cotton Pakistani suit with minimal white embroidery and comfortable straight-cut design",
+                description: "Comfortable cotton suit ideal for everyday wear with elegant simplicity."
+            },
+            {
+                id: 6,
+                name: "Summer Breeze Casual Suit",
+                price: 129.99,
+                category: "casual",
+                image: "image/6.jpg",
+                alt: "Light blue casual Pakistani suit with delicate floral prints and breathable fabric",
+                description: "Perfect for summer, this light and airy casual suit offers ultimate comfort."
+            },
+            {
+                id: 7,
+                name: "Everyday Chic Casual Wear",
+                price: 159.99,
+                category: "casual",
+                image: "image/7.jpg",
+                alt: "Stylish grey casual Pakistani suit with simple embroidery and modern cut",
+                description: "A versatile casual suit that combines comfort with contemporary style."
+            },
+            {
+                id: 8,
+                name: "Floral Delight Casual Suit",
+                price: 139.99,
+                category: "casual",
+                image: "image/8.jpg",
+                alt: "White casual Pakistani suit with vibrant floral patterns and a relaxed fit",
+                description: "Embrace the beauty of nature with this charming floral casual suit."
+            },
+            {
+                id: 9,
+                name: "Bridal Dreams Collection",
+                price: 899.99,
+                category: "bridal",
+                image: "image/9.jpg",
+                alt: "Stunning red bridal Pakistani suit with heavy golden embroidery, sequins, mirror work and traditional patterns",
+                description: "Stunning bridal ensemble with heavy embellishments and traditional craftsmanship."
+            },
+            {
+                id: 10,
+                name: "Golden Glow Bridal Lehenga",
+                price: 1199.99,
+                category: "bridal",
+                image: "image/10.jpg",
+                alt: "Luxurious golden bridal lehenga with intricate zardozi work and heavy dupatta",
+                description: "A magnificent bridal lehenga designed to make you shine on your special day."
+            },
+            {
+                id: 11,
+                name: "Ivory Elegance Bridal Gown",
+                price: 999.99,
+                category: "bridal",
+                image: "image/11.jpg",
+                alt: "Graceful ivory bridal gown with delicate silver embroidery and flowing silhouette",
+                description: "An ethereal ivory gown, perfect for a sophisticated bridal look."
+            },
+            {
+                id: 12,
+                name: "Crimson Charm Bridal Dress",
+                price: 1049.99,
+                category: "bridal",
+                image: "image/12.jpg",
+                alt: "Deep crimson bridal dress with rich gold and maroon embroidery and traditional motifs",
+                description: "A captivating crimson dress, embodying traditional bridal charm."
+            },
+            {
+                id: 13,
+                name: "Party Glamour Suit",
+                price: 249.99,
+                category: "party",
+                image: "image/13.jpg",
+                alt: "Sparkly black party wear Pakistani suit with silver sequins and modern cut perfect for evening events",
+                description: "Glamorous party wear with modern cuts and sparkling details."
+            },
+                {
+                id: 14,
+                name: "Midnight Blue Party Dress",
+                price: 279.99,
+                category: "party",
+                image: "image/14.jpg",
+                alt: "Elegant midnight blue party wear Pakistani suit with subtle embellishments and a sleek design",
+                description: "A sophisticated blue dress, ideal for any evening party."
+            },
+            {
+                id: 15,
+                name: "Rose Gold Party Ensemble",
+                price: 269.99,
+                category: "party",
+                image: "image/15.jpg",
+                alt: "Chic rose gold party wear Pakistani suit with contemporary design and light embroidery",
+                description: "Trendy rose gold outfit for a fashionable party look."
+            },
+            {
+                id: 16,
+                name: "Vibrant Purple Party Suit",
+                price: 259.99,
+                category: "party",
+                image: "image/16.jpg",
+                alt: "Bold purple party wear Pakistani suit with unique patterns and a festive feel",
+                description: "Stand out with this vibrant purple party suit, perfect for celebrations."
+            }
+        ];
+
+        let cart = [];
+        let currentFilter = 'all';
+
+        // Intersection Observer for scroll animations
+        const animateOnScrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const animation = element.dataset.animation;
+                    const delay = element.dataset.delay || '0s';
+
+                    // Apply animation
+                    element.style.animation = `${animation} 0.6s ease forwards ${delay}`;
+                    
+                    // Special handling for section headings to animate the ::after pseudo-element
+                    if (element.classList.contains('section-heading')) {
+                        element.parentElement.classList.add('animate-heading');
+                    }
+
+                    // For product cards, apply animation to price tag as well
+                    if (element.classList.contains('product-card')) {
+                        const priceTag = element.querySelector('.price-tag');
+                        if (priceTag) {
+                            priceTag.style.animation = `scaleIn 0.3s ease forwards ${parseFloat(delay) + 0.6}s`; // Delay after card animation
+                        }
+                    }
+
+                    observer.unobserve(element); // Stop observing once animated
+                }
+            });
+        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // displayProducts(products); // This function is not needed for about.html
+            updateCartUI();
+            
+            // Observe elements for scroll animations
+            document.querySelectorAll('.animate-on-scroll').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+
+            // Observe product cards for scroll animations (if any are present, though not expected in about.html)
+            document.querySelectorAll('.product-card').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+
+            // Observe category filters for scroll animations (if any are present, though not expected in about.html)
+            document.querySelectorAll('.category-filter').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+
+            // Observe footer items for scroll animations
+            document.querySelectorAll('.footer-item').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+            document.querySelectorAll('.footer-list-item').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+        });
+
+        // Display products (kept for compatibility, but not called in about.html)
+        function displayProducts(productsToShow) {
+            const grid = document.getElementById('products-grid');
+            if (!grid) return; // Ensure grid exists
+            
+            // Clear existing products if any
+            grid.innerHTML = '';
+            
+            productsToShow.forEach((product, index) => {
+                // Calculate delay for staggered animation
+                const delay = `${0.1 * index}s`; 
+                const productCard = `
+                    <div class="product-card animate-on-scroll" data-animation="fadeUpEnter" data-delay="${delay}">
+                        <div class="relative overflow-hidden">
+                            <a href="products.html"> <!-- Link added here -->
+                                <img src="${product.image}" alt="${product.alt}" class="w-full h-64 object-cover">
+                            </a>
+                            <div class="price-tag animate-on-scroll" data-animation="scaleIn" data-delay="${parseFloat(delay) + 0.6}s"></div> <!-- Removed price display here -->
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold mb-2 text-gray-800">${product.name}</h3>
+                            <p class="text-gray-600 text-sm mb-4">${product.description}</p>
+                            <button onclick="event.stopPropagation(); openProductModal(${product.id})" class="w-full bg-[#a07b6b] text-white py-2 rounded-lg font-medium hover:bg-[#8a6a5c] transition duration-300">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += productCard;
+            });
+
+            // Re-observe newly added product cards
+            document.querySelectorAll('#products-grid .product-card').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+        }
+
+        // Filter products (kept for compatibility, but not called in about.html)
+        function filterProducts(category) {
+            currentFilter = category;
+            
+            // Update active filter button
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active');
+                // Check if the button's text content (converted to lowercase) includes the category
+                // This handles cases like "Party Wear" matching "party"
+                if (btn.textContent.toLowerCase().includes(category.toLowerCase())) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter and display products
+            const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
+            displayProducts(filteredProducts);
+
+            // Scroll to products section after filtering
+            // document.getElementById('products').scrollIntoView({ behavior: 'smooth' }); // Not needed for about.html
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            updateCartUI();
+            
+            // Add bounce animation to cart icon
+            const cartCount = document.getElementById('cart-count');
+            if (cartCount) { // Check if cartCount exists on this page
+                cartCount.classList.add('animate-bounce-once');
+                setTimeout(() => {
+                    cartCount.classList.remove('animate-bounce-once');
+                }, 1000);
+            }
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartCountMobile = document.getElementById('cart-count-mobile');
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            if (cartCount) {
+                cartCount.textContent = totalItems;
+            }
+            if (cartCountMobile) {
+                cartCountMobile.textContent = totalItems;
+            }
+            
+            // Update cart items
+            cartItems.innerHTML = '';
+            let total = 0;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-center text-gray-500 py-4">Your cart is empty</p>';
+            } else {
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                    cartItems.innerHTML += `
+                        <div class="flex items-center justify-between py-4 border-b last:border-b-0">
+                            <div class="flex items-center space-x-4">
+                                <img src="${item.image}" alt="${item.alt}" class="w-16 h-16 object-cover rounded">
+                                <div>
+                                    <h4 class="font-medium text-gray-800">${item.name}</h4>
+                                    <p class="text-sm text-gray-500">$${item.price.toFixed(2)}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="text-gray-500 hover:text-red-500">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="w-6 text-center">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="text-gray-500 hover:text-green-500">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 ml-2">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Update quantity
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // Modal functions
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = modal.querySelector('.transform'); // Select the inner content div
+            
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                // Add a class to trigger the animation
+                setTimeout(() => {
+                    content.classList.add('is-visible');
+                }, 10);
+            } else {
+                // Remove the class to reverse the animation
+                content.classList.remove('is-visible');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 400); // Match this duration with the CSS transition duration
+            }
+        }
+
+        function toggleCart() {
+            toggleModal('cart-modal');
+        }
+
+        function toggleAuth() {
+            toggleModal('auth-modal');
+        }
+
+        function toggleSearch() {
+            const searchBar = document.getElementById('search-bar');
+            searchBar.classList.toggle('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+
+            mobileMenu.classList.toggle('open');
+            hamburgerIcon.classList.toggle('open');
+            
+            // Toggle body scroll
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+
+            // Apply animations to mobile menu items when opened
+            if (mobileMenu.classList.contains('open')) {
+                mobileMenu.querySelectorAll('.mobile-menu-item').forEach((item, index) => {
+                    item.style.animation = `slideInRight 0.4s ease forwards ${0.1 * index + 0.1}s`;
+                });
+            } else {
+                // Reset animation properties when closed
+                mobileMenu.querySelectorAll('.mobile-menu-item').forEach(item => {
+                    item.style.animation = 'none';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(20px)';
+                });
+            }
+        }
+
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            const modal = document.getElementById('product-modal');
+            const modalContent = modal.querySelector('.product-modal-content');
+            
+            document.getElementById('modal-title').textContent = product.name;
+            document.getElementById('modal-image').src = product.image;
+            document.getElementById('modal-image').alt = product.alt;
+            document.getElementById('modal-description').textContent = product.description;
+            document.getElementById('modal-price').textContent = `$${product.price.toFixed(2)}`;
+            
+            modal.dataset.productId = productId;
+            
+            // Show modal and trigger animations
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.add('is-visible');
+            }, 10);
+        }
+
+        function closeProductModal() {
+            const modal = document.getElementById('product-modal');
+            const modalContent = modal.querySelector('.product-modal-content');
+            
+            // Hide modal and trigger reverse animations
+            modalContent.classList.remove('is-visible');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 400); // Match this duration with the CSS transition duration
+        }
+
+        function addToCartFromModal() {
+            const modal = document.getElementById('product-modal');
+            const productId = parseInt(modal.dataset.productId);
+            addToCart(productId);
+            closeProductModal();
+        }
+
+        function switchToSignup() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('signup-form').classList.remove('hidden');
+            document.getElementById('auth-title').textContent = 'Sign Up';
+        }
+
+        function switchToLogin() {
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('auth-title').textContent = 'Login';
+        }
+
+        function scrollToProducts() {
+            // This function is not directly applicable to about.html, but kept for compatibility
+            // If you want to scroll to a specific section in about.html, you'd need to define it.
+            console.log("Scroll to products called from about.html - no products section here.");
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const cartModal = document.getElementById('cart-modal');
+            const authModal = document.getElementById('auth-modal');
+            const productModal = document.getElementById('product-modal');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+
+            // Check if the click is outside the modal content but inside the modal overlay
+            if (event.target === cartModal) {
+                toggleModal('cart-modal');
+            }
+            if (event.target === authModal) {
+                toggleModal('auth-modal');
+            }
+            if (event.target === productModal) {
+                closeProductModal(); // Use closeProductModal for its specific animations
+            }
+            // Close mobile menu if clicking outside and it's open
+            // Ensure the click is not on the hamburger icon itself or within the mobile menu
+            if (mobileMenu.classList.contains('open') && !mobileMenu.contains(event.target) && !hamburgerIcon.contains(event.target)) {
+                toggleMobileMenu();
+            }
+        }
+
+        // Add bounce animation style for cart count
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce-once {
+                0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+                40% {transform: translateY(-10px);}
+                60% {transform: translateY(-5px);}
+            }
+            .animate-bounce-once {
+                animation: bounce-once 1s ease;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

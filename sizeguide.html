@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Size Guide - Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb; /* Light gray from index.html body */
+            color: #374151; /* Default text color */
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Gradient colors from index.html */
+        .gradient-bg-main {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+        }
+        .gradient-text-main {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-pattern {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(250,247,245,0.9) 100%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="none"/><path d="M0 0L20 20M20 0L0 20" stroke="%23e5e5e5" stroke-width="0.5"/></svg>');
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366; /* WhatsApp green */
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .whatsapp-btn:hover {
+            transform: translateY(-5px) scale(1.05); /* More pronounced hover */
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+        
+        .feature-card {
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            position: relative; /* For pseudo-elements or overlays */
+            overflow: hidden; /* For hover effects */
+            transform: translateY(20px); /* Initial state for animation */
+            opacity: 0;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02); /* Lift and slightly enlarge */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15); /* Stronger shadow */
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .measurement-icon {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .measurement-icon:hover {
+            transform: rotate(5deg) scale(1.1);
+            box-shadow: 0 0 0 5px rgba(160, 123, 107, 0.3);
+        }
+
+        .footer-bg {
+            background-color: #1f2937;
+        }
+
+        /* New Animations */
+        @keyframes fadeInScaleUp {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .animate-on-load {
+            animation: fadeInScaleUp 0.8s ease-out forwards;
+            opacity: 0; /* Initial state */
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Specific delays for staggered animations */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+        .delay-700 { animation-delay: 0.7s; }
+        .delay-800 { animation-delay: 0.8s; }
+        .delay-900 { animation-delay: 0.9s; }
+        .delay-1000 { animation-delay: 1s; }
+
+        /* Section Heading Underline */
+        .section-heading {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 40px;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; /* Initial width for animation */
+            height: 3px;
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            border-radius: 3px;
+            transition: width 0.6s ease 0.3s; /* Transition for width */
+        }
+        .animate-heading .section-heading::after {
+            width: 80px;
+        }
+
+        /* Image hover effect */
+        .image-hover-effect img {
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+        .image-hover-effect:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header class="hero-pattern py-8">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="title-font text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4 animate-on-load">
+                Perfect Fit <span class="gradient-text-main">Guaranteed</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto animate-on-load delay-200">
+                Your comfort and confidence matter most to us. Discover your ideal size with our personalized assistance.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- Hero Section -->
+        <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+            <div class="animate-on-scroll image-hover-effect">
+                <div class="rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-300">
+                    <img 
+                        src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0d274b82-3a11-410d-8e65-aff7757450cd.png" 
+                        alt="Professional tailor taking precise measurements of elegant clothing in a well-lit studio with various measurement tools and fabrics visible"
+                        class="w-full h-auto"
+                    />
+                </div>
+            </div>
+            
+            <div>
+                <h2 class="title-font text-3xl md:text-4xl font-bold text-gray-800 mb-6 section-heading animate-on-scroll">
+                    Why Personalized Size Guidance?
+                </h2>
+                <p class="text-gray-600 text-lg mb-6 animate-on-scroll delay-200">
+                    At Libaas Studio, we understand that finding the perfect size is just as important as choosing the perfect design. Since every outfit is crafted with unique fabrics, styles, and stitching details, sizes may vary slightly from product to product.
+                </p>
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 animate-on-scroll delay-400">
+                    <p class="text-yellow-700">
+                        <strong>✨ Perfect Fit Assurance:</strong> We provide personalized size assistance for every item to ensure you get the best fit possible.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="text-center mb-16">
+            <h2 class="title-font text-3xl md:text-4xl font-bold text-gray-800 mb-4 section-heading animate-on-scroll">
+                How It Works
+            </h2>
+            <p class="text-gray-600 text-lg mb-12 max-w-3xl mx-auto animate-on-scroll delay-200">
+                Getting the perfect fit has never been easier. Follow these simple steps:
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="feature-card bg-white rounded-2xl p-8 text-center animate-on-scroll delay-300">
+                    <div class="w-16 h-16 measurement-icon rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-6">
+                        1
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Share Product Details</h3>
+                    <p class="text-gray-600">Send us the product name or code via WhatsApp</p>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl p-8 text-center animate-on-scroll delay-500">
+                    <div class="w-16 h-16 measurement-icon rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-6">
+                        2
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Get Expert Advice</h3>
+                    <p class="text-gray-600">Our team provides detailed measurements and recommendations</p>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl p-8 text-center animate-on-scroll delay-700">
+                    <div class="w-16 h-16 measurement-icon rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-6">
+                        3
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Place Your Order</h3>
+                    <p class="text-gray-600">Confidently order knowing you'll get the perfect fit</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- What You Get -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-16 animate-on-scroll delay-200">
+            <h2 class="title-font text-3xl md:text-4xl font-bold text-gray-800 text-center mb-12 section-heading">
+                Complete Size Guidance Package
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center animate-on-scroll delay-300">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-xl mb-4 mx-auto measurement-icon">
+                        <i class="fas fa-ruler-combined"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800 mb-2">Exact Measurements</h4>
+                    <p class="text-gray-600 text-sm">Precise dimensions of every outfit</p>
+                </div>
+                
+                <div class="text-center animate-on-scroll delay-500">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xl mb-4 mx-auto measurement-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800 mb-2">Fabric Details</h4>
+                    <p class="text-gray-600 text-sm">Stretch and fitting style information</p>
+                </div>
+                
+                <div class="text-center animate-on-scroll delay-700">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-xl mb-4 mx-auto measurement-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800 mb-2">Body Type Advice</h4>
+                    <p class="text-gray-600 text-sm">Personalized recommendations</p>
+                </div>
+                
+                <div class="text-center animate-on-scroll delay-900">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 text-xl mb-4 mx-auto measurement-icon">
+                        <i class="fas fa-scissors"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800 mb-2">Custom Options</h4>
+                    <p class="text-gray-600 text-sm">Tailoring and customization available</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="text-center gradient-bg-main rounded-2xl p-12 mb-16 animate-on-scroll delay-200">
+            <h2 class="title-font text-3xl md:text-4xl font-bold text-white mb-6">
+                Ready to Find Your Perfect Fit?
+            </h2>
+            <p class="text-white text-lg mb-8 max-w-2xl mx-auto">
+                Don't guess your size - get expert guidance from our team. We're here to ensure you look and feel amazing in every Libaas Studio outfit.
+            </p>
+            
+            <a 
+                href="https://wa.me/yournumber" 
+                class="whatsapp-btn inline-flex items-center px-8 py-4 rounded-full text-white font-semibold text-lg mx-auto animate-on-scroll delay-400"
+                target="_blank"
+            >
+                <i class="fab fa-whatsapp text-2xl mr-3"></i>
+                WhatsApp Us Now
+            </a>
+            
+            <p class="text-gray-200 text-sm mt-4 animate-on-scroll delay-600">
+                📱 Typically respond within 15 minutes during business hours
+            </p>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 animate-on-scroll delay-200">
+            <h2 class="title-font text-3xl md:text-4xl font-bold text-gray-800 text-center mb-8 section-heading">
+                Frequently Asked Questions
+            </h2>
+            
+            <div class="space-y-4 max-w-3xl mx-auto">
+                <div class="border-b border-gray-200 pb-4 animate-on-scroll delay-300">
+                    <h3 class="font-semibold text-gray-800 mb-2">How long does it take to get size guidance?</h3>
+                    <p class="text-gray-600">We typically respond within 15-30 minutes during business hours (10 AM - 8 PM).</p>
+                </div>
+                
+                <div class="border-b border-gray-200 pb-4 animate-on-scroll delay-500">
+                    <h3 class="font-semibold text-gray-800 mb-2">What information should I provide?</h3>
+                    <p class="text-gray-600">Please share the product name/code and your basic measurements if available.</p>
+                </div>
+                
+                <div class="border-b border-gray-200 pb-4 animate-on-scroll delay-700">
+                    <h3 class="font-semibold text-gray-800 mb-2">Do you offer custom sizing?</h3>
+                    <p class="text-gray-600">Yes! Many of our outfits can be custom-tailored to your exact measurements.</p>
+                </div>
+                
+                <div class="pb-4 animate-on-scroll delay-900">
+                    <h3 class="font-semibold text-gray-800 mb-2">What if the outfit doesn't fit perfectly?</h3>
+                    <p class="text-gray-600">We offer easy exchanges and alterations to ensure complete satisfaction.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-bg text-white py-12 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="title-font text-2xl font-bold mb-4 animate-on-scroll">Libaas Studio</h3>
+            <p class="text-gray-400 mb-6 animate-on-scroll delay-200">Crafting perfection in every stitch</p>
+            
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors animate-on-scroll delay-300">
+                    <i class="fab fa-instagram text-2xl"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors animate-on-scroll delay-400">
+                    <i class="fab fa-facebook text-2xl"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors animate-on-scroll delay-500">
+                    <i class="fab fa-whatsapp text-2xl"></i>
+                </a>
+            </div>
+            
+            <p class="text-gray-500 text-sm animate-on-scroll delay-600">
+            © 2025 Libaas Studio | All Rights Reserved
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const animateOnScrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    element.classList.add('is-visible');
+                    
+                    // Special handling for section headings to animate the ::after pseudo-element
+                    if (element.classList.contains('section-heading')) {
+                        element.classList.add('animate-heading');
+                    }
+                    observer.unobserve(element); // Stop observing once animated
+                }
+            });
+        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Observe elements for scroll animations
+            document.querySelectorAll('.animate-on-scroll').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+
+            // Observe elements for load animations (if not already handled by scroll observer)
+            document.querySelectorAll('.animate-on-load').forEach(element => {
+                element.style.animationPlayState = 'running';
+            });
+
+            // Smooth scrolling for anchor links (if any were added)
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

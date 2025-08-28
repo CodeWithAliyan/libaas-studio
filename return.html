@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return & Exchange Policy | Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg"> <!-- Favicon added -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            perspective: 1000px; /* Establish a 3D context for the entire body */
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Updated Gradient Backgrounds and Text */
+        .gradient-bg {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Enhanced Product Card (from index.html, needed for product modal) */
+        .product-card {
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-10px) !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+        .product-card img {
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+        .product-card:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.05);
+        }
+
+        /* Price Tag (from index.html, needed for product modal) */
+        .price-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 2;
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        /* Category Filters (from index.html, not directly used but good to keep for consistency) */
+        .category-filter {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #a07b6b;
+            color: #a07b6b;
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            margin: 0 8px 8px 0;
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        .category-filter:hover {
+            background: #f5f0ed;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .category-filter.active {
+            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 6px rgba(225, 160, 131, 0.5);
+        }
+
+        /* Hero Section (from index.html, not directly used but good to keep for consistency) */
+        .hero-overlay {
+            background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.4));
+        }
+        .hero-button {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            color: #a07b6b;
+            padding: 12px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        .hero-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .hero-button:hover {
+            transform: translateY(-5px) scale(1.05) !important;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        .hero-button:hover::before {
+            left: 100%;
+        }
+
+        /* Section Headings (from index.html, not directly used but good to keep for consistency) */
+        .section-heading {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 40px;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            border-radius: 3px;
+            transition: width 0.6s ease 0.3s;
+        }
+        .animate-heading .section-heading::after {
+            width: 80px;
+        }
+
+        /* Feature Card (from index.html, not directly used but good to keep for consistency) */
+        .feature-card {
+            transition: all 0.4s ease;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transform-style: preserve-3d; /* Enable 3D transforms for children */
+            transform: translateY(30px);
+            opacity: 0;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px) rotateX(5deg) scale(1.02) !important; /* 3D tilt on hover */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+        }
+        .feature-card img {
+            transition: transform 0.5s ease;
+        }
+        .feature-card:hover img {
+            transform: scale(1.1);
+        }
+        .feature-card .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover .overlay {
+            transform: translateY(0);
+        }
+
+        /* Contact Form (from index.html, needed for auth modal) */
+        .contact-input {
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            transform: translateY(10px);
+            opacity: 0;
+        }
+        .contact-input:focus {
+            border-color: #a07b6b;
+            box-shadow: 0 0 0 3px rgba(160, 123, 107, 0.2);
+        }
+
+        /* WhatsApp Button (from index.html) */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            z-index: 100;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite, bounceIn 0.8s ease forwards 1s;
+        }
+        .whatsapp-button:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* Header Styles (from index.html) */
+        .header-logo {
+            height: 50px;
+            transition: transform 0.3s ease;
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        .header-logo:hover {
+            transform: scale(1.05) !important;
+        }
+        .nav-link {
+            position: relative;
+            padding: 8px 0;
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #e1a083, #a07b6b);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Animations (from index.html) */
+        @keyframes fadeUpEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeDownEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Specific animation classes for elements */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Menu (from index.html) */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        .mobile-menu-item {
+            transition: all 0.3s ease;
+            transform: translateX(20px);
+            opacity: 0;
+        }
+        .mobile-menu-item:hover {
+            background: rgba(160, 123, 107, 0.1);
+            padding-left: 25px;
+        }
+
+        /* Libaas Studio Text Styling (from index.html) */
+        .libaas-studio-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #e1a083, #a07b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+
+        /* Hamburger Icon Styles (from index.html) */
+        .hamburger-icon {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .hamburger-icon span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #000000;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger-icon.open span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+        }
+        .hamburger-icon.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-icon.open span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+        }
+
+        /* Product Modal Specific Styles and Animations (from index.html) */
+        .product-modal-content {
+            transform: scale(0.95) translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .product-modal-content.is-visible {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        .product-modal-image {
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        .product-modal-content.is-visible .product-modal-image {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .product-modal-details > * {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(1) { transition-delay: 0.1s; }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(2) { transition-delay: 0.2s; }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(3) { transition-delay: 0.3s; }
+        .product-modal-content.is-visible .product-modal-details > *:nth-child(4) { transition-delay: 0.4s; }
+
+        /* Custom styles for matching theme */
+        .theme-primary-text {
+            color: #a07b6b;
+        }
+        .theme-border-color {
+            border-color: #a07b6b;
+        }
+        .theme-bg-light {
+            background-color: #f5f0ed; /* A lighter shade of the new colors */
+        }
+        .theme-hover-bg-light:hover {
+            background-color: #f5f0ed;
+        }
+
+        /* New 3D-like Animations and Styles */
+        .hero-title-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        .hero-title-3d:hover {
+            transform: rotateX(5deg) rotateY(5deg) translateZ(10px);
+        }
+
+        .whatsapp-cta-btn {
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .whatsapp-cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            transform: translateZ(-1px); /* Push pseudo-element back */
+        }
+        .whatsapp-cta-btn:hover {
+            transform: translateY(-5px) scale(1.02) translateZ(10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        .whatsapp-cta-btn:hover::before {
+            left: 100%;
+        }
+
+        .policy-detail-item {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .policy-detail-item:hover {
+            transform: translateY(-5px) translateZ(5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+        }
+
+        .faq-item {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .faq-item:hover {
+            transform: translateY(-3px) translateZ(3px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.08);
+        }
+
+        /* Entrance animations with 3D feel */
+        @keyframes fadeInScaleUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95) translateZ(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1) translateZ(0);
+            }
+        }
+
+        .animate-fade-in-scale-up {
+            animation: fadeInScaleUp 0.8s ease-out forwards;
+            opacity: 0; /* Initial state */
+        }
+
+        /* Staggered animation for process cards */
+        .process-card-1 { animation-delay: 0.1s; }
+        .process-card-2 { animation-delay: 0.2s; }
+        .process-card-3 { animation-delay: 0.3s; }
+
+        /* Staggered animation for policy details */
+        .policy-item-1 { animation-delay: 0.1s; }
+        .policy-item-2 { animation-delay: 0.2s; }
+        .policy-item-3 { animation-delay: 0.3s; }
+        .policy-item-4 { animation-delay: 0.4s; }
+
+        /* Staggered animation for FAQ items */
+        .faq-item-1 { animation-delay: 0.1s; }
+        .faq-item-2 { animation-delay: 0.2s; }
+        .faq-item-3 { animation-delay: 0.3s; }
+
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header (Copied from index.html) -->
+    <header class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300" id="main-header">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <!-- Logo Image -->
+                    <img src="image/h-logo.png" alt="Libaas Studio Logo" class="header-logo h-12 animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s">
+
+                    <span class="libaas-studio-text hidden md:block animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s">Libaas Studio</span> <!-- Applied new styles -->
+                </div>
+                
+              <nav class="hidden md:flex space-x-8">
+  <a href="index.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.3s">Home</a>
+  <a href="products.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.4s">Products</a>
+  <a href="about.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.5s">About</a>
+  <a href="contact.html" class="nav-link text-gray-700 font-medium animate-on-scroll" data-animation="fadeDownEnter" data-delay="0.6s">Contact</a>
+</nav>
+
+                
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleSearch()" class="text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.5s">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                    <button onclick="toggleAuth()" class="text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.6s">
+                        <i class="fas fa-user text-xl"></i>
+                    </button>
+                    <button onclick="toggleCart()" class="relative text-gray-700 hover:text-[#a07b6b] transition duration-200 animate-on-scroll" data-animation="scaleIn" data-delay="0.7s">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700"> <!-- Removed animate-on-scroll -->
+                        <div id="hamburger-icon" class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div id="search-bar" class="hidden mt-4 transition-all duration-300 ease-in-out">
+                <div class="relative">
+                    <input type="text" placeholder="Search for suits..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a07b6b] shadow-sm">
+                    <button class="absolute right-3 top-2 text-gray-500 hover:text-[#a07b6b] transition duration-200">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Mobile Menu (Copied from index.html) -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-white z-40 pt-16 px-4 md:hidden">
+      <div class="flex flex-col space-y-4 py-4">
+        <a href="index.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.2s">Home</a>
+        <a href="products.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.3s">Products</a>
+        <a href="about.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.4s">About</a>
+        <a href="contact.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.5s">Contact</a>
+        
+        <a href="login.html" class="mobile-menu-item py-3 px-4 rounded-lg text-gray-700 font-medium" onclick="toggleMobileMenu()" data-animation="slideInRight" data-delay="0.6s">Login / Signup</a>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 hero-title-3d animate-fade-in-scale-up">Return & Exchange</h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90 animate-fade-in-scale-up" style="animation-delay: 0.2s;">
+                    Hassle-free returns and exchanges for your peace of mind
+                </p>
+                <div class="w-24 h-2 bg-white mx-auto mb-8 rounded-full animate-fade-in-scale-up" style="animation-delay: 0.4s;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Overview -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 animate-fade-in-scale-up">Simple Return Process</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto animate-fade-in-scale-up" style="animation-delay: 0.1s;">
+                    We make returns and exchanges easy. Contact us via WhatsApp and we'll guide you through the simple process.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="feature-card text-center p-6 rounded-lg bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-300 animate-fade-in-scale-up process-card-1">
+                    <div class="feature-icon w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-comment-dots text-2xl theme-primary-text"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">1. Contact Us</h3>
+                    <p class="text-gray-600">Reach out via WhatsApp with your order details and reason for return/exchange</p>
+                </div>
+
+                <div class="feature-card text-center p-6 rounded-lg bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-300 animate-fade-in-scale-up process-card-2">
+                    <div class="feature-icon w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-box-open text-2xl theme-primary-text"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">2. Package Item</h3>
+                    <p class="text-gray-600">Safely package the item with all original tags and accessories</p>
+                </div>
+
+                <div class="feature-card text-center p-6 rounded-lg bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-300 animate-fade-in-scale-up process-card-3">
+                    <div class="feature-icon w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shipping-fast text-2xl theme-primary-text"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">3. Ship & Receive</h3>
+                    <p class="text-gray-600">We'll provide shipping instructions and process your refund or exchange</p>
+                </div>
+            </div>
+
+            <!-- Visual Representation -->
+            <div class="bg-gray-100 rounded-2xl p-8 text-center animate-fade-in-scale-up" style="animation-delay: 0.4s;">
+                <img src="image/fbbaner.jpg" alt="Customer service representative assisting with return process through mobile messaging app" class="rounded-lg mx-auto mb-6" onerror="this.style.display='none'">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Ready to Start Your Return?</h3>
+                <p class="text-gray-600 mb-6">Our customer service team is available via WhatsApp to assist you promptly</p>
+                
+                <!-- WhatsApp CTA Button -->
+                <a href="https://wa.me/97433795577?text=Hi,%20I'd%20like%20to%20return/exchange%20my%20order" 
+                   target="_blank" 
+                   class="whatsapp-cta-btn inline-flex items-center px-8 py-4 bg-green-500 text-white font-semibold rounded-full hover:bg-green-600">
+                    <i class="fab fa-whatsapp text-2xl mr-3"></i>
+                    Contact via WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Policy Details -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center animate-fade-in-scale-up">Return Policy Details</h2>
+                
+                <div class="bg-white rounded-2xl shadow-sm p-8">
+                    <div class="space-y-6">
+                        <div class="border-l-4 theme-border-color pl-6 policy-detail-item animate-fade-in-scale-up policy-item-1">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Eligibility</h3>
+                            <p class="text-gray-600">Items must be returned within 30 days of purchase, unused, and in original packaging with tags attached.</p>
+                        </div>
+                        
+                        <div class="border-l-4 theme-border-color pl-6 policy-detail-item animate-fade-in-scale-up policy-item-2">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Refund Process</h3>
+                            <p class="text-gray-600">Refunds are processed within 3-5 business days after we receive and inspect the returned item.</p>
+                        </div>
+                        
+                        <div class="border-l-4 theme-border-color pl-6 policy-detail-item animate-fade-in-scale-up policy-item-3">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Exchange Options</h3>
+                            <p class="text-gray-600">We offer exchanges for different sizes, colors, or styles based on availability.</p>
+                        </div>
+                        
+                        <div class="border-l-4 theme-border-color pl-6 policy-detail-item animate-fade-in-scale-up policy-item-4">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Shipping Costs</h3>
+                            <p class="text-gray-600">Return shipping is free for defective items. For other returns, customers are responsible for return shipping costs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-12 text-center animate-fade-in-scale-up">Frequently Asked Questions</h2>
+            
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="bg-gray-50 rounded-lg p-6 faq-item theme-hover-bg-light animate-fade-in-scale-up faq-item-1">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">How long does the return process take?</h3>
+                    <p class="text-gray-600">Typically, returns are processed within 5-7 business days after we receive your item.</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg p-6 faq-item theme-hover-bg-light animate-fade-in-scale-up faq-item-2">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">What if my item is damaged or defective?</h3>
+                    <p class="text-gray-600">Contact us immediately via WhatsApp. We'll arrange free return shipping and process a full refund or replacement.</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-lg p-6 faq-item theme-hover-bg-light animate-fade-in-scale-up faq-item-3">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Can I exchange for a different product?</h3>
+                    <p class="text-gray-600">Yes, you can exchange for any product of equal value. Price differences will be refunded or charged accordingly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-16 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 animate-fade-in-scale-up">Need Help With Your Return?</h2>
+            <p class="text-xl text-white mb-8 max-w-2xl mx-auto animate-fade-in-scale-up" style="animation-delay: 0.1s;">
+                Our customer support team is ready to assist you via WhatsApp. Contact us now for quick and friendly service.
+            </p>
+            <a href="https://wa.me/97433795577?text=Hi,%20I%20need%20help%20with%20a%20return%20or%20exchange" 
+               target="_blank" 
+               class="whatsapp-cta-btn inline-flex items-center px-10 py-5 bg-white theme-primary-text font-bold rounded-full text-lg hover:bg-gray-100 animate-fade-in-scale-up" style="animation-delay: 0.2s;">
+                <i class="fab fa-whatsapp text-2xl mr-3 text-green-500"></i>
+                Message Us on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-scale-up">
+            <p>© 2025 Libaas Studio | All Rights Reserved</p>
+            <p class="mt-2 text-gray-400">Customer satisfaction is our priority</p>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal (Copied from index.html) -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold">Your Shopping Cart</h3>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be added here -->
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-semibold">Total:</span>
+                    <span id="cart-total" class="text-xl font-bold text-[#a07b6b]">$0.00</span>
+                </div>
+                <button class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal (Copied from index.html) -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-3xl max-h-[90vh] overflow-y-auto product-modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 id="modal-title" class="text-3xl font-bold text-gray-800"></h3>
+                <button onclick="closeProductModal()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div class="product-modal-image">
+                    <img id="modal-image" src="" alt="" class="w-full h-auto rounded-lg shadow-lg object-cover">
+                </div>
+                <div class="product-modal-details flex flex-col justify-between h-full">
+                    <div>
+                        <p id="modal-description" class="text-black text-lg leading-relaxed mb-6"></p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold text-[#a07b6b]" id="modal-price"></span>
+                        </div>
+                    </div>
+                    <button onclick="addToCartFromModal()" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal (Copied from index.html) -->
+    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md transform transition-all duration-300 scale-95 opacity-0">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="auth-title" class="text-2xl font-bold">Login</h3>
+                <button onclick="toggleAuth()" class="text-gray-500 hover:text-gray-700 transition duration-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="login-form">
+                <form>
+                    <div class="mb-4">
+                        <input type="email" placeholder="Email" class="contact-input">
+                    </div>
+                    <div class="mb-6">
+                        <input type="password" placeholder="Password" class="contact-input">
+                    </div>
+                    <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Login</button>
+                </form>
+                <p class="text-center mt-4 text-gray-600">
+                    Don't have an account? 
+                    <button onclick="switchToSignup()" class="text-[#a07b6b] hover:underline transition duration-200">Sign up</button>
+                </p>
+            </div>
+            <div id="signup-form" class="hidden">
+                <form>
+                    <div class="mb-4">
+                        <input type="text" placeholder="Full Name" class="contact-input">
+                    </div>
+                    <div class="mb-4">
+                        <input type="email" placeholder="Email" class="contact-input">
+                    </div>
+                    <div class="mb-6">
+                        <input type="password" placeholder="Password" class="contact-input">
+                    </div>
+                    <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300">Sign Up</button>
+                </form>
+                <p class="text-center mt-4 text-gray-600">
+                    Already have an account? 
+                    <button onclick="switchToLogin()" class="text-[#a07b6b] hover:underline transition duration-200">Login</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/97433795577?text=Hello%20Libaas%20Studio,%20I%27m%20interested%20in%20your%20suits!" class="whatsapp-button" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Product data (Copied from index.html - necessary for cart/product modal functionality)
+        const products = [
+            {
+                id: 1,
+                name: "Royal Elegance Formal Suit",
+                price: 299.99,
+                category: "formal",
+                image: "image/1.jpg",
+                alt: "Luxurious navy blue Pakistani formal suit with intricate silver embroidery and beadwork on the neckline and sleeves",
+                description: "Exquisite formal suit with intricate embroidery perfect for special occasions."
+            },
+            {
+                id: 2,
+                name: "Classic Black Formal Suit",
+                price: 349.99,
+                category: "formal",
+                image: "image/2.jpg",
+                alt: "Elegant black formal Pakistani suit with gold embroidery and a modern silhouette",
+                description: "A timeless black formal suit, perfect for evening events."
+            },
+            {
+                id: 3,
+                name: "Emerald Green Formal Dress",
+                price: 319.99,
+                category: "formal",
+                image: "image/3.jpg",
+                alt: "Vibrant emerald green formal Pakistani suit with intricate silver detailing",
+                description: "Stunning emerald green suit, ideal for grand celebrations."
+            },
+            {
+                id: 4,
+                name: "Regal Blue Formal Ensemble",
+                price: 379.99,
+                category: "formal",
+                image: "image/4.jpg",
+                alt: "Royal blue formal Pakistani suit with heavy golden embroidery and traditional design",
+                description: "A majestic blue suit, designed for a regal look."
+            },
+            {
+                id: 5,
+                name: "Casual Comfort Cotton Suit",
+                price: 149.99,
+                category: "casual",
+                image: "image/5.jpg",
+                alt: "Light peach colored casual cotton Pakistani suit with minimal white embroidery and comfortable straight-cut design",
+                description: "Comfortable cotton suit ideal for everyday wear with elegant simplicity."
+            },
+            {
+                id: 6,
+                name: "Summer Breeze Casual Suit",
+                price: 129.99,
+                category: "casual",
+                image: "image/6.jpg",
+                alt: "Light blue casual Pakistani suit with delicate floral prints and breathable fabric",
+                description: "Perfect for summer, this light and airy casual suit offers ultimate comfort."
+            },
+            {
+                id: 7,
+                name: "Everyday Chic Casual Wear",
+                price: 159.99,
+                category: "casual",
+                image: "image/7.jpg",
+                alt: "Stylish grey casual Pakistani suit with simple embroidery and modern cut",
+                description: "A versatile casual suit that combines comfort with contemporary style."
+            },
+            {
+                id: 8,
+                name: "Floral Delight Casual Suit",
+                price: 139.99,
+                category: "casual",
+                image: "image/8.jpg",
+                alt: "White casual Pakistani suit with vibrant floral patterns and a relaxed fit",
+                description: "Embrace the beauty of nature with this charming floral casual suit."
+            },
+            {
+                id: 9,
+                name: "Bridal Dreams Collection",
+                price: 899.99,
+                category: "bridal",
+                image: "image/9.jpg",
+                alt: "Stunning red bridal Pakistani suit with heavy golden embroidery, sequins, mirror work and traditional patterns",
+                description: "Stunning bridal ensemble with heavy embellishments and traditional craftsmanship."
+            },
+            {
+                id: 10,
+                name: "Golden Glow Bridal Lehenga",
+                price: 1199.99,
+                category: "bridal",
+                image: "image/10.jpg",
+                alt: "Luxurious golden bridal lehenga with intricate zardozi work and heavy dupatta",
+                description: "A magnificent bridal lehenga designed to make you shine on your special day."
+            },
+            {
+                id: 11,
+                name: "Ivory Elegance Bridal Gown",
+                price: 999.99,
+                category: "bridal",
+                image: "image/11.jpg",
+                alt: "Graceful ivory bridal gown with delicate silver embroidery and flowing silhouette",
+                description: "An ethereal ivory gown, perfect for a sophisticated bridal look."
+            },
+            {
+                id: 12,
+                name: "Crimson Charm Bridal Dress",
+                price: 1049.99,
+                category: "bridal",
+                image: "image/12.jpg",
+                alt: "Deep crimson bridal dress with rich gold and maroon embroidery and traditional motifs",
+                description: "A captivating crimson dress, embodying traditional bridal charm."
+            },
+            {
+                id: 13,
+                name: "Party Glamour Suit",
+                price: 249.99,
+                category: "party",
+                image: "image/13.jpg",
+                alt: "Sparkly black party wear Pakistani suit with silver sequins and modern cut perfect for evening events",
+                description: "Glamorous party wear with modern cuts and sparkling details."
+            },
+                {
+                id: 14,
+                name: "Midnight Blue Party Dress",
+                price: 279.99,
+                category: "party",
+                image: "image/14.jpg",
+                alt: "Elegant midnight blue party wear Pakistani suit with subtle embellishments and a sleek design",
+                description: "A sophisticated blue dress, ideal for any evening party."
+            },
+            {
+                id: 15,
+                name: "Rose Gold Party Ensemble",
+                price: 269.99,
+                category: "party",
+                image: "image/15.jpg",
+                alt: "Chic rose gold party wear Pakistani suit with contemporary design and light embroidery",
+                description: "Trendy rose gold outfit for a fashionable party look."
+            },
+            {
+                id: 16,
+                name: "Vibrant Purple Party Suit",
+                price: 259.99,
+                category: "party",
+                image: "image/16.jpg",
+                alt: "Bold purple party wear Pakistani suit with unique patterns and a festive feel",
+                description: "Stand out with this vibrant purple party suit, perfect for celebrations."
+            }
+        ];
+
+        let cart = [];
+        let currentFilter = 'all'; // Not directly used on this page, but part of copied JS
+
+        // Intersection Observer for scroll animations (Copied from index.html)
+        const animateOnScrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const animation = element.dataset.animation;
+                    const delay = element.dataset.delay || '0s';
+
+                    // Apply animation
+                    if (animation) { // Only apply if data-animation is present
+                        element.style.animation = `${animation} 0.6s ease forwards ${delay}`;
+                    } else if (element.classList.contains('animate-fade-in-scale-up')) {
+                        // For elements using the new custom animation
+                        element.style.animationPlayState = 'running';
+                    }
+                    
+                    // Special handling for section headings to animate the ::after pseudo-element
+                    if (element.classList.contains('section-heading')) {
+                        element.parentElement.classList.add('animate-heading');
+                    }
+
+                    // For product cards, apply animation to price tag as well
+                    if (element.classList.contains('product-card')) {
+                        const priceTag = element.querySelector('.price-tag');
+                        if (priceTag) {
+                            priceTag.style.animation = `scaleIn 0.3s ease forwards ${parseFloat(delay) + 0.6}s`; // Delay after card animation
+                        }
+                    }
+
+                    observer.unobserve(element); // Stop observing once animated
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Initialize the page (Copied from index.html, adapted for this page)
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartUI(); // Still needed for cart count in header
+            
+            // Observe elements for scroll animations
+            document.querySelectorAll('.animate-on-scroll, .animate-fade-in-scale-up').forEach(element => {
+                // Set initial state for new animations to paused
+                if (element.classList.contains('animate-fade-in-scale-up')) {
+                    element.style.animationPlayState = 'paused';
+                }
+                animateOnScrollObserver.observe(element);
+            });
+
+            // Observe product cards for scroll animations (if any were added dynamically)
+            document.querySelectorAll('.product-card').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+
+            // Observe category filters for scroll animations (if any were added dynamically)
+            document.querySelectorAll('.category-filter').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+
+            // Observe footer items for scroll animations
+            document.querySelectorAll('.footer-item').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+            document.querySelectorAll('.footer-list-item').forEach(element => {
+                animateOnScrollObserver.observe(element);
+            });
+        });
+
+        // displayProducts (Not needed on this page, but keeping for completeness if product modal is used)
+        function displayProducts(productsToShow) {
+            const grid = document.getElementById('products-grid'); // This ID might not exist on this page
+            if (grid) {
+                grid.innerHTML = '';
+                productsToShow.forEach((product, index) => {
+                    const delay = `${0.1 * index}s`; 
+                    const productCard = `
+                        <div class="product-card animate-on-scroll" data-animation="fadeUpEnter" data-delay="${delay}">
+                            <div class="relative overflow-hidden">
+                                <a href="products.html">
+                                    <img src="${product.image}" alt="${product.alt}" class="w-full h-64 object-cover">
+                                </a>
+                                <div class="price-tag animate-on-scroll" data-animation="scaleIn" data-delay="${parseFloat(delay) + 0.6}s"></div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold mb-2 text-gray-800">${product.name}</h3>
+                                <p class="text-gray-600 text-sm mb-4">${product.description}</p>
+                                <button onclick="event.stopPropagation(); openProductModal(${product.id})" class="w-full bg-[#a07b6b] text-white py-2 rounded-lg font-medium hover:bg-[#8a6a5c] transition duration-300">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    grid.innerHTML += productCard;
+                });
+                document.querySelectorAll('#products-grid .product-card').forEach(element => {
+                    animateOnScrollObserver.observe(element);
+                });
+            }
+        }
+
+        // filterProducts (Not needed on this page, but part of copied JS)
+        function filterProducts(category) {
+            currentFilter = category;
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(category.toLowerCase())) {
+                    btn.classList.add('active');
+                }
+            });
+            const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
+            displayProducts(filteredProducts);
+        }
+
+        // Add to cart (Copied from index.html)
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            updateCartUI();
+            
+            const cartCount = document.getElementById('cart-count');
+            cartCount.classList.add('animate-bounce-once');
+            setTimeout(() => {
+                cartCount.classList.remove('animate-bounce-once');
+            }, 1000);
+        }
+
+        // Update cart UI (Copied from index.html)
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartCountMobile = document.getElementById('cart-count-mobile');
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            if (cartCountMobile) {
+                cartCountMobile.textContent = totalItems;
+            }
+            
+            cartItems.innerHTML = '';
+            let total = 0;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-center text-gray-500 py-4">Your cart is empty</p>';
+            } else {
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                    cartItems.innerHTML += `
+                        <div class="flex items-center justify-between py-4 border-b last:border-b-0">
+                            <div class="flex items-center space-x-4">
+                                <img src="${item.image}" alt="${item.alt}" class="w-16 h-16 object-cover rounded">
+                                <div>
+                                    <h4 class="font-medium text-gray-800">${item.name}</h4>
+                                    <p class="text-sm text-gray-500">$${item.price.toFixed(2)}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="text-gray-500 hover:text-red-500">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="w-6 text-center">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="text-gray-500 hover:text-green-500">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700 ml-2">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Update quantity (Copied from index.html)
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        // Remove from cart (Copied from index.html)
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // Modal functions (Copied from index.html)
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const content = modal.querySelector('.transform');
+            
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    content.classList.add('is-visible');
+                }, 10);
+            } else {
+                content.classList.remove('is-visible');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 400);
+            }
+        }
+
+        function toggleCart() {
+            toggleModal('cart-modal');
+        }
+
+        function toggleAuth() {
+            toggleModal('auth-modal');
+        }
+
+        function toggleSearch() {
+            const searchBar = document.getElementById('search-bar');
+            searchBar.classList.toggle('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+
+            mobileMenu.classList.toggle('open');
+            hamburgerIcon.classList.toggle('open');
+            
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+
+            if (mobileMenu.classList.contains('open')) {
+                mobileMenu.querySelectorAll('.mobile-menu-item').forEach((item, index) => {
+                    item.style.animation = `slideInRight 0.4s ease forwards ${0.1 * index + 0.1}s`;
+                });
+            } else {
+                mobileMenu.querySelectorAll('.mobile-menu-item').forEach(item => {
+                    item.style.animation = 'none';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(20px)';
+                });
+            }
+        }
+
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            const modal = document.getElementById('product-modal');
+            const modalContent = modal.querySelector('.product-modal-content');
+            
+            document.getElementById('modal-title').textContent = product.name;
+            document.getElementById('modal-image').src = product.image;
+            document.getElementById('modal-image').alt = product.alt;
+            document.getElementById('modal-description').textContent = product.description;
+            document.getElementById('modal-description').classList.add('text-black');
+            document.getElementById('modal-price').textContent = `$${product.price.toFixed(2)}`;
+            
+            modal.dataset.productId = productId;
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.add('is-visible');
+            }, 10);
+        }
+
+        function closeProductModal() {
+            const modal = document.getElementById('product-modal');
+            const modalContent = modal.querySelector('.product-modal-content');
+            
+            modalContent.classList.remove('is-visible');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 400);
+        }
+
+        function addToCartFromModal() {
+            const modal = document.getElementById('product-modal');
+            const productId = parseInt(modal.dataset.productId);
+            addToCart(productId);
+            closeProductModal();
+        }
+
+        function switchToSignup() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('signup-form').classList.remove('hidden');
+            document.getElementById('auth-title').textContent = 'Sign Up';
+        }
+
+        function switchToLogin() {
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('auth-title').textContent = 'Login';
+        }
+
+        function scrollToProducts() {
+            // This function is specific to index.html, not directly applicable here
+            // but kept for completeness if the header links to it.
+        }
+
+        // Close modals when clicking outside (Copied from index.html)
+        window.onclick = function(event) {
+            const cartModal = document.getElementById('cart-modal');
+            const authModal = document.getElementById('auth-modal');
+            const productModal = document.getElementById('product-modal');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+
+            if (event.target === cartModal) {
+                toggleModal('cart-modal');
+            }
+            if (event.target === authModal) {
+                toggleModal('auth-modal');
+            }
+            if (event.target === productModal) {
+                closeProductModal();
+            }
+            if (mobileMenu.classList.contains('open') && !mobileMenu.contains(event.target) && !hamburgerIcon.contains(event.target)) {
+                toggleMobileMenu();
+            }
+        }
+
+        // Add bounce animation style for cart count (Copied from index.html)
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce-once {
+                0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+                40% {transform: translateY(-10px);}
+                60% {transform: translateY(-5px);}
+            }
+            .animate-bounce-once {
+                animation: bounce-once 1s ease;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // WhatsApp number replacement (update this with your actual WhatsApp number)
+        const whatsappNumber = '97433795577'; // Replace with your actual WhatsApp number from index.html
+        document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+            // Only replace if the number is the placeholder '1234567890'
+            if (link.href.includes('1234567890')) {
+                link.href = link.href.replace('1234567890', whatsappNumber);
+            }
+            // Ensure the text parameter is correctly encoded if it's not already
+            const url = new URL(link.href);
+            if (url.searchParams.has('text')) {
+                const text = url.searchParams.get('text');
+                url.searchParams.set('text', decodeURIComponent(text)); // Decode first to prevent double encoding
+                url.searchParams.set('text', encodeURIComponent(text));
+            }
+            link.href = url.toString();
+        });
+    </script>
+</body>
+</html>
