@@ -28,11 +28,14 @@
         .gradient-bg {
             background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
         }
-        .gradient-text {
-            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+       .gradient-text {
+    background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+    background-clip: text;              /* standard */
+    -webkit-background-clip: text;      /* Chrome, Safari */
+    color: transparent;                 /* fallback */
+    -webkit-text-fill-color: transparent;
         }
+
 
         /* Header Styles */
         .header-logo {
@@ -64,14 +67,18 @@
             width: 100%;
         }
         .libaas-studio-text {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.5rem;
-            background: linear-gradient(45deg, #e1a083, #a07b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            transform: translateX(-20px);
-            opacity: 0;
-        }
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, #e1a083, #a07b6b);
+    background-clip: text;              /* standard */
+    -webkit-background-clip: text;      /* Chrome/Safari */
+    color: transparent;                 /* fallback */
+    -webkit-text-fill-color: transparent;
+    transform: translateX(-20px);
+    opacity: 0;
+}
+
+        
         .hamburger-icon {
             width: 30px;
             height: 20px;
@@ -574,10 +581,10 @@
         </div>
     </div>
 
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/97433795577?text=Hello%20Libaas%20Studio,%20I%27m%20interested%20in%20your%20suits!" class="whatsapp-button" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+  <!-- WhatsApp Floating Button -->
+<a href="https://wa.me/YOUR_NUMBER?text=Hello%20Libaas%20Studio,%20I%27m%20interested%20in%20your%20suits!" class="whatsapp-button" target="_blank" rel="noopener noreferrer">
+    <i class="fab fa-whatsapp"></i>
+</a>
 
     <script>
         // Dummy product data for cart functionality (not used for product display on this page)

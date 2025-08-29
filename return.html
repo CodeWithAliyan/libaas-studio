@@ -614,7 +614,7 @@
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 animate-fade-in-scale-up">Simple Return Process</h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto animate-fade-in-scale-up" style="animation-delay: 0.1s;">
-                    We make returns and exchanges easy. Contact us via WhatsApp and we'll guide you through the simple process.
+                    We make returns and exchanges easy. Contact us and we'll guide you through the simple process.
                 </p>
             </div>
 
@@ -624,7 +624,7 @@
                         <i class="fas fa-comment-dots text-2xl theme-primary-text"></i>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-3">1. Contact Us</h3>
-                    <p class="text-gray-600">Reach out via WhatsApp with your order details and reason for return/exchange</p>
+                    <p class="text-gray-600">Reach out with your order details and reason for return/exchange</p>
                 </div>
 
                 <div class="feature-card text-center p-6 rounded-lg bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-300 animate-fade-in-scale-up process-card-2">
@@ -648,14 +648,13 @@
             <div class="bg-gray-100 rounded-2xl p-8 text-center animate-fade-in-scale-up" style="animation-delay: 0.4s;">
                 <img src="image/fbbaner.jpg" alt="Customer service representative assisting with return process through mobile messaging app" class="rounded-lg mx-auto mb-6" onerror="this.style.display='none'">
                 <h3 class="text-2xl font-bold text-gray-800 mb-4">Ready to Start Your Return?</h3>
-                <p class="text-gray-600 mb-6">Our customer service team is available via WhatsApp to assist you promptly</p>
+                <p class="text-gray-600 mb-6">Our customer service team is available to assist you promptly</p>
                 
-                <!-- WhatsApp CTA Button -->
-                <a href="https://wa.me/97433795577?text=Hi,%20I'd%20like%20to%20return/exchange%20my%20order" 
-                   target="_blank" 
+                <!-- Contact CTA Button (Replaced WhatsApp with a generic contact button) -->
+                <a href="contact.html" 
                    class="whatsapp-cta-btn inline-flex items-center px-8 py-4 bg-green-500 text-white font-semibold rounded-full hover:bg-green-600">
-                    <i class="fab fa-whatsapp text-2xl mr-3"></i>
-                    Contact via WhatsApp
+                    <i class="fas fa-envelope text-2xl mr-3"></i>
+                    Contact Us
                 </a>
             </div>
         </div>
@@ -707,7 +706,7 @@
                 
                 <div class="bg-gray-50 rounded-lg p-6 faq-item theme-hover-bg-light animate-fade-in-scale-up faq-item-2">
                     <h3 class="text-lg font-semibold text-gray-800 mb-2">What if my item is damaged or defective?</h3>
-                    <p class="text-gray-600">Contact us immediately via WhatsApp. We'll arrange free return shipping and process a full refund or replacement.</p>
+                    <p class="text-gray-600">Contact us immediately. We'll arrange free return shipping and process a full refund or replacement.</p>
                 </div>
                 
                 <div class="bg-gray-50 rounded-lg p-6 faq-item theme-hover-bg-light animate-fade-in-scale-up faq-item-3">
@@ -723,13 +722,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 animate-fade-in-scale-up">Need Help With Your Return?</h2>
             <p class="text-xl text-white mb-8 max-w-2xl mx-auto animate-fade-in-scale-up" style="animation-delay: 0.1s;">
-                Our customer support team is ready to assist you via WhatsApp. Contact us now for quick and friendly service.
+                Our customer support team is ready to assist you. Contact us now for quick and friendly service.
             </p>
-            <a href="https://wa.me/97433795577?text=Hi,%20I%20need%20help%20with%20a%20return%20or%20exchange" 
-               target="_blank" 
+            <a href="contact.html" 
                class="whatsapp-cta-btn inline-flex items-center px-10 py-5 bg-white theme-primary-text font-bold rounded-full text-lg hover:bg-gray-100 animate-fade-in-scale-up" style="animation-delay: 0.2s;">
-                <i class="fab fa-whatsapp text-2xl mr-3 text-green-500"></i>
-                Message Us on WhatsApp
+                <i class="fas fa-envelope text-2xl mr-3 text-green-500"></i>
+                Contact Us
             </a>
         </div>
     </section>
@@ -835,10 +833,10 @@
         </div>
     </div>
 
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/97433795577?text=Hello%20Libaas%20Studio,%20I%27m%20interested%20in%20your%20suits!" class="whatsapp-button" target="_blank" rel="noopener noreferrer">
+    <!-- WhatsApp Floating Button (Removed) -->
+    <!-- <a href="https://wa.me/97433795577?text=Hello%20Libaas%20Studio,%20I%27m%20interested%20in%20your%20suits!" class="whatsapp-button" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-whatsapp"></i>
-    </a>
+    </a> -->
 
     <script>
         // Product data (Copied from index.html - necessary for cart/product modal functionality)
@@ -1335,22 +1333,20 @@
         `;
         document.head.appendChild(style);
 
-        // WhatsApp number replacement (update this with your actual WhatsApp number)
-        const whatsappNumber = '97433795577'; // Replace with your actual WhatsApp number from index.html
-        document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
-            // Only replace if the number is the placeholder '1234567890'
-            if (link.href.includes('1234567890')) {
-                link.href = link.href.replace('1234567890', whatsappNumber);
-            }
-            // Ensure the text parameter is correctly encoded if it's not already
-            const url = new URL(link.href);
-            if (url.searchParams.has('text')) {
-                const text = url.searchParams.get('text');
-                url.searchParams.set('text', decodeURIComponent(text)); // Decode first to prevent double encoding
-                url.searchParams.set('text', encodeURIComponent(text));
-            }
-            link.href = url.toString();
-        });
+        // WhatsApp number replacement (Removed)
+        // const whatsappNumber = '97433795577'; 
+        // document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+        //     if (link.href.includes('1234567890')) {
+        //         link.href = link.href.replace('1234567890', whatsappNumber);
+        //     }
+        //     const url = new URL(link.href);
+        //     if (url.searchParams.has('text')) {
+        //         const text = url.searchParams.get('text');
+        //         url.searchParams.set('text', decodeURIComponent(text)); 
+        //         url.searchParams.set('text', encodeURIComponent(text));
+        //     }
+        //     link.href = url.toString();
+        // });
     </script>
 </body>
 </html>

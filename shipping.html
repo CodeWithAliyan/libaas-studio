@@ -460,10 +460,10 @@
 
                 <div class="whatsapp-section animate-on-scroll" data-delay="0s">
                     <h2>Need Delivery Assistance?</h2>
-                    <p>Our customer support team is available via WhatsApp to help with any delivery inquiries or special requests.</p>
-                    <a href="https://wa.me/97433795577?text=Hello! I have a question about my delivery." class="whatsapp-btn" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                        Chat on WhatsApp
+                    <p>Our customer support team is available to help with any delivery inquiries or special requests.</p>
+                    <a href="#" class="whatsapp-btn">
+                        <i class="fas fa-headset"></i> <!-- Changed icon to a generic headset for support -->
+                        Contact Support
                     </a>
                 </div>
             </div>
@@ -476,10 +476,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const whatsappBtn = document.querySelector('.whatsapp-btn');
+            const contactBtn = document.querySelector('.whatsapp-btn'); // Renamed for clarity
             
-            whatsappBtn.addEventListener('click', function(e) {
-                console.log('WhatsApp button clicked');
+            contactBtn.addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent default link behavior
+                console.log('Contact Support button clicked');
+                // You can add custom logic here, e.g., open a contact form,
+                // display a phone number, or redirect to a contact page.
+                alert('Please visit our Contact Us page or call our support line for assistance.');
             });
             
             // Intersection Observer for scroll animations
