@@ -93,13 +93,16 @@
 
         /* Custom Styles */
 
-        /* Gradient Text for Titles */
-        .gradient-text {
-            background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientShift 5s ease infinite alternate; /* Added animation */
-        }
+      /* Gradient Text for Titles */
+      .gradient-text {
+      background: linear-gradient(135deg, #e1a083 0%, #a07b6b 100%);
+       background-clip: text;              /* standard */
+      -webkit-background-clip: text;      /* for Chrome/Safari */
+      -webkit-text-fill-color: transparent;
+       color: transparent;                 /* fallback */
+       animation: gradientShift 5s ease infinite alternate;
+       }
+
 
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
@@ -115,7 +118,7 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             padding: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Added background transition */
+            transition: transform 0.3s ease, box-shadow 0.3s ease,  0.3s ease; /* Added background transition */
         }
         .glass-card:hover {
             transform: translateY(-8px) scale(1.01); /* More pronounced lift and slight scale */
@@ -160,22 +163,26 @@
             font-size: 1.25rem;
             border: none;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease; /* Added transform */
+            transition: 0.3s ease, transform 0.2s ease; /* Added transform */
         }
         .quantity-selector button:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: scale(1.05); /* Slight scale on hover */
         }
-        .quantity-selector input {
-            width: 60px;
-            text-align: center;
-            background: transparent;
-            border: none;
-            color: #e2e8f0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            -moz-appearance: textfield; /* Firefox */
+       .quantity-selector input {
+    width: 60px;
+    text-align: center;
+    background: transparent;
+    border: none;
+    color: #e2e8f0;
+    font-size: 1.1rem;
+      font-weight: 600;
+        appearance: textfield;       /* standard property */
+       -moz-appearance: textfield;  /* Firefox */
+       -webkit-appearance: none;    /* Chrome, Safari */
         }
+
+        
         .quantity-selector input::-webkit-outer-spin-button,
         .quantity-selector input::-webkit-inner-spin-button {
             -webkit-appearance: none;

@@ -708,30 +708,30 @@
     <section id="contact" class="py-20 gradient-bg">
         <div class="container mx-auto px-4">
             <div class="text-center text-white mb-12">
-                <h2 class="section-heading text-4xl font-bold mb-4 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0s">Get In Touch</h2>
-                <p class="text-xl animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">We'd love to hear from you. Send us a message!</p>
+                <h2 class="section-heading text-4xl md:text-5xl font-bold mb-4 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0s">Get In Touch</h2>
+                <p class="text-lg md:text-xl animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">We'd love to hear from you. Send us a message!</p>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12"> <!-- Adjusted gap for responsiveness -->
                 <div class="text-white">
                     <div class="mb-8 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.1s">
-                        <h3 class="text-2xl font-bold mb-4">Contact Information</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Contact Information</h3>
                         <div class="space-y-4">
-                            <div class="flex items-center animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s">
+                            <div class="flex items-center text-base md:text-lg animate-on-scroll" data-animation="slideInLeft" data-delay="0.2s">
                                 <i class="fas fa-map-marker-alt text-xl mr-4"></i>
                                 <span>[ YOUR ADDRESS ]</span>
                             </div>
-                            <div class="flex items-center animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s">
+                            <div class="flex items-center text-base md:text-lg animate-on-scroll" data-animation="slideInLeft" data-delay="0.3s">
                                 <i class="fas fa-phone text-xl mr-4"></i>
                                 <span>[YOUR NUMBER]</span>
                             </div>
-                            <div class="flex items-center animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s">
+                            <div class="flex items-center text-base md:text-lg animate-on-scroll" data-animation="slideInLeft" data-delay="0.4s">
                                 <i class="fas fa-envelope text-xl mr-4"></i>
                                 <span>[YOUR GMAIL]@gmail.com</span>
                             </div>
                         </div>
                     </div>
                     <div class="animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.5s">
-                        <h3 class="text-2xl font-bold mb-4">Follow Us</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">Follow Us</h3>
                         <div class="flex space-x-4">
                             <a href="#" class="text-2xl hover:text-gray-300 transition duration-200 animate-on-scroll" data-animation="bounceIn" data-delay="0.6s"><i class="fab fa-facebook"></i></a>
                             <a href="#" class="text-2xl hover:text-gray-300 transition duration-200 animate-on-scroll" data-animation="bounceIn" data-delay="0.7s"><i class="fab fa-instagram"></i></a>
@@ -740,14 +740,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl p-8 shadow-xl animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s">
+                <div class="bg-white rounded-xl p-6 sm:p-8 shadow-xl animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.2s"> <!-- Adjusted padding -->
                     <form>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <input type="text" placeholder="Your Name" class="contact-input animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">
-                            <input type="email" placeholder="Your Email" class="contact-input animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.4s">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6"> <!-- Adjusted gap and margin -->
+                            <input type="text" placeholder="Your Name" class="contact-input w-full animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.3s">
+                            <input type="email" placeholder="Your Email" class="contact-input w-full animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.4s">
                         </div>
-                        <input type="text" placeholder="Subject" class="contact-input mb-6 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.5s">
-                        <textarea placeholder="Your Message" rows="5" class="contact-input mb-6 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.6s"></textarea>
+                        <input type="text" placeholder="Subject" class="contact-input w-full mb-4 md:mb-6 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.5s"> <!-- Added w-full -->
+                        <textarea placeholder="Your Message" rows="5" class="contact-input w-full mb-6 animate-on-scroll" data-animation="fadeUpEnter" data-delay="0.6s"></textarea> <!-- Added w-full -->
                         <button type="submit" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105 animate-on-scroll" data-animation="scaleIn" data-delay="0.7s">Send Message</button>
                     </form>
                 </div>

@@ -460,6 +460,33 @@
         .product-modal-content.is-visible .product-modal-details > *:nth-child(2) { transition-delay: 0.2s; }
         .product-modal-content.is-visible .product-modal-details > *:nth-child(3) { transition-delay: 0.3s; }
         .product-modal-content.is-visible .product-modal-details > *:nth-child(4) { transition-delay: 0.4s; }
+
+        /* Custom styles for Hero Section responsiveness */
+        .hero-section-about {
+            background-position: center center; /* Center the image */
+            background-size: cover; /* Ensure it covers the area */
+            height: 600px; /* Default height for larger screens */
+        }
+
+        @media (max-width: 768px) { /* For tablets and smaller devices */
+            .hero-section-about {
+                height: 400px; /* Adjust height for smaller screens */
+                background-position: center center; /* Keep it centered */
+            }
+        }
+
+        @media (max-width: 480px) { /* For mobile phones */
+            .hero-section-about {
+                height: 300px; /* Further adjust height for very small screens */
+                background-position: center center; /* Keep it centered */
+            }
+            .libaas-studio-text {
+                font-size: 2rem; /* Slightly smaller font for mobile */
+            }
+            .header-logo {
+                height: 40px; /* Smaller logo on mobile */
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -529,8 +556,8 @@
 </div>
 
     <!-- Hero Section -->
-  <section class="bg-center bg-no-repeat bg-cover py-20 md:py-28" 
-         style="background-image: url('image/fbbaner.jpg'); height: 600px;">
+  <section class="bg-center bg-no-repeat bg-cover py-20 md:py-28 hero-section-about" 
+         style="background-image: url('image/fbbaner.jpg');">
     <div class="container mx-auto px-6 text-center">
         <!-- Text removed -->
     </div>
@@ -567,10 +594,10 @@
                 <!-- Team Member 1 -->
                 <div class="team-card bg-white rounded-xl shadow-md overflow-hidden transition duration-300">
                     <div class="h-64 overflow-hidden">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d727b7fb-9875-452d-82c4-5116227631b4.png" alt="Sarah Johnson, CEO - professional portrait of a confident female executive" class="w-full h-full object-cover">
+                        <img src="image/ab1.jpg" alt="Sarah Johnson, CEO - professional portrait of a confident female executive" class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-800">Sarah Johnson</h3>
+                        <h3 class="text-xl font-semibold text-gray-800">WANIA KHAN</h3>
                         <p class="text-[#a07b6b] mb-4">CEO & Founder</p>
                         <p class="text-gray-600">Visionary leader with 15+ years in tech industry</p>
                     </div>
@@ -579,10 +606,10 @@
                 <!-- Team Member 2 -->
                 <div class="team-card bg-white rounded-xl shadow-md overflow-hidden transition duration-300">
                     <div class="h-64 overflow-hidden">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7761fda2-54ee-4e6c-99b6-3e8300574827.png" alt="Michael Chen, CTO - smiling asian male engineer reviewing code on laptop" class="w-full h-full object-cover">
+                        <img src="image/ab2.jpg" alt="Michael Chen, CTO - smiling asian male engineer reviewing code on laptop" class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-800">Michael Chen</h3>
+                        <h3 class="text-xl font-semibold text-gray-800">KASHAN AKEEL</h3>
                         <p class="text-[#a07b6b] mb-4">Chief Technology Officer</p>
                         <p class="text-gray-600">Tech enthusiast passionate about scalable solutions</p>
                     </div>
@@ -591,10 +618,10 @@
                 <!-- Team Member 3 -->
                 <div class="team-card bg-white rounded-xl shadow-md overflow-hidden transition duration-300">
                     <div class="h-64 overflow-hidden">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-85cc-36bccacb97df.png" alt="Emma Rodriguez, Design Lead - creative professional working on a digital tablet" class="w-full h-full object-cover">
+                        <img src="image/ab3.jpg" alt="Emma Rodriguez, Design Lead - creative professional working on a digital tablet" class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-800">Emma Rodriguez</h3>
+                        <h3 class="text-xl font-semibold text-gray-800">KHIZER ABBAS</h3>
                         <p class="text-[#a07b6b] mb-4">Design Lead</p>
                         <p class="text-gray-600">Transforming complex ideas into beautiful experiences</p>
                     </div>
