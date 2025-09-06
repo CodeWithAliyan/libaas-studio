@@ -28,6 +28,8 @@ This project showcases a fully responsive fashion store front-end design.
 ## 📂 Project Structure
 
 
+## Project Structure
+
 libaas-studio/
 ├── index.html
 ├── about.html
@@ -39,7 +41,7 @@ libaas-studio/
 ├── return.html
 ├── shipping.html
 ├── sizeguide.html
-└── assets/ (images, css, js)
+└── assets/        # images, CSS, JS files
 
 
 
