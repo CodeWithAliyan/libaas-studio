@@ -1,8 +1,8 @@
 # 🪡 Libaas Studio — Luxury Fashion E-Commerce
 
+<div align="center">
 
-
-![Libaas Studio Banner](screenshots/banner.png)
+![Libaas Studio Banner](image/githubbanner.jpg)
 
 **A premium Pakistani ladies fashion e-commerce website built with pure HTML, Tailwind CSS & Vanilla JavaScript.**
 
@@ -12,25 +12,23 @@
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-
+</div>
 
 ---
 
 ## 📸 Project Screenshots
 
-> _Add your screenshots to a `/screenshots` folder and update the paths below._
+> 🕐 **Screenshots will be added soon.** To preview the project, visit the live demo link above or clone the repository and open `index.html` locally.
 
-| Homepage | Product Catalog |
-|----------|----------------|
-| ![Homepage](screenshots/homepage.png) | ![Products](screenshots/products.png) |
-
-| Product Detail | Checkout / Order |
-|---------------|-----------------|
-| ![Detail](screenshots/product-detail.png) | ![Order](screenshots/order.png) |
-
-| About Page | Contact Page |
-|------------|-------------|
-| ![About](screenshots/about.png) | ![Contact](screenshots/contact.png) |
+| Page | File | Description |
+|------|------|-------------|
+| 🏠 Homepage | `index.html` | Hero banner, collections grid, product listings |
+| 🛍️ Product Catalog | `products.html` | Full catalog with category filters |
+| 👗 Product Detail | `product-detail.html` | Individual product view with cart & WhatsApp |
+| 🧾 Order Dashboard | `order.html` | Cart review, order history, WhatsApp checkout |
+| 💛 About | `about.html` | Brand story, founder's message, stats |
+| 📞 Contact | `contact.html` | Contact form, WhatsApp card, FAQ |
+| 🔄 Returns | `return.html` | Returns & exchange policy |
 
 ---
 
@@ -43,6 +41,7 @@
 - **Product Detail Pages** — URL-based routing (`?id=lawn1`) with dynamic content rendering
 - **Shopping Cart** — Persistent cart using `localStorage` shared across all pages
 - **WhatsApp Checkout** — One-click order confirmation via WhatsApp with full order summary
+- **Order History Dashboard** — Auto-saved order history with unique IDs (`#LBS-2026-001`) and status badges
 - **Sticky Cart & Header** — Smooth header scroll behaviour with cart item badge
 - **Accordion UI** — Animated accordion sections on Returns and FAQ pages
 - **Contact Form** — Validated form that forwards enquiries directly to WhatsApp
@@ -64,7 +63,7 @@
 | `index.html` | Homepage — hero banner, collections, product grid, testimonials |
 | `products.html` | Full product catalog with sticky filter bar (27 products) |
 | `product-detail.html` | Dynamic product detail — URL-param driven (`?id=...`) |
-| `order.html` | Cart review & WhatsApp checkout page |
+| `order.html` | Order dashboard — cart, history, WhatsApp checkout |
 | `about.html` | Brand story, philosophy, founder's message, stats |
 | `contact.html` | Contact form, WhatsApp card, social links, FAQ |
 | `return.html` | Returns & Exchange Policy with accordion sections |
@@ -79,7 +78,7 @@
 | **Tailwind CSS** (CDN) | Utility-first styling |
 | **Custom CSS** | CSS Variables, animations, accordion logic |
 | **Vanilla JavaScript** | Cart, modals, routing, WhatsApp integration |
-| **localStorage** | Persistent cart state across pages |
+| **localStorage** | Persistent cart & order history across pages |
 | **Google Fonts** | Playfair Display, Montserrat, Great Vibes |
 | **Font Awesome 6** | Icon library |
 
@@ -93,13 +92,14 @@ libaas-studio/
 ├── index.html              # Homepage
 ├── products.html           # Product catalog
 ├── product-detail.html     # Product detail (dynamic)
-├── order.html              # Cart & checkout
+├── order.html              # Order dashboard & checkout
 ├── about.html              # Brand story
 ├── contact.html            # Contact & FAQ
 ├── return.html             # Returns policy
 ├── README.md               # This file
 │
 └── image/                  # All product & UI images
+    ├── githubbanner.jpg     # GitHub README banner
     ├── banner-d.jpg         # Desktop hero banner
     ├── banner-r.jpg         # Mobile hero banner
     ├── favicon.jpg
@@ -125,7 +125,7 @@ git clone https://github.com/CodeWithAliyan/libaas-studio.git
 ### 2. Navigate into the project folder
 
 ```bash
-cd your-repo-name
+cd libaas-studio
 ```
 
 ### 3. Add your images
