@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping & Delivery — Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-black': '#000000',
+                        'brand-dark':  '#111111',
+                        'brand-card':  '#181818',
+                        'brand-border':'#222222',
+                        'brand-gold':  '#c9a96e',
+                        'brand-tan':   '#b8956a',
+                        'brand-muted': '#888888',
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'sans':    ['Montserrat', 'sans-serif'],
+                        'script':  ['Great Vibes', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* ── Reset & Root ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --black:      #000000;
+            --dark:       #111111;
+            --dark-card:  #181818;
+            --dark-border:#222222;
+            --gold:       #c9a96e;
+            --gold-light: #e1c99a;
+            --warm-tan:   #b8956a;
+            --white:      #ffffff;
+            --off-white:  #f5f0eb;
+            --text-muted: #888888;
+            --text-dim:   #555555;
+            --font-display:'Playfair Display', serif;
+            --font-body:   'Montserrat', sans-serif;
+            --font-script: 'Great Vibes', cursive;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--dark);
+            color: var(--off-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4 { font-family: var(--font-display); }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; font-family: var(--font-body); border: none; background: none; }
+        img { display: block; max-width: 100%; }
+
+        /* ── Announcement Bar ── */
+        .announcement-bar {
+            background: #0a0a0a;
+            border-bottom: 1px solid var(--dark-border);
+            padding: 8px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .announcement-track {
+            display: inline-flex;
+            animation: ticker 40s linear infinite;
+        }
+        .announcement-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 40px;
+            font-size: 10.5px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .announcement-item .star { color: var(--gold); font-size: 9px; }
+        .announcement-item strong { color: var(--off-white); }
+        @keyframes ticker {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ── Header ── */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #000;
+            border-bottom: 1px solid var(--dark-border);
+            transition: box-shadow .3s;
+        }
+        .header-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+        .nav-left { display: flex; align-items: center; gap: 28px; }
+        .nav-link {
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: #aaa;
+            position: relative;
+            padding-bottom: 2px;
+            transition: color .25s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width .3s;
+        }
+        .nav-link:hover { color: #fff; }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active { color: #fff; }
+        .nav-link.active::after { width: 100%; }
+        .brand-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            line-height: 1;
+        }
+        .brand-name {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .brand-tagline {
+            font-size: 8px;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        .icon-btn {
+            font-size: 14px;
+            color: #aaa;
+            transition: color .25s;
+            position: relative;
+            padding: 4px;
+        }
+        .icon-btn:hover { color: #fff; }
+        .cart-badge {
+            position: absolute;
+            top: -5px; right: -7px;
+            background: var(--gold);
+            color: #000;
+            font-size: 8px;
+            font-weight: 700;
+            width: 15px; height: 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Hamburger ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            width: 22px;
+            cursor: pointer;
+        }
+        .hamburger span {
+            display: block;
+            height: 1.5px;
+            background: #fff;
+            transition: all .3s;
+        }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translateY(9px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translateY(-9px); }
+
+        /* ── Mobile Nav ── */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 36px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity .4s, transform .4s;
+        }
+        .mobile-nav.open { display: flex; opacity: 1; transform: translateY(0); }
+        .mobile-nav a {
+            font-family: var(--font-display);
+            font-size: 28px;
+            color: #fff;
+            letter-spacing: 4px;
+        }
+
+        /* ── Search Bar ── */
+        .search-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 64px;
+            background: #000;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            padding: 0 32px;
+            gap: 16px;
+            transform: translateY(-100%);
+            transition: transform .35s ease;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        .search-bar.open { transform: translateY(0); }
+        .search-bar input {
+            flex: 1; background: none; border: none; outline: none;
+            color: #fff; font-size: 14px; letter-spacing: 1px;
+            font-family: var(--font-body);
+        }
+        .search-bar input::placeholder { color: var(--text-muted); }
+
+        /* ── Page Hero ── */
+        .page-hero {
+            background: #000;
+            border-bottom: 1px solid var(--dark-border);
+            padding: 90px 40px 76px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 90% at 50% 120%, rgba(201,169,110,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .page-hero-label {
+            font-size: 9.5px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 18px;
+        }
+        .page-hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(34px, 5vw, 62px);
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: #fff;
+            line-height: 1.12;
+            margin-bottom: 18px;
+        }
+        .page-hero-sub {
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .hero-divider {
+            width: 48px; height: 1px;
+            background: var(--gold);
+            margin: 28px auto 0;
+            opacity: .55;
+        }
+
+        /* ── Breadcrumb ── */
+        .breadcrumb {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 18px 32px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .breadcrumb a { transition: color .25s; }
+        .breadcrumb a:hover { color: var(--gold); }
+        .breadcrumb .sep { color: var(--dark-border); }
+        .breadcrumb .current { color: var(--gold); }
+
+        /* ── Main Layout ── */
+        .shipping-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 64px 32px 80px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 56px;
+            align-items: start;
+        }
+        @media (max-width: 860px) {
+            .shipping-wrap {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 48px 20px 64px;
+            }
+        }
+
+        /* ── Sticky Sidebar ── */
+        .sidebar {
+            position: sticky;
+            top: 88px;
+        }
+        .sidebar-title {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav li { margin-bottom: 4px; }
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            font-size: 10.5px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border: 1px solid transparent;
+            transition: all .25s;
+        }
+        .sidebar-nav a i {
+            font-size: 11px;
+            width: 14px;
+            text-align: center;
+            color: var(--text-dim);
+            transition: color .25s;
+        }
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            color: var(--gold);
+            border-color: rgba(201,169,110,0.22);
+            background: rgba(201,169,110,0.04);
+        }
+        .sidebar-nav a:hover i,
+        .sidebar-nav a.active i { color: var(--gold); }
+
+        .sidebar-card {
+            margin-top: 28px;
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            padding: 24px 20px;
+        }
+        .sidebar-card-title {
+            font-family: var(--font-display);
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .sidebar-card p {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            line-height: 1.75;
+            margin-bottom: 18px;
+        }
+        .sidebar-btn {
+            display: block;
+            text-align: center;
+            padding: 11px 20px;
+            background: var(--gold);
+            color: #000;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            transition: background .25s;
+        }
+        .sidebar-btn:hover { background: var(--gold-light); }
+
+        /* ── Content Sections ── */
+        .content-section {
+            margin-bottom: 56px;
+            scroll-margin-top: 100px;
+        }
+        .content-section:last-child { margin-bottom: 0; }
+
+        .section-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+        .eyebrow-icon {
+            width: 42px; height: 42px;
+            border: 1px solid rgba(201,169,110,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+        
+        .eyebrow-label {
+            font-size: 9px;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 4px;
+        }
+        .eyebrow-heading {
+            font-family: var(--font-display);
+            font-size: clamp(20px, 2.5vw, 28px);
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .section-divider {
+            width: 100%; height: 1px;
+            background: var(--dark-border);
+            margin-bottom: 28px;
+        }
+
+        /* Body text */
+        .body-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.9;
+            letter-spacing: 0.3px;
+            margin-bottom: 20px;
+        }
+        .body-text:last-child { margin-bottom: 0; }
+        .body-text a {
+            color: var(--gold);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: opacity .2s;
+        }
+        .body-text a:hover { opacity: .75; }
+
+        /* Timeline Cards */
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        @media (max-width: 640px) { .timeline-grid { grid-template-columns: 1fr; } }
+
+        .timeline-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            padding: 24px 20px;
+            position: relative;
+            transition: border-color .3s;
+        }
+        .timeline-card:hover { border-color: rgba(201,169,110,0.35); }
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 2px; height: 100%;
+            background: var(--gold);
+            opacity: 0;
+            transition: opacity .3s;
+        }
+        .timeline-card:hover::before { opacity: 1; }
+        .tc-icon {
+            font-size: 20px;
+            color: var(--gold);
+            margin-bottom: 14px;
+        }
+        .tc-label {
+            font-size: 9px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 6px;
+        }
+        .tc-value {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+        .tc-desc {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Info Rows */
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        .info-row:first-of-type { border-top: 1px solid var(--dark-border); }
+        .info-row-icon {
+            width: 32px; height: 32px;
+            border: 1px solid var(--dark-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 12px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+       
+        .info-row-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--off-white);
+            margin-bottom: 4px;
+        }
+        .info-row-text {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: rgba(201,169,110,0.05);
+            border: 1px solid rgba(201,169,110,0.2);
+            border-left: 3px solid var(--gold);
+            padding: 20px 24px;
+            margin: 24px 0;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+        .highlight-box i {
+            color: var(--gold);
+            font-size: 14px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .highlight-box p {
+            font-size: 11.5px;
+            color: var(--off-white);
+            line-height: 1.75;
+            letter-spacing: 0.2px;
+        }
+        .highlight-box strong { color: var(--gold); }
+
+        /* Step Cards — Tracking */
+        .steps-list { list-style: none; }
+        .step-item {
+            display: flex;
+            gap: 20px;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--dark-border);
+            position: relative;
+        }
+        .step-item:first-child { border-top: 1px solid var(--dark-border); }
+        .step-num {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 600;
+            color: rgba(201,169,110,0.18);
+            line-height: 1;
+            flex-shrink: 0;
+            width: 36px;
+            text-align: center;
+        }
+        
+        .step-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--off-white);
+            margin-bottom: 6px;
+        }
+        .step-text {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        /* Coverage Map Cards */
+        .coverage-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        @media (max-width: 540px) { .coverage-grid { grid-template-columns: 1fr; } }
+
+        .coverage-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            padding: 28px 24px;
+            transition: border-color .3s;
+        }
+        .coverage-card:hover { border-color: rgba(201,169,110,0.3); }
+        .cov-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .cov-icon {
+            width: 36px; height: 36px;
+            border: 1px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 13px;
+        }
+        .cov-title {
+            font-family: var(--font-display);
+            font-size: 17px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+        .cov-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            font-size: 8.5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .cov-badge.available  { background: rgba(201,169,110,0.1); color: var(--gold); border: 1px solid rgba(201,169,110,0.3); }
+        .cov-badge.limited    { background: rgba(255,180,50,0.08);  color: #e5a830;    border: 1px solid rgba(229,168,48,0.3); }
+        .cov-list {
+            list-style: none;
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .cov-list li { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+        .cov-list li::before {
+            content: '—';
+            color: var(--gold);
+            font-size: 9px;
+            flex-shrink: 0;
+        }
+
+        /* Charges Table */
+        .charges-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+        .charges-table th {
+            font-size: 9px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+            padding: 12px 16px;
+            background: #0d0d0d;
+            border-bottom: 1px solid var(--dark-border);
+            text-align: left;
+        }
+        .charges-table td {
+            font-size: 11.5px;
+            color: var(--off-white);
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--dark-border);
+            vertical-align: middle;
+        }
+        .charges-table tr:last-child td { border-bottom: none; }
+        .charges-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .free-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(201,169,110,0.1);
+            color: var(--gold);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border: 1px solid rgba(201,169,110,0.25);
+        }
+
+        /* ── CTA Section ── */
+        .cta-section {
+            background: #000;
+            border-top: 1px solid var(--dark-border);
+            padding: 80px 40px;
+            text-align: center;
+        }
+        .cta-inner { max-width: 560px; margin: 0 auto; }
+        .cta-label {
+            font-size: 9.5px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 16px;
+        }
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(26px, 3.5vw, 40px);
+            font-weight: 500;
+            letter-spacing: 3px;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        .cta-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.4px;
+            line-height: 1.85;
+            margin-bottom: 36px;
+        }
+        .cta-buttons { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .btn-gold {
+            display: inline-block;
+            padding: 14px 40px;
+            background: var(--gold);
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: background .3s, transform .2s;
+        }
+        .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+        .btn-ghost {
+            display: inline-block;
+            padding: 14px 40px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.22);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: border-color .3s, color .3s;
+        }
+        .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* ── Footer ── */
+        footer {
+            background: #000;
+            border-top: 1px solid var(--dark-border);
+        }
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 60px 40px 0;
+            display: grid;
+            grid-template-columns: 1.8fr 1fr 1fr 1fr;
+            gap: 48px;
+        }
+        @media (max-width: 900px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 500px) {
+            .footer-inner { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand p { max-width: 100%; }
+            .footer-social { justify-content: center; }
+        }
+        .footer-brand h2 {
+            font-family: var(--font-display);
+            font-size: 22px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .footer-brand .tagline {
+            font-size: 8px; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--text-muted); margin-bottom: 20px; display: block;
+        }
+        .footer-brand p { font-size: 11px; color: var(--text-muted); line-height: 1.9; max-width: 280px; }
+        .footer-social { display: flex; gap: 14px; margin-top: 24px; }
+        .footer-social a {
+            width: 34px; height: 34px;
+            border: 1px solid var(--dark-border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; color: var(--text-muted); transition: all .25s;
+        }
+        .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+        .footer-col h4 {
+            font-family: var(--font-body);
+            font-size: 9.5px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; color: #fff; margin-bottom: 24px;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a {
+            font-size: 11px; color: var(--text-muted);
+            letter-spacing: 0.5px; transition: color .25s;
+        }
+        .footer-col ul li a:hover { color: var(--gold); }
+        .footer-bottom {
+            border-top: 1px solid var(--dark-border);
+            margin-top: 48px; padding: 20px 40px;
+            display: flex; align-items: center; justify-content: center;
+            flex-wrap: wrap; gap: 20px; text-align: center;
+        }
+        .footer-bottom p { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; }
+        .footer-bottom-links { display: flex; gap: 24px; }
+        .footer-bottom-links a {
+            font-size: 10px; color: var(--text-dim);
+            letter-spacing: 1px; transition: color .25s;
+        }
+        .footer-bottom-links a:hover { color: var(--gold); }
+
+        /* ── Cart Modal ── */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.7); z-index: 2000;
+            display: none; align-items: stretch;
+            justify-content: flex-end;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-panel {
+            width: 420px; max-width: 100vw;
+            background: #0a0a0a;
+            border-left: 1px solid var(--dark-border);
+            display: flex; flex-direction: column;
+            transform: translateX(100%);
+            transition: transform .35s ease;
+        }
+        .modal-panel.visible { transform: translateX(0); }
+        .modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 24px 28px; border-bottom: 1px solid var(--dark-border);
+        }
+        .modal-header h3 {
+            font-family: var(--font-display); font-size: 18px;
+            letter-spacing: 3px; text-transform: uppercase; color: #fff;
+        }
+        .close-btn { font-size: 16px; color: var(--text-muted); transition: color .25s; }
+        .close-btn:hover { color: #fff; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 24px 28px; }
+        .cart-footer { padding: 24px 28px; border-top: 1px solid var(--dark-border); }
+        .cart-total-row {
+            display: flex; justify-content: space-between;
+            margin-bottom: 20px; font-size: 12px;
+        }
+        .cart-total-row span:first-child { color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+        .cart-total-row span:last-child { color: #fff; font-weight: 600; font-size: 14px; }
+        .btn-checkout {
+            width: 100%; padding: 15px; background: var(--gold);
+            border: none; color: #000; font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase; transition: background .25s;
+        }
+        .btn-checkout:hover { background: var(--gold-light); }
+
+        /* ── Auth Modal ── */
+        .auth-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.75); z-index: 2000;
+            display: none; align-items: center; justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .auth-overlay.active { display: flex; }
+        .auth-panel {
+            width: 400px; max-width: 95vw;
+            background: #0a0a0a; border: 1px solid var(--dark-border);
+            padding: 40px; position: relative;
+            transform: scale(.95); opacity: 0; transition: all .3s;
+        }
+        .auth-panel.visible { transform: scale(1); opacity: 1; }
+        .auth-panel h2 {
+            font-family: var(--font-display); font-size: 22px;
+            letter-spacing: 4px; text-transform: uppercase; color: #fff; margin-bottom: 8px;
+        }
+        .auth-subtitle {
+            font-size: 10px; color: var(--text-muted);
+            letter-spacing: 1px; margin-bottom: 32px; display: block;
+        }
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block; font-size: 9px; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;
+        }
+        .form-group input {
+            width: 100%; background: #111; border: 1px solid var(--dark-border);
+            outline: none; color: #fff; font-size: 12px; padding: 11px 14px;
+            font-family: var(--font-body); transition: border-color .25s;
+        }
+        .form-group input:focus { border-color: var(--gold); }
+        .btn-submit {
+            width: 100%; padding: 13px; background: var(--gold); border: none;
+            color: #000; font-size: 10px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; margin-top: 8px; transition: background .25s;
+        }
+        .btn-submit:hover { background: var(--gold-light); }
+        .auth-switch { text-align: center; margin-top: 20px; font-size: 11px; color: var(--text-muted); }
+        .auth-switch button { color: var(--gold); text-decoration: underline; font-size: 11px; }
+        .hidden { display: none; }
+
+        /* ── Reveal ── */
+        .reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.in { opacity: 1; transform: translateY(0); }
+
+        /* ── Responsive overrides ── */
+        @media (max-width: 900px) {
+            .hamburger { display: flex; }
+            .nav-left, .brand-center { display: none; }
+            .mobile-brand {
+                font-family: var(--font-display);
+                font-size: 20px; letter-spacing: 6px; color: #fff;
+            }
+            .footer-bottom { padding: 20px 24px; }
+            .page-hero { padding: 64px 24px 56px; }
+            .sidebar { position: static; }
+        }
+        @media (max-width: 540px) {
+            .breadcrumb { padding: 14px 20px 0; }
+            .cta-section { padding: 64px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     ANNOUNCEMENT BAR
+══════════════════════════════════════ -->
+<div class="announcement-bar">
+    <div class="announcement-track">
+        <span class="announcement-item"><i class="fas fa-heart star"></i> 10% Off With Code <strong>LIBAAS10</strong> &nbsp;•&nbsp; Use At Checkout</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> Free Shipping On All Orders. Don't Miss This Deal!</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> Buy More Than Rs.3,000 And Get Free Delivery Nationwide</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> New Collection Arrived — Shop The Latest Designs</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> 10% Off With Code <strong>LIBAAS10</strong> &nbsp;•&nbsp; Use At Checkout</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> Free Shipping On All Orders. Don't Miss This Deal!</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> Buy More Than Rs.3,000 And Get Free Delivery Nationwide</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> New Collection Arrived — Shop The Latest Designs</span>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     HEADER
+══════════════════════════════════════ -->
+<header class="site-header" id="site-header">
+    <div class="search-bar" id="search-bar">
+        <i class="fas fa-search" style="color:var(--text-muted);font-size:13px;"></i>
+        <input type="text" id="search-input" placeholder="Search collections...">
+        <button class="icon-btn" onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="header-inner">
+        <nav class="nav-left">
+            <a href="index.html"    class="nav-link">Home</a>
+            <a href="products.html" class="nav-link">Shop</a>
+            <a href="about.html"    class="nav-link">About</a>
+            <a href="products.html" class="nav-link">Gallery</a>
+            <a href="faqs.html"     class="nav-link">FAQ</a>
+            <a href="contact.html"  class="nav-link">Contact</a>
+        </nav>
+
+        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <span class="mobile-brand" style="display:none;" id="mobile-logo">LIBAAS</span>
+
+        <div class="brand-center">
+            <div class="brand-name">Libaas</div>
+            <div class="brand-tagline">Studio</div>
+        </div>
+
+        <div class="header-actions">
+            <button class="icon-btn" onclick="toggleSearch()" aria-label="Search"><i class="fas fa-search"></i></button>
+            <button class="icon-btn" onclick="toggleAuth()"   aria-label="Account"><i class="fas fa-user"></i></button>
+            <button class="icon-btn" onclick="toggleCart()"   aria-label="Cart">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge" id="cart-count">0</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav" id="mobile-nav">
+    <button style="position:absolute;top:20px;right:28px;font-size:20px;color:#fff;" onclick="toggleMobileMenu()">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="index.html"    onclick="toggleMobileMenu()">Home</a>
+    <a href="products.html" onclick="toggleMobileMenu()">Shop</a>
+    <a href="about.html"    onclick="toggleMobileMenu()">About</a>
+    <a href="products.html" onclick="toggleMobileMenu()">Gallery</a>
+    <a href="faqs.html"     onclick="toggleMobileMenu()">FAQ</a>
+    <a href="contact.html"  onclick="toggleMobileMenu()">Contact</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     PAGE HERO
+══════════════════════════════════════ -->
+<section class="page-hero">
+    <span class="page-hero-label">Policies &amp; Information</span>
+    <h1 class="page-hero-title">Shipping &amp; Delivery<br>Policy</h1>
+    <p class="page-hero-sub">Transparent, reliable delivery across Pakistan — and beyond</p>
+    <div class="hero-divider"></div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Shipping &amp; Delivery</span>
+</div>
+
+<!-- ══════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════ -->
+<div class="shipping-wrap">
+
+    <!-- ─── Sticky Sidebar ─── -->
+    <aside class="sidebar">
+        <p class="sidebar-title">On This Page</p>
+        <ul class="sidebar-nav">
+            <li><a href="#delivery-timeline" class="active"><i class="fas fa-clock"></i> Delivery Timeline</a></li>
+            <li><a href="#shipping-charges"><i class="fas fa-tag"></i> Shipping Charges</a></li>
+            <li><a href="#order-tracking"><i class="fas fa-map-marker-alt"></i> Order Tracking</a></li>
+            <li><a href="#coverage"><i class="fas fa-map"></i> Coverage Areas</a></li>
+            <li><a href="#important-notes"><i class="fas fa-info-circle"></i> Important Notes</a></li>
+        </ul>
+
+        <div class="sidebar-card">
+            <h3 class="sidebar-card-title">Need Help?</h3>
+            <p>Have a question about your delivery? Our team is available 7 days a week to assist you.</p>
+            <a href="contact.html" class="sidebar-btn">Contact Us</a>
+        </div>
+    </aside>
+
+    <!-- ─── Content ─── -->
+    <main>
+
+        <!-- ① Delivery Timeline -->
+        <div class="content-section reveal" id="delivery-timeline">
+            <div class="section-eyebrow">
+                <div class="eyebrow-icon"><i class="fas fa-clock"></i></div>
+                <div class="eyebrow-text">
+                    <span class="eyebrow-label">Section 01</span>
+                    <h2 class="eyebrow-heading">Delivery Timeline</h2>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <p class="body-text">At Libaas Studio, we understand that receiving your order promptly matters. We work with Pakistan's most reliable courier partners to ensure your purchase reaches you safely and on time. Delivery estimates begin from the day your order is dispatched — not the day it is placed.</p>
+
+            <div class="timeline-grid">
+                <div class="timeline-card">
+                    <div class="tc-icon"><i class="fas fa-city"></i></div>
+                    <span class="tc-label">Major Cities</span>
+                    <div class="tc-value">1–2 Days</div>
+                    <p class="tc-desc">Karachi, Lahore, Islamabad, Rawalpindi, Faisalabad</p>
+                </div>
+                <div class="timeline-card">
+                    <div class="tc-icon"><i class="fas fa-map-pin"></i></div>
+                    <span class="tc-label">Standard Nationwide</span>
+                    <div class="tc-value">3–5 Days</div>
+                    <p class="tc-desc">All other cities and towns across Pakistan</p>
+                </div>
+                <div class="timeline-card">
+                    <div class="tc-icon"><i class="fas fa-mountain"></i></div>
+                    <span class="tc-label">Remote Areas</span>
+                    <div class="tc-value">5–7 Days</div>
+                    <p class="tc-desc">Rural areas, AJK, Gilgit-Baltistan, and FATA regions</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <i class="fas fa-info-circle"></i>
+                <p>Orders placed before <strong>2:00 PM (PKT)</strong> on business days are typically dispatched the same day. Orders placed on weekends or public holidays are processed the next working day.</p>
+            </div>
+
+            <p class="body-text">Please note that delivery timelines are estimates and may be affected by courier delays, weather conditions, or exceptionally high demand periods such as Eid, Black Friday, and national holidays. We will notify you via SMS if your delivery is expected to be delayed.</p>
+        </div>
+
+        <!-- ② Shipping Charges -->
+        <div class="content-section reveal" id="shipping-charges" style="transition-delay:.08s">
+            <div class="section-eyebrow">
+                <div class="eyebrow-icon"><i class="fas fa-tag"></i></div>
+                <div class="eyebrow-text">
+                    <span class="eyebrow-label">Section 02</span>
+                    <h2 class="eyebrow-heading">Shipping Charges</h2>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <p class="body-text">We believe premium fashion should reach you without hidden costs. That is why Libaas Studio offers free standard shipping on every single order — no minimum spend, no exceptions.</p>
+
+            <table class="charges-table">
+                <thead>
+                    <tr>
+                        <th>Delivery Type</th>
+                        <th>Coverage</th>
+                        <th>Estimated Time</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Standard Shipping</td>
+                        <td>All of Pakistan</td>
+                        <td>3–5 Business Days</td>
+                        <td><span class="free-tag"><i class="fas fa-check"></i> Free</span></td>
+                    </tr>
+                    <tr>
+                        <td>Express Shipping</td>
+                        <td>Major Cities Only</td>
+                        <td>1–2 Business Days</td>
+                        <td><span class="free-tag"><i class="fas fa-check"></i> Free</span></td>
+                    </tr>
+                    <tr>
+                        <td>Remote Area Delivery</td>
+                        <td>AJK, GB, FATA</td>
+                        <td>5–7 Business Days</td>
+                        <td><span class="free-tag"><i class="fas fa-check"></i> Free</span></td>
+                    </tr>
+                    <tr>
+                        <td>Cash on Delivery (COD)</td>
+                        <td>Nationwide</td>
+                        <td>Same as above</td>
+                        <td><span class="free-tag"><i class="fas fa-check"></i> Free</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <i class="fas fa-gift"></i>
+                <p>Use discount code <strong>LIBAAS10</strong> at checkout to receive an additional <strong>10% off</strong> your entire order. Free shipping applies automatically — no code required.</p>
+            </div>
+        </div>
+
+        <!-- ③ Order Tracking -->
+        <div class="content-section reveal" id="order-tracking" style="transition-delay:.12s">
+            <div class="section-eyebrow">
+                <div class="eyebrow-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="eyebrow-text">
+                    <span class="eyebrow-label">Section 03</span>
+                    <h2 class="eyebrow-heading">Order Tracking</h2>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <p class="body-text">We keep you informed every step of the way. From the moment your order is confirmed to the second it arrives at your door, you'll have full visibility over your parcel's journey.</p>
+
+            <ul class="steps-list">
+                <li class="step-item">
+                    <span class="step-num">01</span>
+                    <div class="step-content">
+                        <div class="step-title">Order Confirmed</div>
+                        <p class="step-text">As soon as you place your order, you will receive an SMS and email confirmation with your order number and a summary of your purchase. Save this for reference.</p>
+                    </div>
+                </li>
+                <li class="step-item">
+                    <span class="step-num">02</span>
+                    <div class="step-content">
+                        <div class="step-title">Order Packed &amp; Dispatched</div>
+                        <p class="step-text">Once your order has been packed and handed to our courier partner, you will receive a second SMS containing your <strong style="color:var(--off-white);">tracking number</strong> and a direct link to the courier's tracking portal.</p>
+                    </div>
+                </li>
+                <li class="step-item">
+                    <span class="step-num">03</span>
+                    <div class="step-content">
+                        <div class="step-title">Track In Real-Time</div>
+                        <p class="step-text">Use your tracking number on the courier's website or app to monitor your parcel's live location. Updates are provided at each transit hub automatically.</p>
+                    </div>
+                </li>
+                <li class="step-item">
+                    <span class="step-num">04</span>
+                    <div class="step-content">
+                        <div class="step-title">Out for Delivery</div>
+                        <p class="step-text">On the day of delivery, the courier will send a final notification confirming your parcel is out for delivery. Please ensure someone is available at the delivery address to receive the order.</p>
+                    </div>
+                </li>
+                <li class="step-item">
+                    <span class="step-num">05</span>
+                    <div class="step-content">
+                        <div class="step-title">Order Delivered</div>
+                        <p class="step-text">Your parcel has arrived! If for any reason delivery could not be completed, the courier will attempt re-delivery the following business day. If you need further assistance, please <a href="contact.html">contact our team</a>.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ④ Coverage Areas -->
+        <div class="content-section reveal" id="coverage" style="transition-delay:.16s">
+            <div class="section-eyebrow">
+                <div class="eyebrow-icon"><i class="fas fa-map"></i></div>
+                <div class="eyebrow-text">
+                    <span class="eyebrow-label">Section 04</span>
+                    <h2 class="eyebrow-heading">Coverage Areas</h2>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <p class="body-text">Libaas Studio currently delivers across the entire length of Pakistan. We are continuously expanding our logistics network to reach every corner of the country with speed and reliability.</p>
+
+            <div class="coverage-grid">
+                <div class="coverage-card">
+                    <div class="cov-header">
+                        <div class="cov-icon"><i class="fas fa-city"></i></div>
+                        <h3 class="cov-title">Major Cities</h3>
+                    </div>
+                    <span class="cov-badge available">Express Available</span>
+                    <ul class="cov-list">
+                        <li>Karachi</li>
+                        <li>Lahore</li>
+                        <li>Islamabad / Rawalpindi</li>
+                        <li>Faisalabad</li>
+                        <li>Multan</li>
+                        <li>Peshawar</li>
+                        <li>Quetta</li>
+                        <li>Hyderabad</li>
+                    </ul>
+                </div>
+                <div class="coverage-card">
+                    <div class="cov-header">
+                        <div class="cov-icon"><i class="fas fa-map-pin"></i></div>
+                        <h3 class="cov-title">All Other Areas</h3>
+                    </div>
+                    <span class="cov-badge available">Standard Delivery</span>
+                    <ul class="cov-list">
+                        <li>All Punjab Districts</li>
+                        <li>All Sindh Districts</li>
+                        <li>All KPK Districts</li>
+                        <li>All Balochistan Districts</li>
+                        <li>Azad Kashmir (AJK)</li>
+                        <li>Gilgit-Baltistan (GB)</li>
+                        <li>FATA Regions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-row-icon"><i class="fas fa-globe"></i></div>
+                <div class="info-row-content">
+                    <div class="info-row-title">International Shipping</div>
+                    <p class="info-row-text">We currently ship exclusively within Pakistan. International shipping to UAE, UK, and other countries is planned for the near future. <a href="contact.html" style="color:var(--gold);text-decoration:underline;text-underline-offset:2px;">Contact us</a> to be notified when international shipping launches.</p>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-row-icon"><i class="fas fa-phone-alt"></i></div>
+                <div class="info-row-content">
+                    <div class="info-row-title">Delivery Attempt Policy</div>
+                    <p class="info-row-text">Our courier partners will make up to 3 delivery attempts on consecutive business days. After 3 failed attempts, the parcel may be returned to us. Please provide an accurate delivery address and phone number at checkout.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ⑤ Important Notes -->
+        <div class="content-section reveal" id="important-notes" style="transition-delay:.2s">
+            <div class="section-eyebrow">
+                <div class="eyebrow-icon"><i class="fas fa-info-circle"></i></div>
+                <div class="eyebrow-text">
+                    <span class="eyebrow-label">Section 05</span>
+                    <h2 class="eyebrow-heading">Important Notes</h2>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <div class="info-row">
+                <div class="info-row-icon"><i class="fas fa-calendar-check"></i></div>
+                <div class="info-row-content">
+                    <div class="info-row-title">Business Days</div>
+                    <p class="info-row-text">Delivery timelines are calculated in business days (Monday–Saturday). Sundays and public holidays are not counted. Orders placed during Eid, Independence Day, and similar national holidays may experience additional delays of 1–2 days.</p>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-row-icon"><i class="fas fa-box-open"></i></div>
+                <div class="info-row-content">
+                    <div class="info-row-title">Parcel Inspection</div>
+                    <p class="info-row-text">We encourage customers to inspect their parcel for any visible damage before accepting delivery. If the outer packaging appears tampered with or damaged, please do not accept the parcel and <a href="contact.html" style="color:var(--gold);text-decoration:underline;text-underline-offset:2px;">notify us immediately</a>.</p>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-row-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="info-row-content">
+                    <div class="info-row-title">Incorrect Address</div>
+                    <p class="info-row-text">Libaas Studio is not responsible for delays or non-delivery resulting from an incorrect or incomplete address provided by the customer. Please double-check your delivery details at checkout. Address corrections after dispatch may not always be possible.</p>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-row-icon"><i class="fas fa-headset"></i></div>
+                <div class="info-row-content">
+                    <div class="info-row-title">Customer Support</div>
+                    <p class="info-row-text">If your order has not arrived within the estimated window, or if you have any delivery concerns, our support team is available 7 days a week. Reach us via our <a href="contact.html" style="color:var(--gold);text-decoration:underline;text-underline-offset:2px;">Contact page</a> and we'll resolve your issue promptly.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+
+<!-- ══════════════════════════════════════
+     CTA SECTION
+══════════════════════════════════════ -->
+<section class="cta-section">
+    <div class="cta-inner reveal">
+        <span class="cta-label">We're Here To Help</span>
+        <h2 class="cta-title">Still Have Questions<br>About Your Delivery?</h2>
+        <p class="cta-sub">Our customer care team is available 7 days a week to help you track your order, clarify delivery details, or resolve any issues quickly and with care.</p>
+        <div class="cta-buttons">
+            <a href="contact.html"  class="btn-gold">Contact Us</a>
+            <a href="products.html" class="btn-ghost">Browse Collections</a>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h2>Libaas</h2>
+            <span class="tagline">Studio</span>
+            <p>Premium Pakistani ladies suits crafted with elegance and attention to detail. We bring the finest fabrics and embroideries to women who appreciate true artistry.</p>
+            <div class="footer-social">
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Our Gallery</a></li>
+                <li><a href="faqs.html">FAQ</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Collections</h4>
+            <ul>
+                <li><a href="products.html">Best Sellers</a></li>
+                <li><a href="products.html">Lawn Suits</a></li>
+                <li><a href="products.html">Formal Wear</a></li>
+                <li><a href="products.html">Party Wear</a></li>
+                <li><a href="products.html">Bridal</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Policies</h4>
+            <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="shipping.html">Shipping Policy</a></li>
+                <li><a href="#">Refund Policy</a></li>
+                <li><a href="#">Size Guide</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom" style="max-width:1280px;margin:0 auto;">
+        <p>© 2024 Libaas Studio. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="shipping.html">Shipping</a>
+        </div>
+    </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     CART MODAL
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="cart-modal" onclick="handleOverlayClick(event,'cart-modal')">
+    <div class="modal-panel" id="cart-panel">
+        <div class="modal-header">
+            <h3>Your Bag</h3>
+            <button class="close-btn icon-btn" onclick="closeModal('cart-modal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div style="text-align:center;padding:48px 0;color:var(--text-muted);">
+                <i class="fas fa-shopping-bag" style="font-size:28px;margin-bottom:16px;display:block;opacity:.3;"></i>
+                <p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;">Your bag is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total</span>
+                <span id="cart-total">Rs. 0</span>
+            </div>
+            <button class="btn-checkout">Proceed To Checkout</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     AUTH MODAL
+══════════════════════════════════════ -->
+<div class="auth-overlay" id="auth-modal" onclick="handleOverlayClick(event,'auth-modal')">
+    <div class="auth-panel" id="auth-panel">
+        <h2 id="auth-title">Login</h2>
+        <span class="auth-subtitle">Welcome back to Libaas Studio</span>
+        <div id="login-form">
+            <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••"></div>
+            <button class="btn-submit">Login</button>
+            <div class="auth-switch">New here? <button onclick="switchToSignup()">Create an account</button></div>
+        </div>
+        <div id="signup-form" class="hidden">
+            <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your full name"></div>
+            <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" placeholder="Create a password"></div>
+            <button class="btn-submit">Create Account</button>
+            <div class="auth-switch">Already have an account? <button onclick="switchToLogin()">Login</button></div>
+        </div>
+        <button class="close-btn icon-btn" style="position:absolute;top:16px;right:20px;" onclick="closeModal('auth-modal')"><i class="fas fa-times"></i></button>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+/* ── Modals ── */
+function openModal(id) {
+    const overlay = document.getElementById(id);
+    const panel   = overlay.querySelector('.modal-panel, .auth-panel');
+    overlay.classList.add('active');
+    setTimeout(() => panel.classList.add('visible'), 10);
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+    const overlay = document.getElementById(id);
+    const panel   = overlay.querySelector('.modal-panel, .auth-panel');
+    panel.classList.remove('visible');
+    setTimeout(() => { overlay.classList.remove('active'); document.body.style.overflow = ''; }, 350);
+}
+function handleOverlayClick(e, id) { if (e.target === e.currentTarget) closeModal(id); }
+function toggleCart() {
+    document.getElementById('cart-modal').classList.contains('active')
+        ? closeModal('cart-modal') : openModal('cart-modal');
+}
+function toggleAuth() {
+    document.getElementById('auth-modal').classList.contains('active')
+        ? closeModal('auth-modal') : openModal('auth-modal');
+}
+function switchToSignup() {
+    document.getElementById('login-form').classList.add('hidden');
+    document.getElementById('signup-form').classList.remove('hidden');
+    document.getElementById('auth-title').textContent = 'Create Account';
+}
+function switchToLogin() {
+    document.getElementById('signup-form').classList.add('hidden');
+    document.getElementById('login-form').classList.remove('hidden');
+    document.getElementById('auth-title').textContent = 'Login';
+}
+
+/* ── Mobile Menu ── */
+function toggleMobileMenu() {
+    const nav    = document.getElementById('mobile-nav');
+    const burger = document.getElementById('hamburger');
+    const isOpen = nav.classList.contains('open');
+    nav.classList.toggle('open');
+    burger.classList.toggle('open');
+    document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+
+/* ── Search ── */
+function toggleSearch() {
+    const bar = document.getElementById('search-bar');
+    bar.classList.toggle('open');
+    if (bar.classList.contains('open')) document.getElementById('search-input').focus();
+}
+
+/* ── Header shadow on scroll ── */
+window.addEventListener('scroll', () => {
+    document.getElementById('site-header').style.boxShadow =
+        window.scrollY > 40 ? '0 4px 32px rgba(0,0,0,0.6)' : '';
+});
+
+/* ── Active sidebar link on scroll ── */
+const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+const sections     = document.querySelectorAll('.content-section');
+
+const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const id = entry.target.id;
+            sidebarLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+            });
+        }
+    });
+}, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+sections.forEach(s => sectionObserver.observe(s));
+
+/* ── Smooth scroll for sidebar links ── */
+sidebarLinks.forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+/* ── Reveal on scroll ── */
+const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ── Responsive logo ── */
+function handleResize() {
+    const logo = document.getElementById('mobile-logo');
+    logo.style.display = window.innerWidth <= 900 ? 'block' : 'none';
+}
+window.addEventListener('resize', handleResize);
+handleResize();
+
+/* ── Keyboard escape ── */
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal('cart-modal'); closeModal('auth-modal'); }
+});
+</script>
+</body>
+</html> 
+
+

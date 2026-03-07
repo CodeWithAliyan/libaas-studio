@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Size Guide — Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-black': '#000000',
+                        'brand-dark':  '#111111',
+                        'brand-card':  '#181818',
+                        'brand-border':'#222222',
+                        'brand-gold':  '#c9a96e',
+                        'brand-tan':   '#b8956a',
+                        'brand-muted': '#888888',
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'sans':    ['Montserrat', 'sans-serif'],
+                        'script':  ['Great Vibes', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* ── Reset & Root ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --black:       #000000;
+            --dark:        #111111;
+            --dark-card:   #181818;
+            --dark-border: #222222;
+            --gold:        #c9a96e;
+            --gold-light:  #e1c99a;
+            --gold-dim:    rgba(201,169,110,0.15);
+            --warm-tan:    #b8956a;
+            --white:       #ffffff;
+            --off-white:   #f5f0eb;
+            --text-muted:  #888888;
+            --text-dim:    #555555;
+            --font-display:'Playfair Display', serif;
+            --font-body:   'Montserrat', sans-serif;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--dark);
+            color: var(--off-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4 { font-family: var(--font-display); }
+        a  { text-decoration: none; color: inherit; }
+        button { cursor: pointer; font-family: var(--font-body); border: none; background: none; }
+        img { display: block; max-width: 100%; }
+
+        /* ── Announcement Bar ── */
+        .announcement-bar {
+            background: #0a0a0a;
+            border-bottom: 1px solid var(--dark-border);
+            padding: 8px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .announcement-track { display: inline-flex; animation: ticker 40s linear infinite; }
+        .announcement-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 40px;
+            font-size: 10.5px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .announcement-item .star { color: var(--gold); font-size: 9px; }
+        .announcement-item strong { color: var(--off-white); }
+        @keyframes ticker {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ── Header ── */
+        .site-header {
+            position: sticky; top: 0; z-index: 1000;
+            background: #000;
+            border-bottom: 1px solid var(--dark-border);
+            transition: box-shadow .3s;
+        }
+        .header-inner {
+            max-width: 1440px; margin: 0 auto;
+            padding: 0 32px;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 64px;
+        }
+        .nav-left { display: flex; align-items: center; gap: 28px; }
+        .nav-link {
+            font-size: 10.5px; font-weight: 500;
+            letter-spacing: 1.8px; text-transform: uppercase;
+            color: #aaa; position: relative; padding-bottom: 2px;
+            transition: color .25s;
+        }
+        .nav-link::after {
+            content: ''; position: absolute;
+            bottom: -2px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold); transition: width .3s;
+        }
+        .nav-link:hover { color: #fff; }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active { color: #fff; }
+        .nav-link.active::after { width: 100%; }
+
+        .brand-center {
+            position: absolute; left: 50%;
+            transform: translateX(-50%);
+            text-align: center; line-height: 1;
+        }
+        .brand-name {
+            font-family: var(--font-display);
+            font-size: 28px; font-weight: 500;
+            letter-spacing: 10px; text-transform: uppercase; color: #fff;
+        }
+        .brand-tagline {
+            font-size: 8px; letter-spacing: 3.5px;
+            text-transform: uppercase; color: var(--text-muted); margin-top: 2px;
+        }
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        .icon-btn {
+            font-size: 14px; color: #aaa;
+            transition: color .25s; position: relative; padding: 4px;
+        }
+        .icon-btn:hover { color: #fff; }
+        .cart-badge {
+            position: absolute; top: -5px; right: -7px;
+            background: var(--gold); color: #000;
+            font-size: 8px; font-weight: 700;
+            width: 15px; height: 15px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ── Hamburger ── */
+        .hamburger {
+            display: none; flex-direction: column;
+            gap: 5px; width: 22px; cursor: pointer;
+        }
+        .hamburger span { display: block; height: 1.5px; background: #fff; transition: all .3s; }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translateY(9px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translateY(-9px); }
+
+        /* ── Mobile Nav ── */
+        .mobile-nav {
+            display: none; position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 999;
+            flex-direction: column; align-items: center; justify-content: center;
+            gap: 36px; opacity: 0; transform: translateY(-20px);
+            transition: opacity .4s, transform .4s;
+        }
+        .mobile-nav.open { display: flex; opacity: 1; transform: translateY(0); }
+        .mobile-nav a { font-family: var(--font-display); font-size: 28px; color: #fff; letter-spacing: 4px; }
+
+        /* ── Search Bar ── */
+        .search-bar {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: 64px; background: #000; z-index: 1001;
+            display: flex; align-items: center;
+            padding: 0 32px; gap: 16px;
+            transform: translateY(-100%); transition: transform .35s ease;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        .search-bar.open { transform: translateY(0); }
+        .search-bar input {
+            flex: 1; background: none; border: none; outline: none;
+            color: #fff; font-size: 14px; letter-spacing: 1px; font-family: var(--font-body);
+        }
+        .search-bar input::placeholder { color: var(--text-muted); }
+
+        /* ══════════════════════════════
+           PAGE HERO
+        ══════════════════════════════ */
+        .page-hero {
+            background: #000;
+            border-bottom: 1px solid var(--dark-border);
+            padding: 90px 40px 76px;
+            text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 65% 85% at 50% 120%, rgba(201,169,110,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        /* Decorative corner ornaments */
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 1px; height: 32px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            opacity: .5;
+        }
+        .hero-label {
+            font-size: 9.5px; letter-spacing: 4px;
+            text-transform: uppercase; color: var(--gold);
+            display: block; margin-bottom: 18px;
+        }
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(38px, 5.5vw, 68px);
+            font-weight: 600; letter-spacing: 6px;
+            color: #fff; line-height: 1.05; margin-bottom: 18px;
+        }
+        .hero-sub {
+            font-size: 11px; letter-spacing: 2.5px;
+            text-transform: uppercase; color: var(--text-muted);
+            max-width: 440px; margin: 0 auto;
+        }
+        .hero-divider {
+            width: 48px; height: 1px;
+            background: var(--gold);
+            margin: 28px auto 0; opacity: .5;
+        }
+
+        /* ── Breadcrumb ── */
+        .breadcrumb {
+            max-width: 1100px; margin: 0 auto;
+            padding: 18px 32px 0;
+            display: flex; align-items: center; gap: 8px;
+            font-size: 10px; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--text-muted);
+        }
+        .breadcrumb a { transition: color .25s; }
+        .breadcrumb a:hover { color: var(--gold); }
+        .breadcrumb .sep { color: var(--dark-border); }
+        .breadcrumb .cur { color: var(--gold); }
+
+        /* ══════════════════════════════
+           MAIN CONTENT WRAPPER
+        ══════════════════════════════ */
+        .sg-wrap {
+            max-width: 1100px; margin: 0 auto;
+            padding: 64px 32px 80px;
+        }
+
+        /* ── Section header reusable ── */
+        .sec-eyebrow {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 28px;
+        }
+        .eyebrow-icon {
+            width: 42px; height: 42px;
+            border: 1px solid rgba(201,169,110,0.4);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); font-size: 15px; flex-shrink: 0;
+        }
+        .eyebrow-lbl {
+            font-size: 9px; letter-spacing: 3.5px;
+            text-transform: uppercase; color: var(--gold);
+            display: block; margin-bottom: 4px;
+        }
+        .eyebrow-h {
+            font-family: var(--font-display);
+            font-size: clamp(20px, 2.5vw, 28px);
+            font-weight: 500; letter-spacing: 2px; color: #fff;
+        }
+        .sec-divider {
+            width: 100%; height: 1px;
+            background: var(--dark-border); margin-bottom: 32px;
+        }
+
+        /* ── Body text ── */
+        .body-text {
+            font-size: 12px; color: var(--text-muted);
+            line-height: 1.9; letter-spacing: 0.3px; margin-bottom: 20px;
+        }
+        .body-text:last-child { margin-bottom: 0; }
+        .body-text a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
+
+        /* ── Unit Toggle ── */
+        .unit-toggle {
+            display: inline-flex; align-items: center;
+            border: 1px solid var(--dark-border);
+            overflow: hidden; margin-bottom: 28px;
+        }
+        .unit-btn {
+            padding: 9px 24px;
+            font-size: 9.5px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            color: var(--text-muted);
+            background: transparent;
+            transition: all .25s;
+            cursor: pointer; border: none;
+        }
+        .unit-btn.active {
+            background: var(--gold); color: #000;
+        }
+
+        /* ══════════════════════════════
+           SIZE TABLE
+        ══════════════════════════════ */
+        .table-note {
+            font-size: 10.5px; color: var(--text-muted);
+            letter-spacing: 0.5px; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .table-note i { color: var(--gold); font-size: 11px; }
+
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid var(--gold);
+            border-radius: 1px;
+            margin-bottom: 16px;
+        }
+        /* Subtle scrollbar styling */
+        .table-scroll::-webkit-scrollbar { height: 4px; }
+        .table-scroll::-webkit-scrollbar-track { background: var(--dark-card); }
+        .table-scroll::-webkit-scrollbar-thumb { background: var(--gold); }
+
+        .size-table {
+            width: 100%; border-collapse: collapse;
+            min-width: 580px;
+        }
+        .size-table thead tr {
+            background: #000;
+            border-bottom: 1px solid var(--gold);
+        }
+        .size-table th {
+            font-size: 9px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); padding: 16px 20px;
+            text-align: center; white-space: nowrap;
+        }
+        .size-table th:first-child { text-align: left; padding-left: 24px; }
+
+        .size-table tbody tr {
+            border-bottom: 1px solid var(--dark-border);
+            transition: background .2s;
+        }
+        .size-table tbody tr:last-child { border-bottom: none; }
+        .size-table tbody tr:hover { background: rgba(201,169,110,0.04); }
+        /* Highlighted / recommended row */
+        .size-table tbody tr.highlight-row {
+            background: rgba(201,169,110,0.06);
+            border-bottom: 1px solid rgba(201,169,110,0.2);
+        }
+        .size-table tbody tr.highlight-row:hover { background: rgba(201,169,110,0.10); }
+
+        .size-table td {
+            font-size: 12px; color: var(--off-white);
+            padding: 15px 20px; text-align: center;
+            vertical-align: middle;
+        }
+        .size-table td:first-child { text-align: left; padding-left: 24px; }
+
+        /* Size label pill */
+        .size-pill {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 42px; padding: 4px 12px;
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            border: 1px solid var(--dark-border);
+            color: var(--off-white);
+            background: var(--dark-card);
+            transition: all .25s;
+        }
+        .highlight-row .size-pill {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(201,169,110,0.08);
+        }
+        .popular-tag {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 7.5px; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            background: var(--gold); color: #000;
+            padding: 2px 7px;
+            vertical-align: middle;
+        }
+
+        /* ── Table caption / footnote ── */
+        .table-footnote {
+            font-size: 10px; color: var(--text-muted);
+            letter-spacing: 0.4px; line-height: 1.7;
+            margin-top: 12px; padding: 0 4px;
+        }
+        .table-footnote span { color: var(--gold); }
+
+        /* ── Highlight box ── */
+        .highlight-box {
+            background: rgba(201,169,110,0.05);
+            border: 1px solid rgba(201,169,110,0.2);
+            border-left: 3px solid var(--gold);
+            padding: 20px 24px;
+            margin: 28px 0;
+            display: flex; gap: 14px; align-items: flex-start;
+        }
+        .highlight-box i { color: var(--gold); font-size: 14px; margin-top: 2px; flex-shrink: 0; }
+        .highlight-box p { font-size: 11.5px; color: var(--off-white); line-height: 1.75; }
+        .highlight-box strong { color: var(--gold); }
+
+        /* ══════════════════════════════
+           HOW TO MEASURE
+        ══════════════════════════════ */
+        .measure-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        @media (max-width: 640px) { .measure-grid { grid-template-columns: 1fr; } }
+
+        .measure-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            padding: 28px 24px;
+            display: flex; gap: 20px; align-items: flex-start;
+            transition: border-color .3s;
+            position: relative; overflow: hidden;
+        }
+        .measure-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 2px; height: 100%;
+            background: var(--gold);
+            opacity: 0; transition: opacity .3s;
+        }
+        .measure-card:hover { border-color: rgba(201,169,110,0.3); }
+        .measure-card:hover::before { opacity: 1; }
+
+        .mc-num {
+            font-family: var(--font-display);
+            font-size: 32px; font-weight: 600;
+            color: rgba(201,169,110,0.15);
+            line-height: 1; flex-shrink: 0;
+            width: 36px; text-align: center;
+            margin-top: 2px;
+        }
+        
+        .mc-title {
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 1.8px; text-transform: uppercase;
+            color: var(--off-white); margin-bottom: 8px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .mc-icon { color: var(--gold); font-size: 13px; }
+        .mc-text { font-size: 11.5px; color: var(--text-muted); line-height: 1.75; }
+
+        /* ── Tips strip ── */
+        .tips-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px; margin-top: 28px;
+        }
+        @media (max-width: 600px) { .tips-strip { grid-template-columns: 1fr; } }
+
+        .tip-card {
+            background: #0d0d0d;
+            border: 1px solid var(--dark-border);
+            padding: 20px 18px;
+            text-align: center;
+            transition: border-color .3s;
+        }
+        .tip-card:hover { border-color: rgba(201,169,110,0.25); }
+        .tip-card i { font-size: 20px; color: var(--gold); margin-bottom: 12px; display: block; }
+        .tip-card h4 {
+            font-family: var(--font-body);
+            font-size: 9.5px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            color: var(--off-white); margin-bottom: 8px;
+        }
+        .tip-card p { font-size: 10.5px; color: var(--text-muted); line-height: 1.65; }
+
+        /* ══════════════════════════════
+           FABRIC FIT NOTE
+        ══════════════════════════════ */
+        .fit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px; margin-bottom: 28px;
+        }
+        @media (max-width: 640px) { .fit-grid { grid-template-columns: 1fr; } }
+
+        .fit-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            padding: 24px 20px; text-align: center;
+            transition: border-color .3s, transform .3s;
+        }
+        .fit-card:hover {
+            border-color: rgba(201,169,110,0.3);
+            transform: translateY(-3px);
+        }
+        .fit-icon {
+            width: 44px; height: 44px;
+            border: 1px solid rgba(201,169,110,0.35);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); font-size: 16px;
+            margin: 0 auto 14px;
+        }
+        .fit-name {
+            font-family: var(--font-display);
+            font-size: 16px; font-weight: 500;
+            letter-spacing: 1px; color: #fff; margin-bottom: 8px;
+        }
+        .fit-desc { font-size: 10.5px; color: var(--text-muted); line-height: 1.65; }
+
+        /* ══════════════════════════════
+           SECTION SPACING
+        ══════════════════════════════ */
+        .content-block { margin-bottom: 64px; }
+        .content-block:last-child { margin-bottom: 0; }
+
+        /* ══════════════════════════════
+           CTA SECTION
+        ══════════════════════════════ */
+        .cta-section {
+            background: #000;
+            border-top: 1px solid var(--dark-border);
+            padding: 80px 40px;
+            text-align: center;
+        }
+        .cta-inner { max-width: 560px; margin: 0 auto; }
+        .cta-label {
+            font-size: 9.5px; letter-spacing: 4px;
+            text-transform: uppercase; color: var(--gold);
+            display: block; margin-bottom: 16px;
+        }
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(26px, 3.5vw, 40px);
+            font-weight: 500; letter-spacing: 3px; color: #fff; margin-bottom: 16px;
+        }
+        .cta-sub {
+            font-size: 11px; color: var(--text-muted);
+            letter-spacing: 0.4px; line-height: 1.85; margin-bottom: 36px;
+        }
+        .cta-buttons { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .btn-gold {
+            display: inline-block; padding: 14px 40px;
+            background: var(--gold); color: #000;
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            transition: background .3s, transform .2s;
+        }
+        .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+        .btn-ghost {
+            display: inline-block; padding: 14px 40px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.22);
+            color: #fff; font-size: 10px; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase;
+            transition: border-color .3s, color .3s;
+        }
+        .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* ══════════════════════════════
+           FOOTER
+        ══════════════════════════════ */
+        footer { background: #000; border-top: 1px solid var(--dark-border); }
+        .footer-inner {
+            max-width: 1280px; margin: 0 auto;
+            padding: 60px 40px 0;
+            display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 48px;
+        }
+        @media (max-width: 900px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 500px) {
+            .footer-inner { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand p { max-width: 100%; }
+            .footer-social { justify-content: center; }
+        }
+        .footer-brand h2 {
+            font-family: var(--font-display);
+            font-size: 22px; letter-spacing: 8px;
+            text-transform: uppercase; color: #fff; margin-bottom: 4px;
+        }
+        .footer-brand .tagline {
+            font-size: 8px; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--text-muted); margin-bottom: 20px; display: block;
+        }
+        .footer-brand p { font-size: 11px; color: var(--text-muted); line-height: 1.9; max-width: 280px; }
+        .footer-social { display: flex; gap: 14px; margin-top: 24px; }
+        .footer-social a {
+            width: 34px; height: 34px;
+            border: 1px solid var(--dark-border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; color: var(--text-muted); transition: all .25s;
+        }
+        .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+        .footer-col h4 {
+            font-family: var(--font-body);
+            font-size: 9.5px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; color: #fff; margin-bottom: 24px;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; transition: color .25s; }
+        .footer-col ul li a:hover { color: var(--gold); }
+        .footer-bottom {
+            border-top: 1px solid var(--dark-border); margin-top: 48px;
+            padding: 20px 40px;
+            display: flex; align-items: center; justify-content: center;
+            flex-wrap: wrap; gap: 20px; text-align: center;
+        }
+        .footer-bottom p { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; }
+        .footer-bottom-links { display: flex; gap: 24px; }
+        .footer-bottom-links a { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; transition: color .25s; }
+        .footer-bottom-links a:hover { color: var(--gold); }
+
+        /* ── Cart Modal ── */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+            z-index: 2000; display: none; align-items: stretch;
+            justify-content: flex-end; backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-panel {
+            width: 420px; max-width: 100vw;
+            background: #0a0a0a; border-left: 1px solid var(--dark-border);
+            display: flex; flex-direction: column;
+            transform: translateX(100%); transition: transform .35s ease;
+        }
+        .modal-panel.visible { transform: translateX(0); }
+        .modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 24px 28px; border-bottom: 1px solid var(--dark-border);
+        }
+        .modal-header h3 { font-family: var(--font-display); font-size: 18px; letter-spacing: 3px; text-transform: uppercase; color: #fff; }
+        .close-btn { font-size: 16px; color: var(--text-muted); transition: color .25s; }
+        .close-btn:hover { color: #fff; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 24px 28px; }
+        .cart-footer { padding: 24px 28px; border-top: 1px solid var(--dark-border); }
+        .cart-total-row { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 12px; }
+        .cart-total-row span:first-child { color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+        .cart-total-row span:last-child { color: #fff; font-weight: 600; font-size: 14px; }
+        .btn-checkout { width: 100%; padding: 15px; background: var(--gold); border: none; color: #000; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; transition: background .25s; }
+        .btn-checkout:hover { background: var(--gold-light); }
+
+        /* ── Auth Modal ── */
+        .auth-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+            z-index: 2000; display: none; align-items: center; justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .auth-overlay.active { display: flex; }
+        .auth-panel {
+            width: 400px; max-width: 95vw; background: #0a0a0a;
+            border: 1px solid var(--dark-border); padding: 40px;
+            position: relative; transform: scale(.95); opacity: 0; transition: all .3s;
+        }
+        .auth-panel.visible { transform: scale(1); opacity: 1; }
+        .auth-panel h2 { font-family: var(--font-display); font-size: 22px; letter-spacing: 4px; text-transform: uppercase; color: #fff; margin-bottom: 8px; }
+        .auth-subtitle { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 32px; display: block; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+        .form-group input { width: 100%; background: #111; border: 1px solid var(--dark-border); outline: none; color: #fff; font-size: 12px; padding: 11px 14px; font-family: var(--font-body); transition: border-color .25s; }
+        .form-group input:focus { border-color: var(--gold); }
+        .btn-submit { width: 100%; padding: 13px; background: var(--gold); border: none; color: #000; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-top: 8px; transition: background .25s; }
+        .btn-submit:hover { background: var(--gold-light); }
+        .auth-switch { text-align: center; margin-top: 20px; font-size: 11px; color: var(--text-muted); }
+        .auth-switch button { color: var(--gold); text-decoration: underline; font-size: 11px; }
+        .hidden { display: none; }
+
+        /* ── Reveal ── */
+        .reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.in { opacity: 1; transform: translateY(0); }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .hamburger { display: flex; }
+            .nav-left, .brand-center { display: none; }
+            .mobile-brand { font-family: var(--font-display); font-size: 20px; letter-spacing: 6px; color: #fff; }
+            .footer-bottom { padding: 20px 24px; }
+            .page-hero { padding: 64px 24px 56px; }
+            .sg-wrap { padding: 48px 20px 64px; }
+        }
+        @media (max-width: 540px) {
+            .cta-section { padding: 64px 20px; }
+            .breadcrumb { padding: 14px 20px 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     ANNOUNCEMENT BAR
+══════════════════════════════════════ -->
+<div class="announcement-bar">
+    <div class="announcement-track">
+        <span class="announcement-item"><i class="fas fa-heart star"></i> 10% Off With Code <strong>LIBAAS10</strong> &nbsp;•&nbsp; Use At Checkout</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> Free Shipping On All Orders. Don't Miss This Deal!</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> Buy More Than Rs.3,000 And Get Free Delivery Nationwide</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> New Collection Arrived — Shop The Latest Designs</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> 10% Off With Code <strong>LIBAAS10</strong> &nbsp;•&nbsp; Use At Checkout</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> Free Shipping On All Orders. Don't Miss This Deal!</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> Buy More Than Rs.3,000 And Get Free Delivery Nationwide</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> New Collection Arrived — Shop The Latest Designs</span>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     HEADER
+══════════════════════════════════════ -->
+<header class="site-header" id="site-header">
+    <div class="search-bar" id="search-bar">
+        <i class="fas fa-search" style="color:var(--text-muted);font-size:13px;"></i>
+        <input type="text" id="search-input" placeholder="Search collections...">
+        <button class="icon-btn" onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="header-inner">
+        <nav class="nav-left">
+            <a href="index.html"    class="nav-link">Home</a>
+            <a href="products.html" class="nav-link">Shop</a>
+            <a href="about.html"    class="nav-link">About</a>
+            <a href="products.html" class="nav-link">Gallery</a>
+            <a href="faqs.html"     class="nav-link">FAQ</a>
+            <a href="contact.html"  class="nav-link">Contact</a>
+        </nav>
+        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <span class="mobile-brand" style="display:none;" id="mobile-logo">LIBAAS</span>
+        <div class="brand-center">
+            <div class="brand-name">Libaas</div>
+            <div class="brand-tagline">Studio</div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="toggleSearch()" aria-label="Search"><i class="fas fa-search"></i></button>
+            <button class="icon-btn" onclick="toggleAuth()"   aria-label="Account"><i class="fas fa-user"></i></button>
+            <button class="icon-btn" onclick="toggleCart()"   aria-label="Cart">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge" id="cart-count">0</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav" id="mobile-nav">
+    <button style="position:absolute;top:20px;right:28px;font-size:20px;color:#fff;" onclick="toggleMobileMenu()">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="index.html"    onclick="toggleMobileMenu()">Home</a>
+    <a href="products.html" onclick="toggleMobileMenu()">Shop</a>
+    <a href="about.html"    onclick="toggleMobileMenu()">About</a>
+    <a href="products.html" onclick="toggleMobileMenu()">Gallery</a>
+    <a href="faqs.html"     onclick="toggleMobileMenu()">FAQ</a>
+    <a href="contact.html"  onclick="toggleMobileMenu()">Contact</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="page-hero">
+    <span class="hero-label">Fit &amp; Measurements</span>
+    <h1 class="hero-title">Size Guide</h1>
+    <p class="hero-sub">Find your perfect fit — every time you shop</p>
+    <div class="hero-divider"></div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="cur">Size Guide</span>
+</div>
+
+<!-- ══════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════ -->
+<div class="sg-wrap">
+
+    <!-- ① SIZE CHART -->
+    <div class="content-block reveal" id="size-chart">
+        <div class="sec-eyebrow">
+            <div class="eyebrow-icon"><i class="fas fa-ruler-combined"></i></div>
+            <div>
+                <span class="eyebrow-lbl">Section 01</span>
+                <h2 class="eyebrow-h">Size Chart</h2>
+            </div>
+        </div>
+        <div class="sec-divider"></div>
+
+        <p class="body-text">All measurements listed below are <strong style="color:var(--off-white);">body measurements</strong>, not garment measurements. For the best fit, measure yourself and compare against the chart. If you are between two sizes, we recommend sizing up for a more comfortable silhouette.</p>
+
+        <!-- Unit Toggle -->
+        <div class="unit-toggle">
+            <button class="unit-btn active" id="btn-inches" onclick="switchUnit('inches')">Inches</button>
+            <button class="unit-btn" id="btn-cm" onclick="switchUnit('cm')">Centimetres</button>
+        </div>
+
+        <div class="table-note">
+            <i class="fas fa-star"></i>
+            <span>Highlighted row indicates our most popular size. All measurements are approximate.</span>
+        </div>
+
+        <!-- ── Table (inches) ── -->
+        <div class="table-scroll" id="table-inches">
+            <table class="size-table">
+                <thead>
+                    <tr>
+                        <th>Size</th>
+                        <th>Chest (in)</th>
+                        <th>Waist (in)</th>
+                        <th>Hip (in)</th>
+                        <th>Shirt Length (in)</th>
+                        <th>Trouser Length (in)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="size-pill">XS</span></td>
+                        <td>32 – 33</td><td>24 – 25</td><td>34 – 35</td><td>40</td><td>38</td>
+                    </tr>
+                    <tr>
+                        <td><span class="size-pill">S</span></td>
+                        <td>34 – 35</td><td>26 – 27</td><td>36 – 37</td><td>41</td><td>39</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><span class="size-pill">M</span><span class="popular-tag">Popular</span></td>
+                        <td>36 – 37</td><td>28 – 29</td><td>38 – 39</td><td>42</td><td>40</td>
+                    </tr>
+                    <tr>
+                        <td><span class="size-pill">L</span></td>
+                        <td>38 – 39</td><td>30 – 31</td><td>40 – 41</td><td>43</td><td>41</td>
+                    </tr>
+                    <tr>
+                        <td><span class="size-pill">XL</span></td>
+                        <td>40 – 41</td><td>32 – 33</td><td>42 – 43</td><td>44</td><td>42</td>
+                    </tr>
+                    <tr>
+                        <td><span class="size-pill">2XL</span></td>
+                        <td>42 – 44</td><td>34 – 36</td><td>44 – 46</td><td>45</td><td>42</td>
+                    </tr>
+                    <tr>
+                        <td><span class="size-pill">3XL</span></td>
+                        <td>45 – 47</td><td>37 – 39</td><td>47 – 49</td><td>46</td><td>43</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ── Table (cm) — hidden by default ── -->
+        <div class="table-scroll" id="table-cm" style="display:none;">
+            <table class="size-table">
+                <thead>
+                    <tr>
+                        <th>Size</th>
+                        <th>Chest (cm)</th>
+                        <th>Waist (cm)</th>
+                        <th>Hip (cm)</th>
+                        <th>Shirt Length (cm)</th>
+                        <th>Trouser Length (cm)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="size-pill">XS</span></td>
+                        <td>81 – 84</td><td>61 – 64</td><td>86 – 89</td><td>102</td><td>97</td>
+                    </tr>
+                    <tr>
+                        <td><span class="size-pill">S</span></td>
+                        <td>86 – 89</td><td>66 – 69</td><td>91 – 94</td><td>104</td><td>99</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><span class="size-pill">M</span><span class="popular-tag">Popular</span></td>
+                        <td>91 – 94</td><td>71 – 74</td><td>97 – 99</td><td>107</td><td>102</td>
+                    </tr>
+                    <tr>
+                        <td><span class="size-pill">L</span></td>
+                        <td>97 – 99</td><td>76 – 79</td><td>102 – 104</td><td>109</td><td>104</td>
+                    </tr>
+                    <tr>
+                        <td><span class="size-pill">XL</span></td>
+                        <td>102 – 104</td><td>81 – 84</td><td>107 – 109</td><td>112</td><td>107</td>
+                    </tr>
+                    <tr>
+                        <td><span class="size-pill">2XL</span></td>
+                        <td>107 – 112</td><td>86 – 91</td><td>112 – 117</td><td>114</td><td>107</td>
+                    </tr>
+                    <tr>
+                        <td><span class="size-pill">3XL</span></td>
+                        <td>114 – 119</td><td>94 – 99</td><td>119 – 124</td><td>117</td><td>109</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="table-footnote">
+            * Measurements are in <span id="unit-label">inches</span>. &nbsp;|&nbsp;
+            All sizes are unstitched/ready-to-stitch — final garment dimensions may vary slightly based on stitching style. &nbsp;|&nbsp;
+            Dupatta dimensions: approx. <strong style="color:var(--off-white);">2.5 metres</strong> across all sizes.
+        </p>
+
+        <div class="highlight-box">
+            <i class="fas fa-lightbulb"></i>
+            <p>Our suits are unstitched fabric sets. Please share your exact measurements with your tailor. We recommend adding <strong>1–2 inches</strong> of ease to all measurements for a comfortable, polished fit.</p>
+        </div>
+    </div>
+
+    <!-- ② HOW TO MEASURE -->
+    <div class="content-block reveal" id="how-to-measure" style="transition-delay:.08s">
+        <div class="sec-eyebrow">
+            <div class="eyebrow-icon"><i class="fas fa-drafting-compass"></i></div>
+            <div>
+                <span class="eyebrow-lbl">Section 02</span>
+                <h2 class="eyebrow-h">How to Measure Yourself</h2>
+            </div>
+        </div>
+        <div class="sec-divider"></div>
+
+        <p class="body-text">Accurate measurements are the foundation of a perfectly stitched suit. Follow the steps below using a soft measuring tape. Keep the tape snug but not tight — you should be able to breathe comfortably.</p>
+
+        <div class="measure-grid">
+            <div class="measure-card">
+                <div class="mc-num">01</div>
+                <div class="mc-body">
+                    <div class="mc-title"><i class="fas fa-expand-alt mc-icon"></i> Chest</div>
+                    <p class="mc-text">Wrap the measuring tape around the fullest part of your chest, just under your arms. Keep the tape parallel to the floor and make sure it is not pulled too tightly. Stand straight with your arms relaxed at your sides.</p>
+                </div>
+            </div>
+            <div class="measure-card">
+                <div class="mc-num">02</div>
+                <div class="mc-body">
+                    <div class="mc-title"><i class="fas fa-circle-notch mc-icon"></i> Waist</div>
+                    <p class="mc-text">Measure around your natural waistline — the narrowest part of your torso, typically about one inch above your belly button. Exhale normally and take the measurement. Do not suck in your stomach.</p>
+                </div>
+            </div>
+            <div class="measure-card">
+                <div class="mc-num">03</div>
+                <div class="mc-body">
+                    <div class="mc-title"><i class="fas fa-arrows-alt-h mc-icon"></i> Hip</div>
+                    <p class="mc-text">Stand with your feet together and wrap the tape around the fullest part of your hips and buttocks. This is usually 7–9 inches below your natural waist. Keep the tape parallel to the floor throughout.</p>
+                </div>
+            </div>
+            <div class="measure-card">
+                <div class="mc-num">04</div>
+                <div class="mc-body">
+                    <div class="mc-title"><i class="fas fa-arrows-alt-v mc-icon"></i> Shirt Length</div>
+                    <p class="mc-text">Measure from the top of your shoulder (at the base of your neck) straight down to your desired shirt hem — typically mid-thigh for a classic kameez. Ask someone to help for a more accurate measurement.</p>
+                </div>
+            </div>
+            <div class="measure-card">
+                <div class="mc-num">05</div>
+                <div class="mc-body">
+                    <div class="mc-title"><i class="fas fa-ruler-vertical mc-icon"></i> Trouser Length</div>
+                    <p class="mc-text">Measure from your natural waist down to your ankle bone. For a straight-cut trouser, this is your full trouser length. For a churidar, add 6–8 extra inches to allow for the gathered ankle effect.</p>
+                </div>
+            </div>
+            <div class="measure-card">
+                <div class="mc-num">06</div>
+                <div class="mc-body">
+                    <div class="mc-title"><i class="fas fa-hand-point-up mc-icon"></i> Sleeve Length</div>
+                    <p class="mc-text">Bend your arm slightly at the elbow. Measure from the back of your neck, across your shoulder, and down to your wrist bone. This gives you the full sleeve length. For a 3/4 sleeve, stop just below the elbow.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Tips -->
+        <div class="tips-strip">
+            <div class="tip-card">
+                <i class="fas fa-tape"></i>
+                <h4>Use a Soft Tape</h4>
+                <p>Always use a flexible fabric or plastic measuring tape. A metal ruler will not give accurate body measurements.</p>
+            </div>
+            <div class="tip-card">
+                <i class="fas fa-user-friends"></i>
+                <h4>Ask for Help</h4>
+                <p>For best accuracy, have a friend or family member take your measurements. Self-measurement can cause the tape to shift.</p>
+            </div>
+            <div class="tip-card">
+                <i class="fas fa-tshirt"></i>
+                <h4>Wear Fitted Clothing</h4>
+                <p>Measure over thin, form-fitting clothing or in your undergarments for the most precise results.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ③ FIT TYPES -->
+    <div class="content-block reveal" id="fit-types" style="transition-delay:.12s">
+        <div class="sec-eyebrow">
+            <div class="eyebrow-icon"><i class="fas fa-magic"></i></div>
+            <div>
+                <span class="eyebrow-lbl">Section 03</span>
+                <h2 class="eyebrow-h">Fit &amp; Style Guide</h2>
+            </div>
+        </div>
+        <div class="sec-divider"></div>
+
+        <p class="body-text">Libaas Studio suits are designed to be stitched to your personal measurements. Understanding the fit you prefer will help your tailor create your perfect silhouette.</p>
+
+        <div class="fit-grid">
+            <div class="fit-card">
+                <div class="fit-icon"><i class="fas fa-vest"></i></div>
+                <h3 class="fit-name">Slim Fit</h3>
+                <p class="fit-desc">A tailored, close-to-body silhouette. Add 1 inch of ease to chest, waist and hip measurements. Ideal for formal and party occasions.</p>
+            </div>
+            <div class="fit-card">
+                <div class="fit-icon"><i class="fas fa-tshirt"></i></div>
+                <h3 class="fit-name">Regular Fit</h3>
+                <p class="fit-desc">A classic, comfortable cut with 2 inches of ease. The most versatile fit — suitable for everyday, casual, and semi-formal wear.</p>
+            </div>
+            <div class="fit-card">
+                <div class="fit-icon"><i class="fas fa-wind"></i></div>
+                <h3 class="fit-name">Relaxed Fit</h3>
+                <p class="fit-desc">A loose, flowing silhouette with 3–4 inches of ease. Perfect for lawn and chiffon fabrics where drape and airflow are desired.</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <i class="fas fa-info-circle"></i>
+            <p>When sharing measurements with your tailor, always specify your preferred fit. Mention the <strong>occasion</strong> (casual, formal, bridal) as this will also guide the tailor on stitching style, neckline depth, and embroidery placement.</p>
+        </div>
+    </div>
+
+    <!-- ④ FABRIC CARE NOTE -->
+    <div class="content-block reveal" id="fabric-note" style="transition-delay:.16s">
+        <div class="sec-eyebrow">
+            <div class="eyebrow-icon"><i class="fas fa-info-circle"></i></div>
+            <div>
+                <span class="eyebrow-lbl">Section 04</span>
+                <h2 class="eyebrow-h">Important Sizing Notes</h2>
+            </div>
+        </div>
+        <div class="sec-divider"></div>
+
+        <p class="body-text">A few things to keep in mind when ordering and stitching your Libaas Studio suit:</p>
+
+        <div style="display:flex;flex-direction:column;gap:0;">
+            <!-- Row 1 -->
+            <div style="display:flex;align-items:flex-start;gap:16px;padding:18px 0;border-top:1px solid var(--dark-border);">
+                <div style="width:32px;height:32px;border:1px solid var(--dark-border);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:12px;flex-shrink:0;margin-top:2px;"><i class="fas fa-water"></i></div>
+                <div>
+                    <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--off-white);margin-bottom:4px;">Pre-Wash Before Stitching</div>
+                    <p style="font-size:11.5px;color:var(--text-muted);line-height:1.75;">Lawn and cotton fabrics may shrink slightly after the first wash. We strongly recommend having your fabric pre-washed (or dry cleaned, for delicate fabrics) before sending it to your tailor. This prevents post-stitching shrinkage and size changes.</p>
+                </div>
+            </div>
+            <!-- Row 2 -->
+            <div style="display:flex;align-items:flex-start;gap:16px;padding:18px 0;border-top:1px solid var(--dark-border);">
+                <div style="width:32px;height:32px;border:1px solid var(--dark-border);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:12px;flex-shrink:0;margin-top:2px;"><i class="fas fa-cut"></i></div>
+                <div>
+                    <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--off-white);margin-bottom:4px;">Unstitched Fabric Dimensions</div>
+                    <p style="font-size:11.5px;color:var(--text-muted);line-height:1.75;">Each suit includes fabric for kameez (shirt), shalwar/trouser, and dupatta. Standard kameez fabric is 3 metres, trouser fabric is 2.5 metres, and dupatta is approximately 2.5 metres. These dimensions comfortably accommodate all sizes up to 3XL.</p>
+                </div>
+            </div>
+            <!-- Row 3 -->
+            <div style="display:flex;align-items:flex-start;gap:16px;padding:18px 0;border-top:1px solid var(--dark-border);border-bottom:1px solid var(--dark-border);">
+                <div style="width:32px;height:32px;border:1px solid var(--dark-border);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:12px;flex-shrink:0;margin-top:2px;"><i class="fas fa-exchange-alt"></i></div>
+                <div>
+                    <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--off-white);margin-bottom:4px;">Between Sizes?</div>
+                    <p style="font-size:11.5px;color:var(--text-muted);line-height:1.75;">If your measurements fall between two sizes, always choose the larger size. Since our suits are unstitched, your tailor can always take the fabric in — but cannot add fabric if the piece is too small. When in doubt, <a href="contact.html" style="color:var(--gold);text-decoration:underline;text-underline-offset:2px;">contact our team</a> and we'll advise you personally.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /sg-wrap -->
+
+<!-- ══════════════════════════════════════
+     CTA SECTION
+══════════════════════════════════════ -->
+<section class="cta-section">
+    <div class="cta-inner reveal">
+        <span class="cta-label">We're Here To Help</span>
+        <h2 class="cta-title">Still Confused<br>About Sizing?</h2>
+        <p class="cta-sub">Our team is happy to help you find the perfect size. Share your measurements with us and we'll guide you to the right choice — personally.</p>
+        <div class="cta-buttons">
+            <a href="contact.html"  class="btn-gold">Ask Us Directly</a>
+            <a href="products.html" class="btn-ghost">Browse Collections</a>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h2>Libaas</h2>
+            <span class="tagline">Studio</span>
+            <p>Premium Pakistani ladies suits crafted with elegance and attention to detail. We bring the finest fabrics and embroideries to women who appreciate true artistry.</p>
+            <div class="footer-social">
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Our Gallery</a></li>
+                <li><a href="faqs.html">FAQ</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Collections</h4>
+            <ul>
+                <li><a href="products.html">Best Sellers</a></li>
+                <li><a href="products.html">Lawn Suits</a></li>
+                <li><a href="products.html">Formal Wear</a></li>
+                <li><a href="products.html">Party Wear</a></li>
+                <li><a href="products.html">Bridal</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Policies</h4>
+            <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="shipping.html">Shipping Policy</a></li>
+                <li><a href="return.html">Refund Policy</a></li>
+                <li><a href="sizeguide.html">Size Guide</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom" style="max-width:1280px;margin:0 auto;">
+        <p>© 2024 Libaas Studio. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+            <a href="privacy.html">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="shipping.html">Shipping</a>
+        </div>
+    </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     CART MODAL
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="cart-modal" onclick="handleOverlayClick(event,'cart-modal')">
+    <div class="modal-panel" id="cart-panel">
+        <div class="modal-header">
+            <h3>Your Bag</h3>
+            <button class="close-btn icon-btn" onclick="closeModal('cart-modal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div style="text-align:center;padding:48px 0;color:var(--text-muted);">
+                <i class="fas fa-shopping-bag" style="font-size:28px;margin-bottom:16px;display:block;opacity:.3;"></i>
+                <p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;">Your bag is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-row"><span>Total</span><span id="cart-total">Rs. 0</span></div>
+           <a href="order.html" class="btn-checkout">Proceed To Checkout</a>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     AUTH MODAL
+══════════════════════════════════════ -->
+<div class="auth-overlay" id="auth-modal" onclick="handleOverlayClick(event,'auth-modal')">
+    <div class="auth-panel" id="auth-panel">
+        <h2 id="auth-title">Login</h2>
+        <span class="auth-subtitle">Welcome back to Libaas Studio</span>
+        <div id="login-form">
+            <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••"></div>
+            <button class="btn-submit">Login</button>
+            <div class="auth-switch">New here? <button onclick="switchToSignup()">Create an account</button></div>
+        </div>
+        <div id="signup-form" class="hidden">
+            <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your full name"></div>
+            <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" placeholder="Create a password"></div>
+            <button class="btn-submit">Create Account</button>
+            <div class="auth-switch">Already have an account? <button onclick="switchToLogin()">Login</button></div>
+        </div>
+        <button class="close-btn icon-btn" style="position:absolute;top:16px;right:20px;" onclick="closeModal('auth-modal')"><i class="fas fa-times"></i></button>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+/* ── Unit Toggle ── */
+function switchUnit(unit) {
+    const isInches = unit === 'inches';
+    document.getElementById('table-inches').style.display = isInches ? 'block' : 'none';
+    document.getElementById('table-cm').style.display     = isInches ? 'none'  : 'block';
+    document.getElementById('btn-inches').classList.toggle('active',  isInches);
+    document.getElementById('btn-cm').classList.toggle('active',     !isInches);
+    document.getElementById('unit-label').textContent = isInches ? 'inches' : 'centimetres';
+}
+
+/* ── Modals ── */
+function openModal(id) {
+    const overlay = document.getElementById(id);
+    const panel   = overlay.querySelector('.modal-panel, .auth-panel');
+    overlay.classList.add('active');
+    setTimeout(() => panel.classList.add('visible'), 10);
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+    const overlay = document.getElementById(id);
+    const panel   = overlay.querySelector('.modal-panel, .auth-panel');
+    panel.classList.remove('visible');
+    setTimeout(() => { overlay.classList.remove('active'); document.body.style.overflow = ''; }, 350);
+}
+function handleOverlayClick(e, id) { if (e.target === e.currentTarget) closeModal(id); }
+function toggleCart() {
+    document.getElementById('cart-modal').classList.contains('active')
+        ? closeModal('cart-modal') : openModal('cart-modal');
+}
+function toggleAuth() {
+    document.getElementById('auth-modal').classList.contains('active')
+        ? closeModal('auth-modal') : openModal('auth-modal');
+}
+function switchToSignup() {
+    document.getElementById('login-form').classList.add('hidden');
+    document.getElementById('signup-form').classList.remove('hidden');
+    document.getElementById('auth-title').textContent = 'Create Account';
+}
+function switchToLogin() {
+    document.getElementById('signup-form').classList.add('hidden');
+    document.getElementById('login-form').classList.remove('hidden');
+    document.getElementById('auth-title').textContent = 'Login';
+}
+
+/* ── Mobile Menu ── */
+function toggleMobileMenu() {
+    const nav    = document.getElementById('mobile-nav');
+    const burger = document.getElementById('hamburger');
+    const isOpen = nav.classList.contains('open');
+    nav.classList.toggle('open');
+    burger.classList.toggle('open');
+    document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+
+/* ── Search ── */
+function toggleSearch() {
+    const bar = document.getElementById('search-bar');
+    bar.classList.toggle('open');
+    if (bar.classList.contains('open')) document.getElementById('search-input').focus();
+}
+
+/* ── Header shadow ── */
+window.addEventListener('scroll', () => {
+    document.getElementById('site-header').style.boxShadow =
+        window.scrollY > 40 ? '0 4px 32px rgba(0,0,0,0.6)' : '';
+});
+
+/* ── Reveal ── */
+const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ── Responsive logo ── */
+function handleResize() {
+    const logo = document.getElementById('mobile-logo');
+    logo.style.display = window.innerWidth <= 900 ? 'block' : 'none';
+}
+window.addEventListener('resize', handleResize);
+handleResize();
+
+/* ── Keyboard escape ── */
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal('cart-modal'); closeModal('auth-modal'); }
+});
+</script>
+</body>
+</html>

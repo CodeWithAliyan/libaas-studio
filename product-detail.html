@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail — Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-gold': '#c9a96e',
+                        'brand-dark': '#111111',
+                        'brand-card': '#181818',
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'sans':    ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --black:       #000000;
+            --dark:        #111111;
+            --dark-card:   #181818;
+            --dark-border: #222222;
+            --gold:        #c9a96e;
+            --gold-light:  #e1c99a;
+            --off-white:   #f5f0eb;
+            --text-muted:  #888888;
+            --text-dim:    #555555;
+            --font-display:'Playfair Display', serif;
+            --font-body:   'Montserrat', sans-serif;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--dark); color: var(--off-white); overflow-x: hidden; line-height: 1.6; }
+        h1,h2,h3,h4 { font-family: var(--font-display); }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; font-family: var(--font-body); border: none; background: none; }
+        img { display: block; max-width: 100%; }
+
+        /* ── Announcement Bar ── */
+        .announcement-bar { background:#0a0a0a; border-bottom:1px solid var(--dark-border); padding:8px 0; overflow:hidden; white-space:nowrap; }
+        .announcement-track { display:inline-flex; animation:ticker 40s linear infinite; }
+        .announcement-item { display:inline-flex; align-items:center; gap:10px; padding:0 40px; font-size:10.5px; font-weight:400; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); }
+        .announcement-item .star { color:var(--gold); font-size:9px; }
+        .announcement-item strong { color:var(--off-white); }
+        @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+        /* ── Header ── */
+        .site-header { position:sticky; top:0; z-index:1000; background:#000; border-bottom:1px solid var(--dark-border); transition:box-shadow .3s; }
+        .header-inner { max-width:1440px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:64px; }
+        .nav-left { display:flex; align-items:center; gap:28px; }
+        .nav-link { font-size:10.5px; font-weight:500; letter-spacing:1.8px; text-transform:uppercase; color:#aaa; position:relative; padding-bottom:2px; transition:color .25s; }
+        .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1px; background:var(--gold); transition:width .3s; }
+        .nav-link:hover { color:#fff; }
+        .nav-link:hover::after { width:100%; }
+        .nav-link.active { color:#fff; }
+        .nav-link.active::after { width:100%; }
+        .brand-center { position:absolute; left:50%; transform:translateX(-50%); text-align:center; line-height:1; }
+        .brand-name { font-family:var(--font-display); font-size:28px; font-weight:500; letter-spacing:10px; text-transform:uppercase; color:#fff; }
+        .brand-tagline { font-size:8px; letter-spacing:3.5px; text-transform:uppercase; color:var(--text-muted); margin-top:2px; }
+        .header-actions { display:flex; align-items:center; gap:20px; }
+        .icon-btn { font-size:14px; color:#aaa; transition:color .25s; position:relative; padding:4px; }
+        .icon-btn:hover { color:#fff; }
+        .cart-badge { position:absolute; top:-5px; right:-7px; background:var(--gold); color:#000; font-size:8px; font-weight:700; width:15px; height:15px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        .hamburger { display:none; flex-direction:column; gap:5px; width:22px; cursor:pointer; }
+        .hamburger span { display:block; height:1.5px; background:#fff; transition:all .3s; }
+        .hamburger.open span:nth-child(1) { transform:rotate(45deg) translateY(9px); }
+        .hamburger.open span:nth-child(2) { opacity:0; }
+        .hamburger.open span:nth-child(3) { transform:rotate(-45deg) translateY(-9px); }
+
+        /* ── Mobile Nav ── */
+        .mobile-nav { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:36px; opacity:0; transform:translateY(-20px); transition:opacity .4s,transform .4s; }
+        .mobile-nav.open { display:flex; opacity:1; transform:translateY(0); }
+        .mobile-nav a { font-family:var(--font-display); font-size:28px; color:#fff; letter-spacing:4px; }
+
+        /* ── Search Bar ── */
+        .search-bar { position:fixed; top:0; left:0; right:0; height:64px; background:#000; z-index:1001; display:flex; align-items:center; padding:0 32px; gap:16px; transform:translateY(-100%); transition:transform .35s ease; border-bottom:1px solid var(--dark-border); }
+        .search-bar.open { transform:translateY(0); }
+        .search-bar input { flex:1; background:none; border:none; outline:none; color:#fff; font-size:14px; letter-spacing:1px; font-family:var(--font-body); }
+        .search-bar input::placeholder { color:var(--text-muted); }
+
+        /* ── Breadcrumb ── */
+        .breadcrumb { background:#000; border-bottom:1px solid var(--dark-border); padding:14px 32px; }
+        .breadcrumb-inner { max-width:1440px; margin:0 auto; display:flex; align-items:center; gap:10px; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-muted); }
+        .breadcrumb-inner a { color:var(--text-muted); transition:color .2s; }
+        .breadcrumb-inner a:hover { color:var(--gold); }
+        .breadcrumb-inner i { font-size:8px; }
+        .breadcrumb-inner span { color:var(--gold); }
+
+        /* ── Product Detail Layout ── */
+        .detail-wrap { max-width:1200px; margin:0 auto; padding:60px 32px 80px; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
+        @media(max-width:900px) { .detail-wrap { grid-template-columns:1fr; gap:40px; padding:40px 20px 60px; } }
+
+        /* ── Image Side ── */
+        .product-img-wrap { position:sticky; top:90px; }
+        .product-main-img { width:100%; aspect-ratio:3/4; object-fit:cover; object-position:center top; border-radius:8px; border:1px solid var(--dark-border); background:#1a1a1a; }
+        @media(max-width:900px) { .product-img-wrap { position:static; } }
+
+        /* ── Info Side ── */
+        .product-category-tag { display:inline-block; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,169,110,0.35); padding:4px 14px; margin-bottom:18px; }
+        .product-title { font-family:var(--font-display); font-size:clamp(24px,3vw,38px); font-weight:500; color:#fff; letter-spacing:1px; line-height:1.2; margin-bottom:20px; }
+        .product-price-wrap { display:flex; align-items:baseline; gap:14px; margin-bottom:8px; }
+        .product-price-sale { font-family:var(--font-display); font-size:28px; font-weight:600; color:var(--gold); }
+        .product-price-orig { font-size:14px; color:var(--text-dim); text-decoration:line-through; }
+        .product-save-badge { font-size:9px; letter-spacing:1.5px; background:rgba(201,169,110,0.12); border:1px solid rgba(201,169,110,0.3); color:var(--gold); padding:3px 10px; text-transform:uppercase; }
+        .product-divider { height:1px; background:var(--dark-border); margin:24px 0; }
+
+        /* ── Description ── */
+        .desc-label { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:14px; display:block; }
+        .desc-text { font-size:12px; color:var(--text-muted); line-height:2; margin-bottom:12px; }
+        .desc-features { list-style:none; margin:16px 0; }
+        .desc-features li { font-size:11px; color:var(--text-muted); padding:6px 0; border-bottom:1px solid #1a1a1a; display:flex; align-items:center; gap:10px; }
+        .desc-features li i { color:var(--gold); font-size:9px; flex-shrink:0; }
+
+        /* ── Quantity ── */
+        .qty-wrap { display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+        .qty-label { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); }
+        .qty-controls { display:flex; align-items:center; gap:0; border:1px solid var(--dark-border); }
+        .qty-btn { width:36px; height:36px; background:transparent; color:var(--text-muted); font-size:12px; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+        .qty-btn:hover { background:var(--dark-border); color:#fff; }
+        .qty-num { width:44px; height:36px; background:#0a0a0a; color:#fff; text-align:center; font-size:13px; display:flex; align-items:center; justify-content:center; border-left:1px solid var(--dark-border); border-right:1px solid var(--dark-border); font-family:var(--font-body); }
+
+        /* ── Action Buttons ── */
+        .btn-add-cart {
+            width:100%; padding:15px; background:var(--gold); border:none; color:#000;
+            font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+            transition:background .25s; margin-bottom:12px; display:flex; align-items:center; justify-content:center; gap:10px;
+        }
+        .btn-add-cart:hover { background:var(--gold-light, #e1c99a); }
+        .btn-whatsapp {
+            width:100%; padding:15px; background:transparent; border:1px solid #25D366; color:#25D366;
+            font-size:10px; font-weight:600; letter-spacing:3px; text-transform:uppercase;
+            transition:all .25s; display:flex; align-items:center; justify-content:center; gap:10px;
+        }
+        .btn-whatsapp:hover { background:#25D366; color:#000; }
+        .btn-add-cart i, .btn-whatsapp i { font-size:13px; }
+
+        /* ── Toast Notification ── */
+        .toast {
+            position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(20px);
+            background:#0a0a0a; border:1px solid var(--gold); color:var(--off-white);
+            padding:14px 28px; font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+            z-index:3000; opacity:0; transition:all .35s; white-space:nowrap;
+            display:flex; align-items:center; gap:10px;
+        }
+        .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+        .toast i { color:var(--gold); }
+
+        /* ── Related / You May Also Like ── */
+        .related-section { background:#000; border-top:1px solid var(--dark-border); padding:70px 0; }
+        .related-inner { max-width:1200px; margin:0 auto; padding:0 32px; }
+        .related-header { text-align:center; margin-bottom:44px; }
+        .section-label { font-size:9.5px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:10px; }
+        .section-title { font-family:var(--font-display); font-size:clamp(22px,3vw,32px); font-weight:500; color:#fff; letter-spacing:2px; }
+        .related-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--dark-border); }
+        @media(max-width:900px) { .related-grid { grid-template-columns:repeat(2,1fr); } }
+        .related-card { background:var(--dark-card); border:1px solid #1c1c1c; display:block; text-decoration:none; color:inherit; overflow:hidden; transition:border-color .25s; }
+        .related-card:hover { border-color:#2a2a2a; }
+        .related-card-img { aspect-ratio:3/4; overflow:hidden; background:#1a1a1a; }
+        .related-card-img img { width:100%; height:100%; object-fit:cover; object-position:center top; transition:transform .5s; }
+        .related-card:hover .related-card-img img { transform:scale(1.05); }
+        .related-card-body { padding:12px 14px 14px; }
+        .related-card-name { font-size:10.5px; font-weight:500; letter-spacing:0.5px; color:var(--off-white); text-transform:uppercase; margin-bottom:5px; line-height:1.4; }
+        .related-card-price { font-size:11px; font-weight:600; color:var(--gold); }
+
+        /* ── Footer ── */
+        footer { background:#000; border-top:1px solid var(--dark-border); }
+        .footer-inner { max-width:1280px; margin:0 auto; padding:60px 40px 0; display:grid; grid-template-columns:1.8fr 1fr 1fr 1fr; gap:48px; }
+        @media(max-width:900px) { .footer-inner { grid-template-columns:1fr 1fr; } }
+        @media(max-width:500px) { .footer-inner { grid-template-columns:1fr; text-align:center; } .footer-social { justify-content:center; } .footer-brand p { max-width:100%; } }
+        .footer-brand h2 { font-family:var(--font-display); font-size:22px; letter-spacing:8px; text-transform:uppercase; color:#fff; margin-bottom:4px; }
+        .footer-brand .tagline { font-size:8px; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); margin-bottom:20px; display:block; }
+        .footer-brand p { font-size:11px; color:var(--text-muted); line-height:1.9; max-width:280px; }
+        .footer-social { display:flex; gap:14px; margin-top:24px; }
+        .footer-social a { width:34px; height:34px; border:1px solid var(--dark-border); display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--text-muted); transition:all .25s; }
+        .footer-social a:hover { border-color:var(--gold); color:var(--gold); }
+        .footer-col h4 { font-family:var(--font-body); font-size:9.5px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#fff; margin-bottom:24px; }
+        .footer-col ul { list-style:none; }
+        .footer-col ul li { margin-bottom:12px; }
+        .footer-col ul li a { font-size:11px; color:var(--text-muted); letter-spacing:0.5px; transition:color .25s; }
+        .footer-col ul li a:hover { color:var(--gold); }
+        .footer-bottom { border-top:1px solid var(--dark-border); margin-top:48px; padding:20px 40px; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:20px; text-align:center; }
+        .footer-bottom p { font-size:10px; color:var(--text-dim); letter-spacing:1px; }
+        .footer-bottom-links { display:flex; gap:24px; }
+        .footer-bottom-links a { font-size:10px; color:var(--text-dim); letter-spacing:1px; transition:color .25s; }
+        .footer-bottom-links a:hover { color:var(--gold); }
+
+        /* ── Cart Modal ── */
+        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:2000; display:none; align-items:stretch; justify-content:flex-end; backdrop-filter:blur(4px); }
+        .modal-overlay.active { display:flex; }
+        .modal-panel { width:420px; max-width:100vw; background:#0a0a0a; border-left:1px solid var(--dark-border); display:flex; flex-direction:column; transform:translateX(100%); transition:transform .35s ease; }
+        .modal-panel.visible { transform:translateX(0); }
+        .modal-header { display:flex; align-items:center; justify-content:space-between; padding:24px 28px; border-bottom:1px solid var(--dark-border); }
+        .modal-header h3 { font-family:var(--font-display); font-size:18px; letter-spacing:3px; text-transform:uppercase; color:#fff; }
+        .close-btn { font-size:16px; color:var(--text-muted); transition:color .25s; }
+        .close-btn:hover { color:#fff; }
+        .cart-items { flex:1; overflow-y:auto; padding:24px 28px; }
+        .cart-item { display:flex; gap:14px; align-items:center; padding:14px 0; border-bottom:1px solid var(--dark-border); }
+        .cart-item img { width:64px; height:80px; object-fit:cover; object-position:top; background:#1a1a1a; }
+        .cart-item-info { flex:1; }
+        .cart-item-name { font-size:11px; color:var(--off-white); margin-bottom:4px; }
+        .cart-item-price { font-size:11px; color:var(--gold); }
+        .cart-item-controls { display:flex; align-items:center; gap:8px; }
+        .cart-qty-btn { width:24px; height:24px; border:1px solid var(--dark-border); color:var(--text-muted); font-size:9px; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+        .cart-qty-btn:hover { border-color:var(--gold); color:var(--gold); }
+        .cart-qty { font-size:12px; color:#fff; min-width:16px; text-align:center; }
+        .cart-remove { color:var(--text-dim); font-size:11px; margin-left:4px; transition:color .2s; }
+        .cart-remove:hover { color:#e55; }
+        .cart-footer { padding:24px 28px; border-top:1px solid var(--dark-border); }
+        .cart-total-row { display:flex; justify-content:space-between; margin-bottom:20px; font-size:12px; }
+        .cart-total-row span:first-child { color:var(--text-muted); letter-spacing:2px; text-transform:uppercase; }
+        .cart-total-row span:last-child { color:#fff; font-weight:600; font-size:14px; }
+        .btn-checkout { width:100%; padding:15px; background:var(--gold); border:none; color:#000; font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; transition:background .25s; display:block; text-align:center; }
+        .btn-checkout:hover { background:#e1c99a; }
+
+        /* ── Auth Modal ── */
+        .auth-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:2000; display:none; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
+        .auth-overlay.active { display:flex; }
+        .auth-panel { width:400px; max-width:95vw; background:#0a0a0a; border:1px solid var(--dark-border); padding:40px; transform:scale(.95); opacity:0; transition:all .3s; position:relative; }
+        .auth-panel.visible { transform:scale(1); opacity:1; }
+        .auth-panel h2 { font-family:var(--font-display); font-size:22px; letter-spacing:4px; text-transform:uppercase; color:#fff; margin-bottom:8px; }
+        .auth-subtitle { font-size:10px; color:var(--text-muted); letter-spacing:1px; margin-bottom:32px; display:block; }
+        .form-group { margin-bottom:18px; }
+        .form-group label { display:block; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+        .form-group input { width:100%; background:#111; border:1px solid var(--dark-border); outline:none; color:#fff; font-size:12px; padding:11px 14px; font-family:var(--font-body); transition:border-color .25s; }
+        .form-group input:focus { border-color:var(--gold); }
+        .btn-submit { width:100%; padding:13px; background:var(--gold); border:none; color:#000; font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; margin-top:8px; transition:background .25s; }
+        .btn-submit:hover { background:#e1c99a; }
+        .auth-switch { text-align:center; margin-top:20px; font-size:11px; color:var(--text-muted); }
+        .auth-switch button { color:var(--gold); text-decoration:underline; font-size:11px; }
+        .hidden { display:none; }
+
+        @media(max-width:900px) {
+            .hamburger { display:flex; }
+            .nav-left, .brand-center { display:none; }
+            .mobile-brand { font-family:var(--font-display); font-size:20px; letter-spacing:6px; color:#fff; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── Announcement Bar ── -->
+<div class="announcement-bar">
+    <div class="announcement-track">
+        <span class="announcement-item"><i class="fas fa-heart star"></i> 10% Off With Code <strong>LIBAAS10</strong> &nbsp;•&nbsp; Use At Checkout</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> Free Shipping On All Orders. Don't Miss This Deal!</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> Buy More Than Rs.3,000 And Get Free Delivery Nationwide</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> New Collection Arrived — Shop The Latest Designs</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> 10% Off With Code <strong>LIBAAS10</strong> &nbsp;•&nbsp; Use At Checkout</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> Free Shipping On All Orders. Don't Miss This Deal!</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> Buy More Than Rs.3,000 And Get Free Delivery Nationwide</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> New Collection Arrived — Shop The Latest Designs</span>
+    </div>
+</div>
+
+<!-- ── Header ── -->
+<header class="site-header" id="site-header">
+    <div class="search-bar" id="search-bar">
+        <i class="fas fa-search" style="color:var(--text-muted);font-size:13px;"></i>
+        <input type="text" id="search-input" placeholder="Search collections...">
+        <button class="icon-btn" onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="header-inner">
+        <nav class="nav-left">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="products.html" class="nav-link active">Shop</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="products.html" class="nav-link">Gallery</a>
+            <a href="faqs.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <span class="mobile-brand" style="display:none;" id="mobile-logo">LIBAAS</span>
+        <div class="brand-center">
+            <div class="brand-name">Libaas</div>
+            <div class="brand-tagline">Studio</div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="toggleSearch()" aria-label="Search"><i class="fas fa-search"></i></button>
+            <button class="icon-btn" onclick="toggleAuth()" aria-label="Account"><i class="fas fa-user"></i></button>
+            <button class="icon-btn" onclick="toggleCart()" aria-label="Cart">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge" id="cart-count">0</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav" id="mobile-nav">
+    <button style="position:absolute;top:20px;right:28px;font-size:20px;color:#fff;" onclick="toggleMobileMenu()">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="index.html" onclick="toggleMobileMenu()">Home</a>
+    <a href="products.html" onclick="toggleMobileMenu()">Shop</a>
+    <a href="about.html" onclick="toggleMobileMenu()">About</a>
+    <a href="products.html" onclick="toggleMobileMenu()">Gallery</a>
+    <a href="contact.html" onclick="toggleMobileMenu()">Contact</a>
+</nav>
+
+<!-- ── Breadcrumb ── -->
+<div class="breadcrumb">
+    <div class="breadcrumb-inner">
+        <a href="index.html">Home</a>
+        <i class="fas fa-chevron-right"></i>
+        <a href="products.html">Shop</a>
+        <i class="fas fa-chevron-right"></i>
+        <span id="breadcrumb-name">Product</span>
+    </div>
+</div>
+
+<!-- ── Product Detail ── -->
+<div class="detail-wrap">
+
+    <!-- LEFT: Image -->
+    <div class="product-img-wrap">
+        <img id="product-main-img" src="image/lawn1.jpg" alt="Product" class="product-main-img">
+    </div>
+
+    <!-- RIGHT: Info -->
+    <div class="product-info">
+        <span class="product-category-tag" id="product-category">Lawn</span>
+        <h1 class="product-title" id="product-title">Loading Product...</h1>
+
+        <div class="product-price-wrap">
+            <span class="product-price-sale" id="product-price-sale">Rs. —</span>
+            <span class="product-price-orig" id="product-price-orig">Rs. —</span>
+            <span class="product-save-badge" id="product-save-badge">Save 0%</span>
+        </div>
+
+        <div class="product-divider"></div>
+
+        <!-- Description -->
+        <span class="desc-label">About This Piece</span>
+        <p class="desc-text" id="product-desc-1">
+            A masterfully crafted ensemble that effortlessly blends traditional artistry with contemporary sensibilities. Each thread is carefully woven to create a garment that drapes elegantly and moves with grace — designed for the woman who commands attention without effort.
+        </p>
+        <p class="desc-text" id="product-desc-2">
+            The intricate embroidery is hand-finished by skilled artisans, ensuring no two pieces are exactly alike. Paired with a flowing dupatta and a tailored trouser, this suit is as versatile as it is beautiful — equally suited to afternoon gatherings and grand celebrations.
+        </p>
+
+        <ul class="desc-features" id="product-features">
+            <li><i class="fas fa-circle"></i> Premium quality fabric — breathable &amp; lightweight</li>
+            <li><i class="fas fa-circle"></i> Hand-finished embroidery with zari &amp; stonework</li>
+            <li><i class="fas fa-circle"></i> 3-piece suit: Shirt · Trouser · Dupatta</li>
+            <li><i class="fas fa-circle"></i> Unstitched — customise to your perfect fit</li>
+            <li><i class="fas fa-circle"></i> Care: Gentle hand wash or dry clean recommended</li>
+        </ul>
+
+        <div class="product-divider"></div>
+
+        <!-- Quantity -->
+        <div class="qty-wrap">
+            <span class="qty-label">Qty</span>
+            <div class="qty-controls">
+                <button class="qty-btn" onclick="changeQty(-1)"><i class="fas fa-minus"></i></button>
+                <span class="qty-num" id="qty-display">1</span>
+                <button class="qty-btn" onclick="changeQty(1)"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <button class="btn-add-cart" onclick="handleAddToCart()">
+            <i class="fas fa-shopping-bag"></i> Add to Bag
+        </button>
+        <button class="btn-whatsapp" onclick="handleWhatsApp()">
+            <i class="fab fa-whatsapp"></i> Order via WhatsApp
+        </button>
+    </div>
+</div>
+
+<!-- ── Related Products ── -->
+<section class="related-section">
+    <div class="related-inner">
+        <div class="related-header">
+            <span class="section-label">You May Also Like</span>
+            <h2 class="section-title">More From Our Collection</h2>
+        </div>
+        <div class="related-grid" id="related-grid">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h2>Libaas</h2>
+            <span class="tagline">Studio</span>
+            <p>Premium Pakistani ladies suits crafted with elegance and attention to detail. We bring the finest fabrics and embroideries to women who appreciate true artistry.</p>
+            <div class="footer-social">
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Our Gallery</a></li>
+                <li><a href="faqs.html">FAQ</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Collections</h4>
+            <ul>
+                <li><a href="products.html">Best Sellers</a></li>
+                <li><a href="products.html">Lawn Suits</a></li>
+                <li><a href="products.html">Formal Wear</a></li>
+                <li><a href="products.html">Party Wear</a></li>
+                <li><a href="products.html">Bridal</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Policies</h4>
+            <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="shipping.html">Shipping Policy</a></li>
+                <li><a href="return.html">Refund Policy</a></li>
+                <li><a href="sizeguide.html">Size Guide</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom" style="max-width:1280px;margin:0 auto;">
+        <p>© 2024 Libaas Studio. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+            <a href="privacy.html">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="shipping.html">Shipping</a>
+        </div>
+    </div>
+</footer>
+
+<!-- ── Cart Modal ── -->
+<div class="modal-overlay" id="cart-modal" onclick="handleOverlayClick(event,'cart-modal')">
+    <div class="modal-panel" id="cart-panel">
+        <div class="modal-header">
+            <h3>Your Bag</h3>
+            <button class="close-btn icon-btn" onclick="closeModal('cart-modal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total</span>
+                <span id="cart-total">Rs. 0</span>
+            </div>
+            <!-- Checkout links to order.html -->
+            <a href="order.html" class="btn-checkout">Proceed To Checkout</a>
+        </div>
+    </div>
+</div>
+
+<!-- ── Auth Modal ── -->
+<div class="auth-overlay" id="auth-modal" onclick="handleOverlayClick(event,'auth-modal')">
+    <div class="auth-panel" id="auth-panel">
+        <h2 id="auth-title">Login</h2>
+        <span class="auth-subtitle">Welcome back to Libaas Studio</span>
+        <div id="login-form">
+            <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••"></div>
+            <button class="btn-submit">Login</button>
+            <div class="auth-switch">New here? <button onclick="switchToSignup()">Create an account</button></div>
+        </div>
+        <div id="signup-form" class="hidden">
+            <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your full name"></div>
+            <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" placeholder="Create a password"></div>
+            <button class="btn-submit">Create Account</button>
+            <div class="auth-switch">Already have an account? <button onclick="switchToLogin()">Login</button></div>
+        </div>
+        <button class="close-btn icon-btn" style="position:absolute;top:16px;right:20px;" onclick="closeModal('auth-modal')"><i class="fas fa-times"></i></button>
+    </div>
+</div>
+
+<!-- ── Toast ── -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toast-msg">Added to bag!</span></div>
+
+<!-- ═══════════════════════════
+     JAVASCRIPT
+═══════════════════════════ -->
+<script>
+/* ──────────────────────────────────────────
+   MASTER PRODUCT CATALOGUE
+   (Keep in sync with index.html & products.html)
+────────────────────────────────────────── */
+const allProducts = [
+    { id:'lawn1',   name:"Pastel Rose Lawn Printed Summer Suit",       price:3500,  originalPrice:4800,  category:"casual", image:"image/lawn1.jpg",   alt:"Pastel rose lawn suit" },
+    { id:'lawn2',   name:"Sage Green Casual Lawn Suit",                price:3200,  originalPrice:4500,  category:"casual", image:"image/lawn2.jpg",   alt:"Sage green lawn suit" },
+    { id:'lawn3',   name:"Teal Blue Digital Print Lawn Suit",          price:3800,  originalPrice:5200,  category:"casual", image:"image/lawn3.jpg",   alt:"Teal blue lawn suit" },
+    { id:'lawn4',   name:"Off-White Classic Lawn Summer Suit",         price:3300,  originalPrice:4600,  category:"casual", image:"image/lawn4.jpg",   alt:"Off-white lawn suit" },
+    { id:'lawn5',   name:"Tropical Green Printed Lawn Suit",           price:3600,  originalPrice:5000,  category:"casual", image:"image/lawn5.jpg",   alt:"Tropical green lawn suit" },
+    { id:'lawn6',   name:"Lemon Yellow Cotton Embroidered Suit",       price:4200,  originalPrice:5800,  category:"casual", image:"image/lawn6.jpg",   alt:"Lemon yellow lawn suit" },
+    { id:'lawn7',   name:"Blush Pink Floral Lawn Printed Suit",        price:3400,  originalPrice:4700,  category:"casual", image:"image/lawn7.jpg",   alt:"Blush pink lawn suit" },
+    { id:'lawn8',   name:"Coral Orange Summer Lawn Suit",              price:3100,  originalPrice:4300,  category:"casual", image:"image/lawn8.jpg",   alt:"Coral orange lawn suit" },
+    { id:'lawn9',   name:"Aqua Blue Light Cotton Casual Suit",         price:3700,  originalPrice:5100,  category:"casual", image:"image/lawn9.jpg",   alt:"Aqua blue casual suit" },
+    { id:'formal1', name:"Ivory Pearl Embroidered Chiffon Suit",       price:6500,  originalPrice:8999,  category:"formal", image:"image/formal1.jpg", alt:"Ivory pearl formal suit" },
+    { id:'formal2', name:"Midnight Black Organza Formal Suit",         price:7200,  originalPrice:9999,  category:"formal", image:"image/formal2.jpg", alt:"Midnight black formal suit" },
+    { id:'formal3', name:"Deep Maroon Velvet Winter Suit",             price:8500,  originalPrice:11500, category:"formal", image:"image/formal3.jpg", alt:"Deep maroon velvet suit" },
+    { id:'formal4', name:"Smoke Grey Georgette Embroidered Suit",      price:7800,  originalPrice:10500, category:"formal", image:"image/formal4.jpg", alt:"Smoke grey formal suit" },
+    { id:'formal5', name:"Bottle Green Jacquard Formal Suit",          price:9200,  originalPrice:12500, category:"formal", image:"image/formal5.jpg", alt:"Bottle green jacquard suit" },
+    { id:'formal6', name:"Cream Silk Embroidered Classic Suit",        price:8800,  originalPrice:11999, category:"formal", image:"image/formal6.jpg", alt:"Cream silk formal suit" },
+    { id:'party1',  name:"Royal Blue Embroidered Net Suit",            price:5800,  originalPrice:7999,  category:"party",  image:"image/party1.jpg",  alt:"Royal blue party suit" },
+    { id:'party2',  name:"Gold Sequin Party Wear Suit",                price:6900,  originalPrice:9500,  category:"party",  image:"image/party2.jpg",  alt:"Gold sequin party suit" },
+    { id:'party3',  name:"Golden Glow Embroidered Net Suit",           price:5500,  originalPrice:7500,  category:"party",  image:"image/party3.jpg",  alt:"Golden glow party suit" },
+    { id:'party4',  name:"Ruby Red Embellished Chiffon Suit",          price:6200,  originalPrice:8500,  category:"party",  image:"image/party4.jpg",  alt:"Ruby red party suit" },
+    { id:'party5',  name:"Midnight Navy Sequin Party Suit",            price:7100,  originalPrice:9800,  category:"party",  image:"image/party5.jpg",  alt:"Midnight navy party suit" },
+    { id:'party6',  name:"Silver Shimmer Festive Chiffon Suit",        price:5900,  originalPrice:8200,  category:"party",  image:"image/party6.jpg",  alt:"Silver shimmer party suit" },
+    { id:'bridal1', name:"Crimson Red Bridal Chiffon Masterpiece",     price:18500, originalPrice:24999, category:"bridal", image:"image/bridal1.jpg", alt:"Crimson red bridal suit" },
+    { id:'bridal2', name:"Dusty Pink Bridal Embellished Suit",         price:22000, originalPrice:29999, category:"bridal", image:"image/bridal2.jpg", alt:"Dusty pink bridal suit" },
+    { id:'bridal3', name:"Spring Garden Bridal Chiffon Suit",          price:16500, originalPrice:22000, category:"bridal", image:"image/bridal3.jpg", alt:"Spring garden bridal suit" },
+    { id:'bridal4', name:"Sky Blue Heavy Embroidered Bridal Suit",     price:25000, originalPrice:33000, category:"bridal", image:"image/bridal4.jpg", alt:"Sky blue bridal suit" },
+    { id:'bridal5', name:"Ivory & Gold Bridal Lehenga Style Suit",     price:28500, originalPrice:37999, category:"bridal", image:"image/bridal5.jpg", alt:"Ivory gold bridal suit" },
+    { id:'bridal6', name:"Deep Plum Velvet Bridal Embroidered Suit",   price:21000, originalPrice:28500, category:"bridal", image:"image/bridal6.jpg", alt:"Deep plum bridal suit" }
+];
+
+/* ── Category display labels ── */
+const catLabels = { casual:'Lawn', formal:'Formal', party:'Party Wear', bridal:'Bridal' };
+
+/* ── Fabric descriptions per category ── */
+const catDescriptions = {
+    casual: [
+        "A breezy, sun-kissed lawn ensemble crafted for the warm months. The soft-touch fabric is lightweight and breathable, making it an ideal choice for daily wear, outdoor gatherings, and relaxed afternoon events.",
+        "Finished with elegant digital or block print detailing, the design strikes a balance between carefree charm and polished grace. The subtle embroidery at the neckline adds a touch of refinement to an otherwise effortless look."
+    ],
+    formal: [
+        "An exquisite formal creation that speaks the language of luxury. Crafted from premium chiffon or organza, every inch of this ensemble is designed to make a statement — from the rich hand-embellished neckline to the gracefully draped dupatta.",
+        "Ideal for weddings, formal dinners, and cultural celebrations, this suit pairs seamlessly with gold or pearl jewellery. The structured silhouette and fine threadwork elevate it beyond ordinary formalwear."
+    ],
+    party: [
+        "Vibrant, glamorous, and unapologetically bold — this party wear suit is made for the woman who lights up every room. The rich embroidery, net fabric, and sequin detailing catch every ray of light, creating a breathtaking effect.",
+        "Designed to stand out at mehndi ceremonies, engagement parties, and festive occasions, this ensemble pairs beautifully with statement earrings and heels. Wear it with confidence and own the night."
+    ],
+    bridal: [
+        "A bridal masterpiece conceived for the most precious chapter of a woman's life. This heavily embellished ensemble features intricate zardozi, resham, and stonework painstakingly crafted by master artisans over many hours.",
+        "From the ornate neckline to the embroidered hem and matching dupatta, every detail is a testament to the highest traditions of South Asian couture. Designed to be treasured — and worn again on the most meaningful occasions."
+    ]
+};
+
+/* ── Cart (shared localStorage key with index.html) ── */
+let cart    = JSON.parse(localStorage.getItem('libaasCart') || '[]');
+let qty     = 1;
+let currentProduct = null;
+
+/* ─── Read URL param ─── */
+function getParam(key) {
+    return new URLSearchParams(window.location.search).get(key);
+}
+
+/* ─── Render the detail page ─── */
+function loadProduct() {
+    const id      = getParam('id') || 'lawn1';
+    const product = allProducts.find(p => p.id === id) || allProducts[0];
+    currentProduct = product;
+
+    const savePct = Math.round((1 - product.price / product.originalPrice) * 100);
+    const cat     = product.category;
+
+    /* DOM updates */
+    document.title                                    = product.name + ' — Libaas Studio';
+    document.getElementById('breadcrumb-name').textContent = product.name;
+    document.getElementById('product-main-img').src   = product.image;
+    document.getElementById('product-main-img').alt   = product.alt;
+    document.getElementById('product-category').textContent = catLabels[cat] || cat;
+    document.getElementById('product-title').textContent    = product.name;
+    document.getElementById('product-price-sale').textContent = 'Rs. ' + product.price.toLocaleString();
+    document.getElementById('product-price-orig').textContent = 'Rs. ' + product.originalPrice.toLocaleString();
+    document.getElementById('product-save-badge').textContent = 'Save ' + savePct + '%';
+
+    /* Category-specific descriptions */
+    const descs = catDescriptions[cat] || catDescriptions.casual;
+    document.getElementById('product-desc-1').textContent = descs[0];
+    document.getElementById('product-desc-2').textContent = descs[1];
+
+    /* Related products: same category, exclude current, max 4 */
+    const related = allProducts.filter(p => p.category === cat && p.id !== id).slice(0, 4);
+    const rGrid   = document.getElementById('related-grid');
+    rGrid.innerHTML = related.map(p => `
+        <a class="related-card" href="product-detail.html?id=${p.id}">
+            <div class="related-card-img">
+                <img src="${p.image}" alt="${p.alt}" loading="lazy">
+            </div>
+            <div class="related-card-body">
+                <div class="related-card-name">${p.name}</div>
+                <div class="related-card-price">Rs. ${p.price.toLocaleString()}</div>
+            </div>
+        </a>`).join('');
+}
+
+/* ─── Quantity control ─── */
+function changeQty(delta) {
+    qty = Math.max(1, qty + delta);
+    document.getElementById('qty-display').textContent = qty;
+}
+
+/* ─── Add to Cart ─── */
+function handleAddToCart() {
+    if (!currentProduct) return;
+    const existing = cart.find(i => i.id === currentProduct.id);
+    if (existing) existing.quantity += qty;
+    else cart.push({ ...currentProduct, quantity: qty });
+    localStorage.setItem('libaasCart', JSON.stringify(cart));
+    updateCartUI();
+    showToast('Added to your bag!');
+    /* Animate badge */
+    const badge = document.getElementById('cart-count');
+    badge.style.transform = 'scale(1.6)';
+    setTimeout(() => badge.style.transform = '', 300);
+}
+
+/* ─── WhatsApp Order ─── */
+function handleWhatsApp() {
+    if (!currentProduct) return;
+    const msg  = encodeURIComponent(
+        `Hi, I want to order *${currentProduct.name}* for *Rs. ${currentProduct.price.toLocaleString()} PKR*.\nPlease confirm availability and delivery details. Thank you!`
+    );
+    /* Replace 923001234567 with your actual WhatsApp business number */
+    window.open(`https://wa.me/923001234567?text=${msg}`, '_blank');
+}
+
+/* ─── Toast helper ─── */
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ─── Cart UI ─── */
+function saveCart() { localStorage.setItem('libaasCart', JSON.stringify(cart)); }
+
+function updateQuantityCart(id, delta) {
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+    item.quantity += delta;
+    if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+    saveCart(); updateCartUI();
+}
+function removeFromCart(id) {
+    cart = cart.filter(i => i.id !== id);
+    saveCart(); updateCartUI();
+}
+function updateCartUI() {
+    const totalQty   = cart.reduce((s, i) => s + i.quantity, 0);
+    const totalPrice = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+    document.getElementById('cart-count').textContent = totalQty;
+    const el = document.getElementById('cart-items');
+    if (!el) return;
+    if (cart.length === 0) {
+        el.innerHTML = `<div style="text-align:center;padding:48px 0;color:var(--text-muted);">
+            <i class="fas fa-shopping-bag" style="font-size:28px;margin-bottom:16px;display:block;opacity:.3;"></i>
+            <p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;">Your bag is empty</p>
+        </div>`;
+    } else {
+        el.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.name}">
+                <div class="cart-item-info">
+                    <div class="cart-item-name">${item.name}</div>
+                    <div class="cart-item-price">Rs. ${item.price.toLocaleString()}</div>
+                </div>
+                <div class="cart-item-controls">
+                    <button class="cart-qty-btn" onclick="updateQuantityCart('${item.id}',-1)"><i class="fas fa-minus"></i></button>
+                    <span class="cart-qty">${item.quantity}</span>
+                    <button class="cart-qty-btn" onclick="updateQuantityCart('${item.id}',1)"><i class="fas fa-plus"></i></button>
+                    <button class="cart-remove" onclick="removeFromCart('${item.id}')"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </div>`).join('');
+    }
+    document.getElementById('cart-total').textContent = 'Rs. ' + totalPrice.toLocaleString();
+}
+
+/* ─── Modals ─── */
+function openModal(id) {
+    const o = document.getElementById(id);
+    const p = o.querySelector('.modal-panel, .auth-panel');
+    o.classList.add('active');
+    setTimeout(() => p.classList.add('visible'), 10);
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+    const o = document.getElementById(id);
+    const p = o.querySelector('.modal-panel, .auth-panel');
+    p.classList.remove('visible');
+    setTimeout(() => { o.classList.remove('active'); document.body.style.overflow = ''; }, 350);
+}
+function handleOverlayClick(e, id) { if (e.target === e.currentTarget) closeModal(id); }
+function toggleCart() {
+    const o = document.getElementById('cart-modal');
+    o.classList.contains('active') ? closeModal('cart-modal') : openModal('cart-modal');
+}
+function toggleAuth() {
+    const o = document.getElementById('auth-modal');
+    o.classList.contains('active') ? closeModal('auth-modal') : openModal('auth-modal');
+}
+function switchToSignup() {
+    document.getElementById('login-form').classList.add('hidden');
+    document.getElementById('signup-form').classList.remove('hidden');
+    document.getElementById('auth-title').textContent = 'Create Account';
+}
+function switchToLogin() {
+    document.getElementById('signup-form').classList.add('hidden');
+    document.getElementById('login-form').classList.remove('hidden');
+    document.getElementById('auth-title').textContent = 'Login';
+}
+
+/* ─── Mobile Menu ─── */
+function toggleMobileMenu() {
+    const nav    = document.getElementById('mobile-nav');
+    const burger = document.getElementById('hamburger');
+    const isOpen = nav.classList.contains('open');
+    nav.classList.toggle('open');
+    burger.classList.toggle('open');
+    document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+
+/* ─── Search ─── */
+function toggleSearch() {
+    const bar = document.getElementById('search-bar');
+    bar.classList.toggle('open');
+    if (bar.classList.contains('open')) document.getElementById('search-input').focus();
+}
+
+/* ─── Header shadow ─── */
+window.addEventListener('scroll', () => {
+    document.getElementById('site-header').style.boxShadow =
+        window.scrollY > 40 ? '0 4px 32px rgba(0,0,0,0.6)' : '';
+});
+
+/* ─── Keyboard ─── */
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal('cart-modal'); closeModal('auth-modal'); }
+});
+
+/* ─── Responsive ─── */
+function handleResize() {
+    document.getElementById('mobile-logo').style.display = window.innerWidth <= 900 ? 'block' : 'none';
+}
+window.addEventListener('resize', handleResize);
+handleResize();
+
+/* ─── Init ─── */
+document.addEventListener('DOMContentLoaded', () => {
+    loadProduct();
+    updateCartUI();
+});
+</script>
+</body>
+</html>

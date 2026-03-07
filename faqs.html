@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs — Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-black': '#000000',
+                        'brand-dark': '#111111',
+                        'brand-card': '#181818',
+                        'brand-border': '#222222',
+                        'brand-gold': '#c9a96e',
+                        'brand-tan': '#b8956a',
+                        'brand-muted': '#888888',
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'sans': ['Montserrat', 'sans-serif'],
+                        'script': ['Great Vibes', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --black: #000000;
+            --dark: #111111;
+            --dark-card: #181818;
+            --dark-border: #222222;
+            --gold: #c9a96e;
+            --gold-light: #e1c99a;
+            --warm-tan: #b8956a;
+            --white: #ffffff;
+            --off-white: #f5f0eb;
+            --text-muted: #888888;
+            --text-dim: #555555;
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --font-script: 'Great Vibes', cursive;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--dark);
+            color: var(--off-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4 { font-family: var(--font-display); }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; font-family: var(--font-body); border: none; background: none; }
+        img { display: block; max-width: 100%; }
+
+        /* ── Announcement Bar ── */
+        .announcement-bar {
+            background: #0a0a0a;
+            border-bottom: 1px solid var(--dark-border);
+            padding: 8px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .announcement-track {
+            display: inline-flex;
+            animation: ticker 40s linear infinite;
+        }
+        .announcement-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 40px;
+            font-size: 10.5px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .announcement-item .star { color: var(--gold); font-size: 9px; }
+        .announcement-item strong { color: var(--off-white); }
+        @keyframes ticker {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ── Header ── */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #000;
+            border-bottom: 1px solid var(--dark-border);
+            transition: box-shadow .3s;
+        }
+        .header-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+        .nav-link {
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: #aaa;
+            position: relative;
+            padding-bottom: 2px;
+            transition: color .25s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width .3s;
+        }
+        .nav-link:hover { color: #fff; }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active { color: #fff; }
+        .nav-link.active::after { width: 100%; }
+
+        .brand-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            line-height: 1;
+        }
+        .brand-name {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .brand-tagline {
+            font-size: 8px;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .icon-btn {
+            font-size: 14px;
+            color: #aaa;
+            transition: color .25s;
+            position: relative;
+            padding: 4px;
+        }
+        .icon-btn:hover { color: #fff; }
+        .cart-badge {
+            position: absolute;
+            top: -5px; right: -7px;
+            background: var(--gold);
+            color: #000;
+            font-size: 8px;
+            font-weight: 700;
+            width: 15px; height: 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Mobile hamburger ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            width: 22px;
+            cursor: pointer;
+        }
+        .hamburger span {
+            display: block;
+            height: 1.5px;
+            background: #fff;
+            transition: all .3s;
+        }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translateY(9px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translateY(-9px); }
+
+        /* ── Mobile Nav ── */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 36px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity .4s, transform .4s;
+        }
+        .mobile-nav.open {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .mobile-nav a {
+            font-family: var(--font-display);
+            font-size: 28px;
+            color: #fff;
+            letter-spacing: 4px;
+        }
+
+        /* ── Search Bar ── */
+        .search-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 64px;
+            background: #000;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            padding: 0 32px;
+            gap: 16px;
+            transform: translateY(-100%);
+            transition: transform .35s ease;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        .search-bar.open { transform: translateY(0); }
+        .search-bar input {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 14px;
+            letter-spacing: 1px;
+            font-family: var(--font-body);
+        }
+        .search-bar input::placeholder { color: var(--text-muted); }
+
+        /* ── Section labels ── */
+        .section-label {
+            font-size: 9.5px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(24px, 3vw, 38px);
+            font-weight: 500;
+            text-transform: capitalize;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        /* ── FAQ Hero ── */
+        .faq-hero {
+            background: #000;
+            border-bottom: 1px solid var(--dark-border);
+            padding: 80px 40px 70px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .faq-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 80% at 50% 120%, rgba(201,169,110,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .faq-hero-label {
+            font-size: 9.5px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 16px;
+        }
+        .faq-hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+        .faq-hero-sub {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            max-width: 440px;
+            margin: 0 auto;
+        }
+        .faq-hero-divider {
+            width: 48px;
+            height: 1px;
+            background: var(--gold);
+            margin: 28px auto 0;
+            opacity: 0.6;
+        }
+
+        /* ── FAQ Section ── */
+        .faq-section {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 80px 32px;
+        }
+
+        /* ── Category Header ── */
+        .faq-category {
+            margin-bottom: 48px;
+        }
+        .faq-category-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .faq-category-icon {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .faq-category-title {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+        .faq-category-line {
+            flex: 1;
+            height: 1px;
+            background: var(--dark-border);
+        }
+
+        /* ── Accordion ── */
+        .accordion-item {
+            border: 1px solid var(--dark-border);
+            background: var(--dark-card);
+            margin-bottom: 8px;
+            transition: border-color .3s;
+        }
+        .accordion-item.open {
+            border-color: rgba(201,169,110,0.35);
+        }
+        .accordion-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            gap: 16px;
+        }
+        .accordion-question {
+            font-family: var(--font-body);
+            font-size: 12.5px;
+            font-weight: 500;
+            letter-spacing: 0.6px;
+            color: var(--off-white);
+            line-height: 1.5;
+            transition: color .25s;
+        }
+        .accordion-item.open .accordion-question {
+            color: var(--gold);
+        }
+        .accordion-icon {
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--dark-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 10px;
+            flex-shrink: 0;
+            transition: border-color .3s, color .3s, transform .35s;
+        }
+        .accordion-item.open .accordion-icon {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: rotate(45deg);
+        }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 0.3s ease;
+            padding: 0 24px;
+        }
+        .accordion-item.open .accordion-body {
+            max-height: 400px;
+            padding: 0 24px 22px;
+        }
+        .accordion-answer {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.85;
+            letter-spacing: 0.3px;
+            border-top: 1px solid var(--dark-border);
+            padding-top: 18px;
+        }
+        .accordion-answer a {
+            color: var(--gold);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: opacity .2s;
+        }
+        .accordion-answer a:hover { opacity: 0.75; }
+
+        /* ── CTA Section ── */
+        .faq-cta {
+            background: #000;
+            border-top: 1px solid var(--dark-border);
+            padding: 80px 40px;
+            text-align: center;
+        }
+        .faq-cta-inner {
+            max-width: 560px;
+            margin: 0 auto;
+        }
+        .faq-cta-label {
+            font-size: 9.5px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 16px;
+        }
+        .faq-cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(26px, 3.5vw, 40px);
+            font-weight: 500;
+            letter-spacing: 3px;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        .faq-cta-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            line-height: 1.8;
+            margin-bottom: 36px;
+        }
+        .btn-cta {
+            display: inline-block;
+            padding: 14px 40px;
+            background: var(--gold);
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: background .3s, transform .2s;
+        }
+        .btn-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+        }
+        .btn-cta-ghost {
+            display: inline-block;
+            padding: 14px 40px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: border-color .3s, background .3s;
+            margin-left: 16px;
+        }
+        .btn-cta-ghost:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* ── Footer ── */
+        footer {
+            background: #000;
+            border-top: 1px solid var(--dark-border);
+        }
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 60px 40px 0;
+            display: grid;
+            grid-template-columns: 1.8fr 1fr 1fr 1fr;
+            gap: 48px;
+        }
+        @media (max-width: 900px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 500px) {
+            .footer-inner { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand p { max-width: 100%; }
+            .footer-social { justify-content: center; }
+        }
+        .footer-brand h2 {
+            font-family: var(--font-display);
+            font-size: 22px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .footer-brand .tagline {
+            font-size: 8px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            display: block;
+        }
+        .footer-brand p {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.9;
+            max-width: 280px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 14px;
+            margin-top: 24px;
+        }
+        .footer-social a {
+            width: 34px; height: 34px;
+            border: 1px solid var(--dark-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            transition: all .25s;
+        }
+        .footer-social a:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        .footer-col h4 {
+            font-family: var(--font-body);
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            transition: color .25s;
+        }
+        .footer-col ul li a:hover { color: var(--gold); }
+        .footer-bottom {
+            border-top: 1px solid var(--dark-border);
+            margin-top: 48px;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            text-align: center;
+        }
+        .footer-bottom p {
+            font-size: 10px;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+        .footer-bottom-links {
+            display: flex;
+            gap: 24px;
+        }
+        .footer-bottom-links a {
+            font-size: 10px;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            transition: color .25s;
+        }
+        .footer-bottom-links a:hover { color: var(--gold); }
+
+        /* ── Cart Modal ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            display: none;
+            align-items: stretch;
+            justify-content: flex-end;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-panel {
+            width: 420px;
+            max-width: 100vw;
+            background: #0a0a0a;
+            border-left: 1px solid var(--dark-border);
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform .35s ease;
+        }
+        .modal-panel.visible { transform: translateX(0); }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        .modal-header h3 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .close-btn {
+            font-size: 16px;
+            color: var(--text-muted);
+            transition: color .25s;
+        }
+        .close-btn:hover { color: #fff; }
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 28px;
+        }
+        .cart-footer {
+            padding: 24px 28px;
+            border-top: 1px solid var(--dark-border);
+        }
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        .cart-total-row span:first-child { color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+        .cart-total-row span:last-child { color: #fff; font-weight: 600; font-size: 14px; }
+        .btn-checkout {
+            width: 100%;
+            padding: 15px;
+            background: var(--gold);
+            border: none;
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: background .25s;
+        }
+        .btn-checkout:hover { background: var(--gold-light); }
+
+        /* ── Auth Modal ── */
+        .auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .auth-overlay.active { display: flex; }
+        .auth-panel {
+            width: 400px;
+            max-width: 95vw;
+            background: #0a0a0a;
+            border: 1px solid var(--dark-border);
+            padding: 40px;
+            transform: scale(.95);
+            opacity: 0;
+            transition: all .3s;
+            position: relative;
+        }
+        .auth-panel.visible { transform: scale(1); opacity: 1; }
+        .auth-panel h2 {
+            font-family: var(--font-display);
+            font-size: 22px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .auth-subtitle {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            margin-bottom: 32px;
+            display: block;
+        }
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block;
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .form-group input {
+            width: 100%;
+            background: #111;
+            border: 1px solid var(--dark-border);
+            outline: none;
+            color: #fff;
+            font-size: 12px;
+            padding: 11px 14px;
+            font-family: var(--font-body);
+            transition: border-color .25s;
+        }
+        .form-group input:focus { border-color: var(--gold); }
+        .btn-submit {
+            width: 100%;
+            padding: 13px;
+            background: var(--gold);
+            border: none;
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 8px;
+            transition: background .25s;
+        }
+        .btn-submit:hover { background: var(--gold-light); }
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .auth-switch button {
+            color: var(--gold);
+            text-decoration: underline;
+            font-size: 11px;
+        }
+        .hidden { display: none; }
+
+        /* ── Reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+        .reveal.in { opacity: 1; transform: translateY(0); }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .hamburger { display: flex; }
+            .nav-left, .brand-center { display: none; }
+            .mobile-brand {
+                font-family: var(--font-display);
+                font-size: 20px;
+                letter-spacing: 6px;
+                color: #fff;
+            }
+            .footer-bottom { padding: 20px 24px; }
+            .faq-hero { padding: 60px 24px 50px; }
+            .faq-section { padding: 60px 20px; }
+        }
+        @media (max-width: 600px) {
+            .btn-cta-ghost { margin-left: 0; margin-top: 12px; display: block; }
+            .faq-cta-buttons { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+            .btn-cta-ghost { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     ANNOUNCEMENT BAR
+═══════════════════════════════════ -->
+<div class="announcement-bar">
+    <div class="announcement-track">
+        <span class="announcement-item"><i class="fas fa-heart star"></i> 10% Off With Code <strong>LIBAAS10</strong> &nbsp;•&nbsp; Use At Checkout</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> Free Shipping On All Orders. Don't Miss This Deal!</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> Buy More Than Rs.3,000 And Get Free Delivery Nationwide</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> New Collection Arrived — Shop The Latest Designs</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> 10% Off With Code <strong>LIBAAS10</strong> &nbsp;•&nbsp; Use At Checkout</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> Free Shipping On All Orders. Don't Miss This Deal!</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> Buy More Than Rs.3,000 And Get Free Delivery Nationwide</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> New Collection Arrived — Shop The Latest Designs</span>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     HEADER
+═══════════════════════════════════ -->
+<header class="site-header" id="site-header">
+    <!-- Search bar overlay -->
+    <div class="search-bar" id="search-bar">
+        <i class="fas fa-search" style="color: var(--text-muted); font-size:13px;"></i>
+        <input type="text" id="search-input" placeholder="Search collections...">
+        <button class="icon-btn" onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="header-inner">
+        <!-- Left: Nav (desktop) / Hamburger (mobile) -->
+        <nav class="nav-left">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="products.html" class="nav-link">Shop</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="products.html" class="nav-link">Gallery</a>
+            <a href="faqs.html" class="nav-link active">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+
+        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+
+        <!-- Mobile logo -->
+        <span class="mobile-brand" style="display:none;" id="mobile-logo">LIBAAS</span>
+
+        <!-- Center: Wordmark (desktop) -->
+        <div class="brand-center">
+            <div class="brand-name">Libaas</div>
+            <div class="brand-tagline">Studio</div>
+        </div>
+
+        <!-- Right: Actions -->
+        <div class="header-actions">
+            <button class="icon-btn" onclick="toggleSearch()" aria-label="Search">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="icon-btn" onclick="toggleAuth()" aria-label="Account">
+                <i class="fas fa-user"></i>
+            </button>
+            <button class="icon-btn" onclick="toggleCart()" aria-label="Cart">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge" id="cart-count">0</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav" id="mobile-nav">
+    <button style="position:absolute;top:20px;right:28px;font-size:20px;color:#fff;" onclick="toggleMobileMenu()">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="index.html" onclick="toggleMobileMenu()">Home</a>
+    <a href="products.html" onclick="toggleMobileMenu()">Shop</a>
+    <a href="about.html" onclick="toggleMobileMenu()">About</a>
+    <a href="products.html" onclick="toggleMobileMenu()">Gallery</a>
+    <a href="faqs.html" onclick="toggleMobileMenu()">FAQ</a>
+    <a href="contact.html" onclick="toggleMobileMenu()">Contact</a>
+</nav>
+
+<!-- ═══════════════════════════════════
+     FAQ HERO
+═══════════════════════════════════ -->
+<section class="faq-hero">
+    <span class="faq-hero-label">Help & Support</span>
+    <h1 class="faq-hero-title">Frequently Asked<br>Questions</h1>
+    <p class="faq-hero-sub">Everything you need to know about shopping at Libaas Studio</p>
+    <div class="faq-hero-divider"></div>
+</section>
+
+<!-- ═══════════════════════════════════
+     FAQ ACCORDION CONTENT
+═══════════════════════════════════ -->
+<main class="faq-section">
+
+    <!-- ── Category 1: Orders & Shipping ── -->
+    <div class="faq-category reveal">
+        <div class="faq-category-header">
+            <div class="faq-category-icon"><i class="fas fa-shipping-fast"></i></div>
+            <h2 class="faq-category-title">Orders &amp; Shipping</h2>
+            <div class="faq-category-line"></div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">How long does delivery take?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">Standard delivery across Pakistan takes 3–5 business days. For orders in Karachi, Lahore, and Islamabad, express delivery is available within 1–2 business days. Remote areas may take up to 7 business days. You'll receive a tracking number via SMS once your order is dispatched.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">Do you offer free shipping?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">Yes! We offer free nationwide shipping on all orders. There are no minimum order requirements — every purchase, regardless of size, ships completely free to your doorstep anywhere in Pakistan.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">Can I track my order?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">Absolutely. Once your order is packed and dispatched, you will receive an SMS and email with your tracking number and a link to the courier's tracking portal. You can also reach out to our support team via <a href="contact.html">the contact page</a> for real-time order updates.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">Can I change or cancel my order after placing it?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">Order amendments or cancellations can be requested within 12 hours of placing your order. After this window, your order will have entered processing and changes may not be possible. Please <a href="contact.html">contact us</a> immediately if you need to make any modifications.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Category 2: Returns & Exchanges ── -->
+    <div class="faq-category reveal" style="transition-delay:.1s">
+        <div class="faq-category-header">
+            <div class="faq-category-icon"><i class="fas fa-exchange-alt"></i></div>
+            <h2 class="faq-category-title">Returns &amp; Exchanges</h2>
+            <div class="faq-category-line"></div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">What is your return policy?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">We accept returns within 7 days of delivery for items that are unworn, unwashed, and in their original packaging with all tags intact. Sale items and customised pieces are final sale and cannot be returned. To initiate a return, please visit our <a href="contact.html">contact page</a>.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">How do I exchange a product for a different size?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">To exchange a size, contact our team within 7 days of receiving your order. Subject to stock availability, we'll arrange a pickup and send out the correct size. Exchanges are processed within 3–5 business days of receiving the returned item. Size guide information is available on every product page.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">What if I received a damaged or incorrect item?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">We sincerely apologise if this has happened. Please <a href="contact.html">contact us</a> within 48 hours of delivery with a photo of the item and your order number. We will arrange a free return pickup and send out a replacement or issue a full refund immediately — no questions asked.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">How long does a refund take to process?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">Once we receive and inspect your returned item, refunds are processed within 3–5 business days. The amount will be credited back to your original payment method. Bank transfer times may vary depending on your financial institution, typically 2–3 additional business days.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Category 3: Payment Methods ── -->
+    <div class="faq-category reveal" style="transition-delay:.15s">
+        <div class="faq-category-header">
+            <div class="faq-category-icon"><i class="fas fa-credit-card"></i></div>
+            <h2 class="faq-category-title">Payment Methods</h2>
+            <div class="faq-category-line"></div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">What payment methods do you accept?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">We accept a wide range of payment methods including Cash on Delivery (COD), bank transfers, JazzCash, EasyPaisa, and all major debit/credit cards (Visa, Mastercard). All online transactions are secured with 128-bit SSL encryption for your safety.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">Is Cash on Delivery (COD) available?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">Yes, Cash on Delivery is available for all orders across Pakistan. Simply select COD at checkout and pay the courier upon receiving your parcel. Please ensure the exact amount is ready as our delivery partners may not carry change.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">How do I apply a discount code?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">At checkout, you'll find a "Discount Code" field in your order summary. Enter your code (e.g. <strong style="color: var(--gold);">LIBAAS10</strong>) and click Apply. The discount will be instantly reflected in your total before you confirm the order. Only one discount code can be applied per order.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">Is my payment information secure?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">Absolutely. We use industry-standard SSL/TLS encryption for all transactions. We do not store any card details on our servers. All payment processing is handled by PCI-DSS compliant payment gateways. Your financial information is always fully protected.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Category 4: Fabric Care ── -->
+    <div class="faq-category reveal" style="transition-delay:.2s">
+        <div class="faq-category-header">
+            <div class="faq-category-icon"><i class="fas fa-tshirt"></i></div>
+            <h2 class="faq-category-title">Fabric Care</h2>
+            <div class="faq-category-line"></div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">How should I wash my lawn suits?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">We recommend hand washing lawn suits in cold water with a mild detergent. If machine washing, use the delicate cycle at 30°C or below. Avoid wringing — gently squeeze out excess water and lay flat to dry in the shade. Direct sunlight can cause colours to fade prematurely.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">How do I care for embroidered and formal pieces?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">Embroidered and heavily embellished formal suits should be dry cleaned only to preserve the thread work and zari details. If spot cleaning at home, use a damp cloth with gentle, circular motions. Never soak embroidered fabric as this can cause threads to loosen and colours to bleed.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">How do I store my suits to maintain their quality?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">Store your suits in a cool, dry place away from direct sunlight. Use breathable fabric garment bags rather than plastic covers to prevent moisture build-up. For heavier bridal and formal pieces, fold them carefully with acid-free tissue paper to maintain the shape of embroidery and embellishments.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false">
+                <span class="accordion-question">Can chiffon dupattas be ironed?</span>
+                <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="accordion-body">
+                <p class="accordion-answer">Yes, but with care. Always iron chiffon dupattas inside-out on the lowest heat setting. Use a pressing cloth between the iron and the fabric to avoid direct contact. Steam ironing is preferable and most effective for removing creases. Never iron embroidered sections — simply hang them in a steamy bathroom to let wrinkles fall out naturally.</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- ═══════════════════════════════════
+     STILL HAVE QUESTIONS CTA
+═══════════════════════════════════ -->
+<section class="faq-cta">
+    <div class="faq-cta-inner reveal">
+        <span class="faq-cta-label">We're Here To Help</span>
+        <h2 class="faq-cta-title">Still Have Questions?</h2>
+        <p class="faq-cta-sub">Our customer care team is available 7 days a week. Whether you need help with sizing, an order, or anything else — we'd love to hear from you.</p>
+        <div class="faq-cta-buttons">
+            <a href="contact.html" class="btn-cta">Get In Touch</a>
+            <a href="products.html" class="btn-cta-ghost">Browse Collections</a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     FOOTER
+═══════════════════════════════════ -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h2>Libaas</h2>
+            <span class="tagline">Studio</span>
+            <p>Premium Pakistani ladies suits crafted with elegance and attention to detail. We bring the finest fabrics and embroideries to women who appreciate true artistry.</p>
+            <div class="footer-social">
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Our Gallery</a></li>
+                <li><a href="faqs.html">FAQ</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Collections</h4>
+            <ul>
+                <li><a href="products.html">Best Sellers</a></li>
+                <li><a href="products.html">Lawn Suits</a></li>
+                <li><a href="products.html">Formal Wear</a></li>
+                <li><a href="products.html">Party Wear</a></li>
+                <li><a href="products.html">Bridal</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Policies</h4>
+            <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="shipping.html">Shipping Policy</a></li>
+                <li><a href="return.html">Refund Policy</a></li>
+                <li><a href="sizeguide.html">Size Guide</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom" style="max-width:1280px;margin:0 auto;">
+        <p>© 2024 Libaas Studio. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+            <a href="privacy.html">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="shipping.html">Shipping</a>
+        </div>
+    </div>
+</footer>
+
+<!-- ═══════════════════════════════════
+     CART MODAL
+═══════════════════════════════════ -->
+<div class="modal-overlay" id="cart-modal" onclick="handleOverlayClick(event, 'cart-modal')">
+    <div class="modal-panel" id="cart-panel">
+        <div class="modal-header">
+            <h3>Your Bag</h3>
+            <button class="close-btn icon-btn" onclick="closeModal('cart-modal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div style="text-align:center;padding:48px 0;color:var(--text-muted);">
+                <i class="fas fa-shopping-bag" style="font-size:28px;margin-bottom:16px;display:block;opacity:.3;"></i>
+                <p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;">Your bag is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total</span>
+                <span id="cart-total">Rs. 0</span>
+            </div>
+            <a href="order.html" class="btn-checkout">Proceed To Checkout</a>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     AUTH MODAL
+═══════════════════════════════════ -->
+<div class="auth-overlay" id="auth-modal" onclick="handleOverlayClick(event, 'auth-modal')">
+    <div class="auth-panel" id="auth-panel">
+        <h2 id="auth-title">Login</h2>
+        <span class="auth-subtitle">Welcome back to Libaas Studio</span>
+
+        <div id="login-form">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" placeholder="••••••••">
+            </div>
+            <button class="btn-submit">Login</button>
+            <div class="auth-switch">
+                New here? <button onclick="switchToSignup()">Create an account</button>
+            </div>
+        </div>
+
+        <div id="signup-form" class="hidden">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" placeholder="Your full name">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" placeholder="Create a password">
+            </div>
+            <button class="btn-submit">Create Account</button>
+            <div class="auth-switch">
+                Already have an account? <button onclick="switchToLogin()">Login</button>
+            </div>
+        </div>
+
+        <button class="close-btn icon-btn" style="position:absolute;top:16px;right:20px;" onclick="closeModal('auth-modal')"><i class="fas fa-times"></i></button>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════ -->
+<script>
+/* ── Accordion ── */
+document.querySelectorAll('.accordion-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const item = btn.closest('.accordion-item');
+        const isOpen = item.classList.contains('open');
+
+        // Close all open items
+        document.querySelectorAll('.accordion-item.open').forEach(openItem => {
+            openItem.classList.remove('open');
+            openItem.querySelector('.accordion-btn').setAttribute('aria-expanded', 'false');
+        });
+
+        // If it was closed, open it
+        if (!isOpen) {
+            item.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+        }
+    });
+});
+
+/* ── Modals ── */
+function openModal(id) {
+    const overlay = document.getElementById(id);
+    const panel = overlay.querySelector('.modal-panel, .auth-panel');
+    overlay.classList.add('active');
+    setTimeout(() => panel.classList.add('visible'), 10);
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+    const overlay = document.getElementById(id);
+    const panel = overlay.querySelector('.modal-panel, .auth-panel');
+    panel.classList.remove('visible');
+    setTimeout(() => { overlay.classList.remove('active'); document.body.style.overflow = ''; }, 350);
+}
+function handleOverlayClick(e, id) { if (e.target === e.currentTarget) closeModal(id); }
+function toggleCart() {
+    const o = document.getElementById('cart-modal');
+    o.classList.contains('active') ? closeModal('cart-modal') : openModal('cart-modal');
+}
+function toggleAuth() {
+    const o = document.getElementById('auth-modal');
+    o.classList.contains('active') ? closeModal('auth-modal') : openModal('auth-modal');
+}
+function switchToSignup() {
+    document.getElementById('login-form').classList.add('hidden');
+    document.getElementById('signup-form').classList.remove('hidden');
+    document.getElementById('auth-title').textContent = 'Create Account';
+}
+function switchToLogin() {
+    document.getElementById('signup-form').classList.add('hidden');
+    document.getElementById('login-form').classList.remove('hidden');
+    document.getElementById('auth-title').textContent = 'Login';
+}
+
+/* ── Mobile Menu ── */
+function toggleMobileMenu() {
+    const nav = document.getElementById('mobile-nav');
+    const burger = document.getElementById('hamburger');
+    const isOpen = nav.classList.contains('open');
+    nav.classList.toggle('open');
+    burger.classList.toggle('open');
+    document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+
+/* ── Search ── */
+function toggleSearch() {
+    const bar = document.getElementById('search-bar');
+    bar.classList.toggle('open');
+    if (bar.classList.contains('open')) document.getElementById('search-input').focus();
+}
+
+/* ── Keyboard ── */
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal('cart-modal'); closeModal('auth-modal'); }
+});
+
+/* ── Header scroll shadow ── */
+window.addEventListener('scroll', () => {
+    document.getElementById('site-header').style.boxShadow =
+        window.scrollY > 40 ? '0 4px 32px rgba(0,0,0,0.6)' : '';
+});
+
+/* ── Reveal on scroll ── */
+const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ── Responsive logo ── */
+function handleResize() {
+    const mobileLogo = document.getElementById('mobile-logo');
+    if (window.innerWidth <= 900) mobileLogo.style.display = 'block';
+    else mobileLogo.style.display = 'none';
+}
+window.addEventListener('resize', handleResize);
+handleResize();
+</script>
+</body>
+</html>

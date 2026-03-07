@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us — Libaas Studio</title>
+    <link rel="icon" type="image/png" href="image/favicon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+        :root {
+            --black:       #000000;
+            --dark:        #111111;
+            --dark-card:   #181818;
+            --dark-border: #222222;
+            --gold:        #c9a96e;
+            --gold-light:  #e1c99a;
+            --off-white:   #f5f0eb;
+            --text-muted:  #888888;
+            --text-dim:    #555555;
+            --green-wa:    #25D366;
+            --font-display:'Playfair Display', serif;
+            --font-body:   'Montserrat', sans-serif;
+            --font-script: 'Great Vibes', cursive;
+        }
+        html { scroll-behavior:smooth; }
+        body { font-family:var(--font-body); background:var(--dark); color:var(--off-white); overflow-x:hidden; line-height:1.6; }
+        h1,h2,h3,h4 { font-family:var(--font-display); }
+        a { text-decoration:none; color:inherit; }
+        button { cursor:pointer; font-family:var(--font-body); border:none; background:none; }
+        img { display:block; max-width:100%; }
+
+        /* ═══ ANNOUNCEMENT BAR ═══ */
+        .announcement-bar { background:#0a0a0a; border-bottom:1px solid var(--dark-border); padding:8px 0; overflow:hidden; white-space:nowrap; }
+        .announcement-track { display:inline-flex; animation:ticker 40s linear infinite; }
+        .announcement-item { display:inline-flex; align-items:center; gap:10px; padding:0 40px; font-size:10.5px; font-weight:400; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); }
+        .announcement-item .star { color:var(--gold); font-size:9px; }
+        .announcement-item strong { color:var(--off-white); }
+        @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+        /* ═══ HEADER ═══ */
+        .site-header { position:sticky; top:0; z-index:1000; background:#000; border-bottom:1px solid var(--dark-border); transition:box-shadow .3s; }
+        .header-inner { max-width:1440px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:64px; }
+        .nav-left { display:flex; align-items:center; gap:28px; }
+        .nav-link { font-size:10.5px; font-weight:500; letter-spacing:1.8px; text-transform:uppercase; color:#aaa; position:relative; padding-bottom:2px; transition:color .25s; }
+        .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1px; background:var(--gold); transition:width .3s; }
+        .nav-link:hover { color:#fff; }
+        .nav-link:hover::after { width:100%; }
+        .nav-link.active { color:#fff; }
+        .nav-link.active::after { width:100%; }
+        .brand-center { position:absolute; left:50%; transform:translateX(-50%); text-align:center; line-height:1; }
+        .brand-name { font-family:var(--font-display); font-size:28px; font-weight:500; letter-spacing:10px; text-transform:uppercase; color:#fff; }
+        .brand-tagline { font-size:8px; letter-spacing:3.5px; text-transform:uppercase; color:var(--text-muted); margin-top:2px; }
+        .header-actions { display:flex; align-items:center; gap:20px; }
+        .icon-btn { font-size:14px; color:#aaa; transition:color .25s; position:relative; padding:4px; }
+        .icon-btn:hover { color:#fff; }
+        .cart-badge { position:absolute; top:-5px; right:-7px; background:var(--gold); color:#000; font-size:8px; font-weight:700; width:15px; height:15px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        .hamburger { display:none; flex-direction:column; gap:5px; width:22px; cursor:pointer; }
+        .hamburger span { display:block; height:1.5px; background:#fff; transition:all .3s; }
+        .hamburger.open span:nth-child(1) { transform:rotate(45deg) translateY(9px); }
+        .hamburger.open span:nth-child(2) { opacity:0; }
+        .hamburger.open span:nth-child(3) { transform:rotate(-45deg) translateY(-9px); }
+        .mobile-nav { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:34px; opacity:0; transform:translateY(-20px); transition:opacity .4s,transform .4s; }
+        .mobile-nav.open { display:flex; opacity:1; transform:translateY(0); }
+        .mobile-nav a { font-family:var(--font-display); font-size:26px; color:#fff; letter-spacing:4px; transition:color .2s; }
+        .mobile-nav a:hover { color:var(--gold); }
+        .mobile-nav-close { position:absolute; top:20px; right:28px; font-size:20px; color:#fff; cursor:pointer; }
+        .search-bar { position:fixed; top:0; left:0; right:0; height:64px; background:#000; z-index:1001; display:flex; align-items:center; padding:0 32px; gap:16px; transform:translateY(-100%); transition:transform .35s ease; border-bottom:1px solid var(--dark-border); }
+        .search-bar.open { transform:translateY(0); }
+        .search-bar input { flex:1; background:none; border:none; outline:none; color:#fff; font-size:14px; font-family:var(--font-body); }
+        .search-bar input::placeholder { color:var(--text-muted); }
+        @media(max-width:900px) { .hamburger{display:flex;} .nav-left,.brand-center{display:none;} }
+
+        /* ═══ PAGE HERO ═══ */
+        .page-hero { background:#000; border-bottom:1px solid var(--dark-border); padding:80px 32px 72px; text-align:center; position:relative; overflow:hidden; }
+        .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(201,169,110,0.07) 0%, transparent 68%); pointer-events:none; }
+        .page-hero::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:1px; height:40px; background:linear-gradient(to bottom, var(--gold), transparent); }
+        .hero-script  { font-family:var(--font-script); font-size:clamp(24px,3.5vw,38px); color:var(--gold); display:block; margin-bottom:6px; opacity:0; animation:fadeUp .8s .15s ease forwards; }
+        .hero-title   { font-family:var(--font-display); font-size:clamp(30px,5vw,60px); font-weight:600; letter-spacing:5px; text-transform:uppercase; color:#fff; line-height:1.1; margin-bottom:20px; opacity:0; animation:fadeUp .8s .3s ease forwards; }
+        .hero-divider { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:18px; opacity:0; animation:fadeUp .8s .45s ease forwards; }
+        .hero-divider-line { width:56px; height:1px; background:linear-gradient(to right,transparent,var(--gold)); }
+        .hero-divider-line.rev { background:linear-gradient(to left,transparent,var(--gold)); }
+        .hero-divider i { color:var(--gold); font-size:9px; }
+        .hero-sub { font-size:10.5px; letter-spacing:3.5px; text-transform:uppercase; color:var(--text-muted); opacity:0; animation:fadeUp .8s .58s ease forwards; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+        /* ═══ BREADCRUMB ═══ */
+        .breadcrumb-bar { background:#0a0a0a; border-bottom:1px solid var(--dark-border); padding:13px 32px; }
+        .breadcrumb-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:10px; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-muted); }
+        .breadcrumb-inner a { transition:color .2s; }
+        .breadcrumb-inner a:hover { color:var(--gold); }
+        .breadcrumb-inner i { font-size:8px; }
+        .breadcrumb-inner span { color:var(--gold); }
+
+        /* ═══ REVEAL ═══ */
+        .reveal { opacity:0; transform:translateY(28px); transition:opacity .65s ease, transform .65s ease; }
+        .reveal.from-left  { transform:translateX(-28px); }
+        .reveal.from-right { transform:translateX(28px); }
+        .reveal.in { opacity:1 !important; transform:translate(0,0) !important; }
+
+        /* ═══ MAIN LAYOUT ═══ */
+        .contact-wrap { max-width:1200px; margin:0 auto; padding:72px 32px 100px; display:grid; grid-template-columns:1fr 1.15fr; gap:56px; align-items:start; }
+        @media(max-width:900px) { .contact-wrap { grid-template-columns:1fr; gap:48px; } }
+
+        /* ═══ LEFT COLUMN — INFO ═══ */
+        .contact-info { display:flex; flex-direction:column; gap:32px; }
+
+        /* Section header reused */
+        .sec-label { font-size:9.5px; letter-spacing:5px; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:12px; }
+        .sec-title  { font-family:var(--font-display); font-size:clamp(22px,2.8vw,34px); font-weight:500; color:#fff; letter-spacing:2px; line-height:1.2; margin-bottom:6px; }
+
+        /* WhatsApp card */
+        .wa-card {
+            background:var(--dark-card);
+            border:1px solid var(--dark-border);
+            border-left:3px solid var(--green-wa);
+            padding:32px 28px;
+            display:flex; flex-direction:column; gap:18px;
+        }
+        .wa-card-top { display:flex; align-items:center; gap:16px; }
+        .wa-icon-wrap { width:52px; height:52px; border-radius:50%; background:rgba(37,211,102,0.1); border:1px solid rgba(37,211,102,0.3); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .wa-icon-wrap i { color:var(--green-wa); font-size:22px; }
+        .wa-card-label { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); margin-bottom:3px; }
+        .wa-card-number { font-family:var(--font-display); font-size:22px; color:#fff; letter-spacing:2px; }
+        .wa-card p { font-size:11.5px; color:var(--text-muted); line-height:1.85; }
+        .btn-wa-large {
+            display:flex; align-items:center; justify-content:center; gap:12px;
+            padding:15px 28px; background:transparent;
+            border:1.5px solid var(--green-wa); color:var(--green-wa);
+            font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+            transition:all .3s; width:100%;
+        }
+        .btn-wa-large:hover { background:var(--green-wa); color:#000; }
+        .btn-wa-large i { font-size:17px; }
+
+        /* Contact details tiles */
+        .contact-tiles { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--dark-border); }
+        @media(max-width:500px) { .contact-tiles { grid-template-columns:1fr; } }
+        .contact-tile { background:var(--dark-card); padding:24px 20px; display:flex; align-items:flex-start; gap:14px; transition:background .25s; }
+        .contact-tile:hover { background:#1c1c1c; }
+        .tile-icon { width:38px; height:38px; border-radius:50%; border:1px solid rgba(201,169,110,0.3); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .25s; }
+        .contact-tile:hover .tile-icon { border-color:var(--gold); background:rgba(201,169,110,0.07); }
+        .tile-icon i { color:var(--gold); font-size:13px; }
+        .tile-label { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; }
+        .tile-value { font-size:12px; color:var(--off-white); line-height:1.6; }
+
+        /* Social links */
+        .social-block { background:var(--dark-card); border:1px solid var(--dark-border); padding:28px; }
+        .social-block-title { font-size:9.5px; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); margin-bottom:20px; }
+        .social-links { display:flex; gap:10px; flex-wrap:wrap; }
+        .social-link-pill {
+            display:inline-flex; align-items:center; gap:9px;
+            padding:10px 18px; border:1px solid var(--dark-border);
+            color:var(--text-muted); font-size:10px; letter-spacing:1.5px; text-transform:uppercase;
+            transition:all .25s;
+        }
+        .social-link-pill:hover { border-color:var(--gold); color:var(--gold); }
+        .social-link-pill i { font-size:13px; }
+
+        /* Address map placeholder */
+        .address-block { background:var(--dark-card); border:1px solid var(--dark-border); overflow:hidden; }
+        .address-map-placeholder {
+            width:100%; height:160px; background:#0f0f0f;
+            border-bottom:1px solid var(--dark-border);
+            display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+            position:relative; overflow:hidden;
+        }
+        .address-map-placeholder::before {
+            content:''; position:absolute; inset:0;
+            background:radial-gradient(ellipse at center, rgba(201,169,110,0.05) 0%, transparent 70%);
+        }
+        .address-map-placeholder i { color:var(--gold); font-size:28px; opacity:.7; }
+        .address-map-placeholder span { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--text-dim); }
+        .address-details { padding:22px 24px; display:flex; flex-direction:column; gap:6px; }
+        .address-line { font-size:12px; color:var(--text-muted); display:flex; align-items:flex-start; gap:10px; }
+        .address-line i { color:var(--gold); font-size:11px; margin-top:2px; flex-shrink:0; }
+
+        /* ═══ RIGHT COLUMN — FORM ═══ */
+        .contact-form-wrap { background:var(--dark-card); border:1px solid var(--dark-border); }
+        .form-head { padding:28px 32px 24px; border-bottom:1px solid var(--dark-border); background:#0f0f0f; }
+        .form-head h3 { font-family:var(--font-display); font-size:22px; letter-spacing:3px; text-transform:uppercase; color:#fff; margin-bottom:4px; }
+        .form-head p { font-size:10.5px; color:var(--text-muted); letter-spacing:0.5px; }
+        .form-body { padding:32px; display:flex; flex-direction:column; gap:20px; }
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+        @media(max-width:580px) { .form-row { grid-template-columns:1fr; } .form-body { padding:24px; } .form-head { padding:24px; } }
+
+        /* Input fields */
+        .field-group { display:flex; flex-direction:column; gap:8px; }
+        .field-label { font-size:9px; letter-spacing:2.5px; text-transform:uppercase; color:var(--text-muted); }
+        .field-input, .field-select, .field-textarea {
+            background:#111; border:1px solid var(--dark-border); outline:none;
+            color:#fff; font-size:12.5px; padding:13px 16px;
+            font-family:var(--font-body); width:100%;
+            transition:border-color .25s, box-shadow .25s;
+            appearance: none;
+        }
+        .field-input::placeholder, .field-textarea::placeholder { color:var(--text-dim); }
+        .field-input:focus, .field-select:focus, .field-textarea:focus {
+            border-color:var(--gold);
+            box-shadow:0 0 0 3px rgba(201,169,110,0.08);
+        }
+        .field-textarea { resize:vertical; min-height:130px; line-height:1.7; }
+        .field-select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; padding-right:40px; color:var(--text-dim); cursor:pointer; }
+        .field-select option { background:#111; color:#fff; }
+
+        /* Checkbox */
+        .checkbox-group { display:flex; align-items:flex-start; gap:12px; }
+        .checkbox-group input[type="checkbox"] { width:16px; height:16px; margin-top:1px; accent-color:var(--gold); flex-shrink:0; cursor:pointer; }
+        .checkbox-group label { font-size:11px; color:var(--text-muted); line-height:1.7; cursor:pointer; }
+        .checkbox-group label a { color:var(--gold); text-decoration:underline; }
+
+        /* Submit button */
+        .btn-submit-form {
+            width:100%; padding:16px; background:var(--gold); border:none; color:#000;
+            font-size:10px; font-weight:700; letter-spacing:3.5px; text-transform:uppercase;
+            transition:background .25s; display:flex; align-items:center; justify-content:center; gap:10px;
+            font-family:var(--font-body); cursor:pointer;
+        }
+        .btn-submit-form:hover { background:var(--gold-light); }
+        .btn-submit-form i { font-size:12px; }
+
+        /* Success message */
+        .form-success { display:none; text-align:center; padding:48px 32px; }
+        .form-success i { font-size:40px; color:var(--gold); margin-bottom:18px; display:block; }
+        .form-success h4 { font-family:var(--font-display); font-size:22px; color:#fff; letter-spacing:2px; margin-bottom:10px; }
+        .form-success p { font-size:12px; color:var(--text-muted); line-height:1.9; }
+
+        /* Response time strip */
+        .response-strip { padding:16px 32px; background:#0a0a0a; border-top:1px solid var(--dark-border); display:flex; align-items:center; justify-content:center; gap:28px; flex-wrap:wrap; }
+        .response-item { display:flex; align-items:center; gap:8px; font-size:10px; color:var(--text-dim); letter-spacing:0.5px; }
+        .response-item i { color:var(--gold); font-size:11px; }
+
+        /* ═══ FAQ STRIP ═══ */
+        .faq-strip { background:#000; border-top:1px solid var(--dark-border); border-bottom:1px solid var(--dark-border); padding:72px 32px; }
+        .faq-inner { max-width:800px; margin:0 auto; }
+        .faq-header { text-align:center; margin-bottom:48px; }
+        .faq-item { border-bottom:1px solid var(--dark-border); }
+        .faq-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; padding:20px 0; cursor:pointer; text-align:left; gap:16px; background:transparent; }
+        .faq-trigger:hover .faq-q { color:var(--gold); }
+        .faq-q { font-size:13px; color:var(--off-white); font-weight:500; letter-spacing:0.3px; transition:color .2s; }
+        .faq-chevron { color:var(--text-dim); font-size:11px; transition:transform .3s; flex-shrink:0; }
+        .faq-trigger.open .faq-chevron { transform:rotate(180deg); color:var(--gold); }
+        .faq-answer { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+        .faq-answer.open { max-height:300px; }
+        .faq-answer-inner { padding:0 0 20px; font-size:12px; color:var(--text-muted); line-height:1.9; }
+
+        /* ═══ CART MODAL ═══ */
+        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:2000; display:none; align-items:stretch; justify-content:flex-end; backdrop-filter:blur(4px); }
+        .modal-overlay.active { display:flex; }
+        .modal-panel { width:420px; max-width:100vw; background:#0a0a0a; border-left:1px solid var(--dark-border); display:flex; flex-direction:column; transform:translateX(100%); transition:transform .35s ease; }
+        .modal-panel.visible { transform:translateX(0); }
+        .modal-header { display:flex; align-items:center; justify-content:space-between; padding:24px 28px; border-bottom:1px solid var(--dark-border); }
+        .modal-header h3 { font-family:var(--font-display); font-size:18px; letter-spacing:3px; text-transform:uppercase; color:#fff; }
+        .close-btn { font-size:16px; color:var(--text-muted); transition:color .25s; }
+        .close-btn:hover { color:#fff; }
+        .cart-items { flex:1; overflow-y:auto; padding:24px 28px; }
+        .cart-item { display:flex; gap:14px; align-items:center; padding:14px 0; border-bottom:1px solid var(--dark-border); }
+        .cart-item img { width:64px; height:80px; object-fit:cover; object-position:top; background:#1a1a1a; }
+        .cart-item-info { flex:1; }
+        .cart-item-name { font-size:11px; color:var(--off-white); margin-bottom:4px; }
+        .cart-item-price { font-size:11px; color:var(--gold); }
+        .cart-item-controls { display:flex; align-items:center; gap:8px; }
+        .cart-qty-btn { width:24px; height:24px; border:1px solid var(--dark-border); color:var(--text-muted); font-size:9px; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+        .cart-qty-btn:hover { border-color:var(--gold); color:var(--gold); }
+        .cart-qty { font-size:12px; color:#fff; min-width:16px; text-align:center; }
+        .cart-remove { color:var(--text-dim); font-size:11px; margin-left:4px; transition:color .2s; }
+        .cart-remove:hover { color:#e55; }
+        .cart-footer { padding:24px 28px; border-top:1px solid var(--dark-border); }
+        .cart-total-row { display:flex; justify-content:space-between; margin-bottom:20px; font-size:12px; }
+        .cart-total-row span:first-child { color:var(--text-muted); letter-spacing:2px; text-transform:uppercase; }
+        .cart-total-row span:last-child  { color:#fff; font-weight:600; font-size:14px; }
+        .btn-checkout { width:100%; padding:15px; background:var(--gold); border:none; color:#000; font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; transition:background .25s; display:block; text-align:center; }
+        .btn-checkout:hover { background:#e1c99a; }
+
+        /* ═══ AUTH MODAL ═══ */
+        .auth-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:2000; display:none; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
+        .auth-overlay.active { display:flex; }
+        .auth-panel { width:400px; max-width:95vw; background:#0a0a0a; border:1px solid var(--dark-border); padding:40px; transform:scale(.95); opacity:0; transition:all .3s; position:relative; }
+        .auth-panel.visible { transform:scale(1); opacity:1; }
+        .auth-panel h2 { font-family:var(--font-display); font-size:22px; letter-spacing:4px; text-transform:uppercase; color:#fff; margin-bottom:8px; }
+        .auth-subtitle { font-size:10px; color:var(--text-muted); letter-spacing:1px; margin-bottom:32px; display:block; }
+        .form-group { margin-bottom:18px; }
+        .form-group label { display:block; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+        .form-group input { width:100%; background:#111; border:1px solid var(--dark-border); outline:none; color:#fff; font-size:12px; padding:11px 14px; font-family:var(--font-body); transition:border-color .25s; }
+        .form-group input:focus { border-color:var(--gold); }
+        .btn-submit-auth { width:100%; padding:13px; background:var(--gold); border:none; color:#000; font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; margin-top:8px; transition:background .25s; cursor:pointer; }
+        .btn-submit-auth:hover { background:#e1c99a; }
+        .auth-switch { text-align:center; margin-top:20px; font-size:11px; color:var(--text-muted); }
+        .auth-switch button { color:var(--gold); text-decoration:underline; font-size:11px; }
+        .hidden { display:none; }
+
+        /* ═══ FOOTER ═══ */
+        footer { background:#000; border-top:1px solid var(--dark-border); }
+        .footer-inner { max-width:1280px; margin:0 auto; padding:60px 40px 0; display:grid; grid-template-columns:1.8fr 1fr 1fr 1fr; gap:48px; }
+        @media(max-width:900px) { .footer-inner { grid-template-columns:1fr 1fr; } }
+        @media(max-width:500px) { .footer-inner { grid-template-columns:1fr; text-align:center; } .footer-social { justify-content:center; } .footer-brand p { max-width:100%; } }
+        .footer-brand h2 { font-family:var(--font-display); font-size:22px; letter-spacing:8px; text-transform:uppercase; color:#fff; margin-bottom:4px; }
+        .footer-brand .tagline { font-size:8px; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); margin-bottom:20px; display:block; }
+        .footer-brand p { font-size:11px; color:var(--text-muted); line-height:1.9; max-width:280px; }
+        .footer-social { display:flex; gap:14px; margin-top:24px; }
+        .footer-social a { width:34px; height:34px; border:1px solid var(--dark-border); display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--text-muted); transition:all .25s; }
+        .footer-social a:hover { border-color:var(--gold); color:var(--gold); }
+        .footer-col h4 { font-size:9.5px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#fff; margin-bottom:24px; }
+        .footer-col ul { list-style:none; }
+        .footer-col ul li { margin-bottom:12px; }
+        .footer-col ul li a { font-size:11px; color:var(--text-muted); letter-spacing:0.5px; transition:color .25s; }
+        .footer-col ul li a:hover { color:var(--gold); }
+        .footer-bottom { border-top:1px solid var(--dark-border); margin-top:48px; padding:20px 40px; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:20px; text-align:center; }
+        .footer-bottom p { font-size:10px; color:var(--text-dim); letter-spacing:1px; }
+        .footer-bottom-links { display:flex; gap:24px; flex-wrap:wrap; justify-content:center; }
+        .footer-bottom-links a { font-size:10px; color:var(--text-dim); letter-spacing:1px; transition:color .25s; }
+        .footer-bottom-links a:hover { color:var(--gold); }
+    </style>
+</head>
+<body>
+
+<!-- ═══ ANNOUNCEMENT BAR ═══ -->
+<div class="announcement-bar">
+    <div class="announcement-track">
+        <span class="announcement-item"><i class="fas fa-heart star"></i> 10% Off With Code <strong>LIBAAS10</strong> &nbsp;•&nbsp; Use At Checkout</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> Free Shipping On All Orders. Don't Miss This Deal!</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> Buy More Than Rs.3,000 And Get Free Delivery Nationwide</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> New Collection Arrived — Shop The Latest Designs</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> 10% Off With Code <strong>LIBAAS10</strong> &nbsp;•&nbsp; Use At Checkout</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> Free Shipping On All Orders. Don't Miss This Deal!</span>
+        <span class="announcement-item"><i class="fas fa-heart star"></i> Buy More Than Rs.3,000 And Get Free Delivery Nationwide</span>
+        <span class="announcement-item"><i class="fas fa-star star"></i> New Collection Arrived — Shop The Latest Designs</span>
+    </div>
+</div>
+
+<!-- ═══ HEADER ═══ -->
+<header class="site-header" id="site-header">
+    <div class="search-bar" id="search-bar">
+        <i class="fas fa-search" style="color:var(--text-muted);font-size:13px;"></i>
+        <input type="text" id="search-input" placeholder="Search collections...">
+        <button class="icon-btn" onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="header-inner">
+        <nav class="nav-left">
+            <a href="index.html"    class="nav-link">Home</a>
+            <a href="products.html" class="nav-link">Shop</a>
+            <a href="about.html"    class="nav-link">About</a>
+            <a href="products.html"             class="nav-link">Gallery</a>
+            <a href="faqs.html"             class="nav-link">FAQ</a>
+            <a href="contact.html"  class="nav-link active">Contact</a>
+        </nav>
+        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <span style="display:none; font-family:var(--font-display); font-size:20px; letter-spacing:6px; color:#fff;" id="mobile-logo">LIBAAS</span>
+        <div class="brand-center">
+            <div class="brand-name">Libaas</div>
+            <div class="brand-tagline">Studio</div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="toggleSearch()" aria-label="Search"><i class="fas fa-search"></i></button>
+            <button class="icon-btn" onclick="toggleAuth()"   aria-label="Account"><i class="fas fa-user"></i></button>
+            <button class="icon-btn" onclick="toggleCart()"   aria-label="Cart">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge" id="cart-count">0</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Nav — ALL PAGES LINKED -->
+<nav class="mobile-nav" id="mobile-nav">
+    <button class="mobile-nav-close" onclick="toggleMobileMenu()"><i class="fas fa-times"></i></button>
+    <a href="index.html"    onclick="toggleMobileMenu()">Home</a>
+    <a href="products.html" onclick="toggleMobileMenu()">Shop</a>
+    <a href="about.html"    onclick="toggleMobileMenu()">About</a>
+    <a href="contact.html"  onclick="toggleMobileMenu()" style="color:var(--gold);">Contact</a>
+    <a href="return.html"   onclick="toggleMobileMenu()">Returns</a>
+    <a href="order.html"    onclick="toggleMobileMenu()">Checkout</a>
+</nav>
+
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero">
+    <span class="hero-script">We'd Love to Hear From You</span>
+    <h1 class="hero-title">Get in Touch</h1>
+    <div class="hero-divider">
+        <div class="hero-divider-line"></div>
+        <i class="fas fa-envelope-open-text"></i>
+        <div class="hero-divider-line rev"></div>
+    </div>
+    <span class="hero-sub">Available via WhatsApp &nbsp;·&nbsp; Email &nbsp;·&nbsp; Social Media</span>
+</section>
+
+<!-- ═══ BREADCRUMB ═══ -->
+<div class="breadcrumb-bar">
+    <div class="breadcrumb-inner">
+        <a href="index.html">Home</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Contact Us</span>
+    </div>
+</div>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<div class="contact-wrap">
+
+    <!-- ── LEFT: Info Column ── -->
+    <div class="contact-info">
+
+        <!-- Heading -->
+        <div class="reveal from-left">
+            <span class="sec-label">Direct Contact</span>
+            <h2 class="sec-title">Reach Us<br>Instantly</h2>
+            <p style="font-size:12px; color:var(--text-muted); margin-top:10px; line-height:1.9;">Our team is real people based in Lahore. Whether you have a question about sizing, want to track an order, or need help choosing a design — we're here.</p>
+        </div>
+
+        <!-- WhatsApp Card -->
+        <div class="wa-card reveal from-left" style="transition-delay:.08s">
+            <div class="wa-card-top">
+                <div class="wa-icon-wrap"><i class="fab fa-whatsapp"></i></div>
+                <div>
+                    <div class="wa-card-label">WhatsApp Support</div>
+                    <!-- ⚠️ Replace with your actual number -->
+                    <div class="wa-card-number">+92 300 123 4567</div>
+                </div>
+            </div>
+            <p>The fastest way to reach us. Send us a message anytime — we typically reply within 2–4 hours on business days.</p>
+            <button class="btn-wa-large" onclick="openWhatsApp()">
+                <i class="fab fa-whatsapp"></i> Chat With Us on WhatsApp
+            </button>
+        </div>
+
+        <!-- Contact Tiles -->
+        <div class="contact-tiles reveal from-left" style="transition-delay:.12s">
+            <div class="contact-tile">
+                <div class="tile-icon"><i class="fas fa-envelope"></i></div>
+                <div>
+                    <div class="tile-label">Email</div>
+                    <!-- ⚠️ Replace with your email -->
+                    <div class="tile-value">hello@libaasstudio.pk</div>
+                </div>
+            </div>
+            <div class="contact-tile">
+                <div class="tile-icon"><i class="fas fa-clock"></i></div>
+                <div>
+                    <div class="tile-label">Hours</div>
+                    <div class="tile-value">Mon–Sat, 10am–8pm PKT</div>
+                </div>
+            </div>
+            <div class="contact-tile">
+                <div class="tile-icon"><i class="fas fa-shipping-fast"></i></div>
+                <div>
+                    <div class="tile-label">Delivery</div>
+                    <div class="tile-value">Nationwide Pakistan<br>3–5 Business Days</div>
+                </div>
+            </div>
+            <div class="contact-tile">
+                <div class="tile-icon"><i class="fas fa-undo-alt"></i></div>
+                <div>
+                    <div class="tile-label">Returns</div>
+                    <div class="tile-value"><a href="return.html" style="color:var(--gold); text-decoration:underline;">View Return Policy</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="social-block reveal from-left" style="transition-delay:.16s">
+            <div class="social-block-title">Follow Us</div>
+            <div class="social-links">
+                <!-- ⚠️ Replace href values with your actual profile URLs -->
+                <a href="https://instagram.com" target="_blank" class="social-link-pill">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://facebook.com" target="_blank" class="social-link-pill">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </a>
+                <a href="https://tiktok.com" target="_blank" class="social-link-pill">
+                    <i class="fab fa-tiktok"></i> TikTok
+                </a>
+                <a href="https://pinterest.com" target="_blank" class="social-link-pill">
+                    <i class="fab fa-pinterest-p"></i> Pinterest
+                </a>
+                <a href="https://youtube.com" target="_blank" class="social-link-pill">
+                    <i class="fab fa-youtube"></i> YouTube
+                </a>
+            </div>
+        </div>
+
+        <!-- Store Address -->
+        <div class="address-block reveal from-left" style="transition-delay:.2s">
+            <div class="address-map-placeholder">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Store Location — Lahore, Pakistan</span>
+            </div>
+            <div class="address-details">
+                <!-- ⚠️ Replace with your actual address -->
+                <div class="address-line"><i class="fas fa-map-marker-alt"></i><span>Studio 14, Gulberg III, Main Boulevard<br>Lahore, Punjab — 54660</span></div>
+                <div class="address-line" style="margin-top:6px;"><i class="fas fa-info-circle"></i><span style="font-size:10.5px; color:var(--text-dim);">Visits by appointment only. Please WhatsApp before visiting.</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── RIGHT: Contact Form ── -->
+    <div class="contact-form-wrap reveal from-right">
+        <div class="form-head">
+            <h3>Send a Message</h3>
+            <p>Fill in the form below and we'll get back to you within 24 hours.</p>
+        </div>
+
+        <div class="form-body" id="contact-form-body">
+            <div class="form-row">
+                <div class="field-group">
+                    <label class="field-label">Full Name *</label>
+                    <input type="text" class="field-input" id="f-name" placeholder="Your full name" autocomplete="name">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Email Address *</label>
+                    <input type="email" class="field-input" id="f-email" placeholder="your@email.com" autocomplete="email">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="field-group">
+                    <label class="field-label">Phone / WhatsApp</label>
+                    <input type="tel" class="field-input" id="f-phone" placeholder="+92 3XX XXXXXXX" autocomplete="tel">
+                </div>
+                <div class="field-group">
+                    <label class="field-label">Subject *</label>
+                    <select class="field-input field-select" id="f-subject">
+                        <option value="" disabled selected>Select a topic…</option>
+                        <option value="order">Order Inquiry</option>
+                        <option value="return">Return / Exchange</option>
+                        <option value="product">Product Question</option>
+                        <option value="custom">Custom Stitching</option>
+                        <option value="wholesale">Wholesale Enquiry</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">Order ID (if applicable)</label>
+                <input type="text" class="field-input" id="f-order" placeholder="e.g. LS-20241234">
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">Your Message *</label>
+                <textarea class="field-input field-textarea" id="f-message" placeholder="Tell us how we can help you…"></textarea>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="f-consent" checked>
+                <label for="f-consent">I agree that Libaas Studio may use this information to respond to my enquiry. View our <a href="#">Privacy Policy</a>.</label>
+            </div>
+
+            <button class="btn-submit-form" onclick="submitForm()">
+                <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+        </div>
+
+        <!-- Success state (hidden by default) -->
+        <div class="form-success" id="form-success">
+            <i class="fas fa-check-circle"></i>
+            <h4>Message Sent!</h4>
+            <p>Thank you for reaching out. Our team will review your message and reply within 24 hours. For urgent matters, please contact us directly on WhatsApp.</p>
+            <button onclick="resetForm()" style="margin-top:20px; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); border-bottom:1px solid var(--gold); padding-bottom:2px;">Send Another Message</button>
+        </div>
+
+        <div class="response-strip">
+            <div class="response-item"><i class="fas fa-clock"></i> Response within 24 hrs</div>
+            <div class="response-item"><i class="fas fa-lock"></i> Your data is private</div>
+            <div class="response-item"><i class="fab fa-whatsapp" style="color:var(--green-wa);"></i> WhatsApp preferred for urgent queries</div>
+        </div>
+    </div>
+
+</div><!-- /contact-wrap -->
+
+<!-- ═══ FAQ STRIP ═══ -->
+<section class="faq-strip">
+    <div class="faq-inner">
+        <div class="faq-header reveal">
+            <span class="sec-label" style="justify-content:center; display:block; text-align:center;">Quick Answers</span>
+            <h2 class="sec-title" style="text-align:center; font-size:clamp(22px,3vw,36px);">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-item reveal" style="transition-delay:.05s">
+            <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span class="faq-q">How do I place an order?</span>
+                <i class="fas fa-chevron-down faq-chevron"></i>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">Browse our collection at <a href="products.html" style="color:var(--gold);">products.html</a>, add items to your bag, and proceed to checkout. You can confirm your order directly via WhatsApp — our team will confirm availability and arrange delivery details with you.</div>
+            </div>
+        </div>
+
+        <div class="faq-item reveal" style="transition-delay:.09s">
+            <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span class="faq-q">Do you offer custom stitching?</span>
+                <i class="fas fa-chevron-down faq-chevron"></i>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">Yes! We offer custom stitching on selected unstitched suits. WhatsApp us with your measurements and we'll give you a quote. Please note that custom-stitched items cannot be returned — sizing must be confirmed before work begins.</div>
+            </div>
+        </div>
+
+        <div class="faq-item reveal" style="transition-delay:.13s">
+            <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span class="faq-q">How long does delivery take?</span>
+                <i class="fas fa-chevron-down faq-chevron"></i>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">Standard delivery across Pakistan takes 3–5 business days. Lahore and major cities are typically 2–3 days. We use reputable couriers and share a tracking number as soon as your order ships.</div>
+            </div>
+        </div>
+
+        <div class="faq-item reveal" style="transition-delay:.17s">
+            <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span class="faq-q">Can I return or exchange an item?</span>
+                <i class="fas fa-chevron-down faq-chevron"></i>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">Returns are accepted within 7 days of delivery for damaged, defective, or incorrectly sent items. Please review our complete <a href="return.html" style="color:var(--gold);">Returns &amp; Exchange Policy</a> for full details and eligibility criteria.</div>
+            </div>
+        </div>
+
+        <div class="faq-item reveal" style="transition-delay:.21s">
+            <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span class="faq-q">Do you ship internationally?</span>
+                <i class="fas fa-chevron-down faq-chevron"></i>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">Currently we ship within Pakistan only. We are working on international shipping for our diaspora customers. Subscribe to our newsletter or follow us on Instagram for updates — international launch is coming soon!</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══ FOOTER — ALL LINKS VERIFIED ═══ -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <h2>Libaas</h2>
+            <span class="tagline">Studio</span>
+            <p>Premium Pakistani ladies suits crafted with elegance and attention to detail. We bring the finest fabrics and embroideries to women who appreciate true artistry.</p>
+            <div class="footer-social">
+                <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://facebook.com"  target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://tiktok.com"    target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://pinterest.com" target="_blank" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Gallery</a></li>
+                <li><a href="faqs.html">FAQ</a></li>
+                <li><a href="contact.html" style="color:var(--gold);">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Collections</h4>
+            <ul>
+                <li><a href="products.html">Best Sellers</a></li>
+                <li><a href="products.html">Lawn Suits</a></li>
+                <li><a href="products.html">Formal Wear</a></li>
+                <li><a href="products.html">Party Wear</a></li>
+                <li><a href="products.html">Bridal</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Policies &amp; Help</h4>
+            <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="shipping.html">Shipping Policy</a></li>
+                <li><a href="return.html">Return Policy</a></li>
+                <li><a href="order.html">Checkout</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom" style="max-width:1280px;margin:0 auto;">
+        <p>© 2024 Libaas Studio. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+            <a href="privacy.html">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="return.html">Returns</a>
+            <a href="contact.html" style="color:var(--gold);">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<!-- ═══ CART MODAL ═══ -->
+<div class="modal-overlay" id="cart-modal" onclick="handleOverlayClick(event,'cart-modal')">
+    <div class="modal-panel" id="cart-panel">
+        <div class="modal-header">
+            <h3>Your Bag</h3>
+            <button class="close-btn icon-btn" onclick="closeModal('cart-modal')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total</span>
+                <span id="cart-total">Rs. 0</span>
+            </div>
+            <a href="order.html" class="btn-checkout">Proceed To Checkout</a>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ AUTH MODAL ═══ -->
+<div class="auth-overlay" id="auth-modal" onclick="handleOverlayClick(event,'auth-modal')">
+    <div class="auth-panel" id="auth-panel">
+        <h2 id="auth-title">Login</h2>
+        <span class="auth-subtitle">Welcome back to Libaas Studio</span>
+        <div id="login-form">
+            <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••"></div>
+            <button class="btn-submit-auth">Login</button>
+            <div class="auth-switch">New here? <button onclick="switchToSignup()">Create an account</button></div>
+        </div>
+        <div id="signup-form" class="hidden">
+            <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your full name"></div>
+            <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" placeholder="Create a password"></div>
+            <button class="btn-submit-auth">Create Account</button>
+            <div class="auth-switch">Already have an account? <button onclick="switchToLogin()">Login</button></div>
+        </div>
+        <button class="close-btn icon-btn" style="position:absolute;top:16px;right:20px;" onclick="closeModal('auth-modal')"><i class="fas fa-times"></i></button>
+    </div>
+</div>
+
+<!-- ═══ JAVASCRIPT ═══ -->
+<script>
+    /* ⚠️ Replace with your actual WhatsApp business number */
+    const WA_NUMBER = '923001234567';
+
+    function openWhatsApp(msg) {
+        const text = msg || 'Hello Libaas Studio! I have a question about your collection.';
+        window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    /* ── Contact Form ── */
+    function submitForm() {
+        const name    = document.getElementById('f-name').value.trim();
+        const email   = document.getElementById('f-email').value.trim();
+        const subject = document.getElementById('f-subject').value;
+        const message = document.getElementById('f-message').value.trim();
+
+        if (!name || !email || !subject || !message) {
+            alert('Please fill in all required fields (Name, Email, Subject, Message).');
+            return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        /* Show success state */
+        document.getElementById('contact-form-body').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+
+        /* Also open WhatsApp with the message */
+        const phone   = document.getElementById('f-phone').value.trim();
+        const orderId = document.getElementById('f-order').value.trim();
+        const waMsg =
+            `*New Enquiry — Libaas Studio Website*\n\n` +
+            `Name: ${name}\nEmail: ${email}\n` +
+            (phone   ? `Phone: ${phone}\n`    : '') +
+            (orderId ? `Order ID: ${orderId}\n` : '') +
+            `Subject: ${subject}\n\nMessage:\n${message}`;
+        openWhatsApp(waMsg);
+    }
+
+    function resetForm() {
+        document.getElementById('contact-form-body').style.display = 'flex';
+        document.getElementById('form-success').style.display = 'none';
+        ['f-name','f-email','f-phone','f-order','f-message'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+        document.getElementById('f-subject').value = '';
+    }
+
+    /* ── FAQ Accordion ── */
+    function toggleFaq(trigger) {
+        const answer = trigger.nextElementSibling;
+        const isOpen = trigger.classList.contains('open');
+        /* Close all */
+        document.querySelectorAll('.faq-trigger.open').forEach(t => {
+            t.classList.remove('open');
+            t.nextElementSibling.classList.remove('open');
+        });
+        if (!isOpen) {
+            trigger.classList.add('open');
+            answer.classList.add('open');
+        }
+    }
+
+    /* ── Cart ── */
+    let cart = JSON.parse(localStorage.getItem('libaasCart') || '[]');
+    function saveCart() { localStorage.setItem('libaasCart', JSON.stringify(cart)); }
+    function updateQuantity(id, delta) {
+        const item = cart.find(i => i.id === id);
+        if (!item) return;
+        item.quantity += delta;
+        if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+        saveCart(); updateCartUI();
+    }
+    function removeFromCart(id) { cart = cart.filter(i => i.id !== id); saveCart(); updateCartUI(); }
+    function updateCartUI() {
+        const tq = cart.reduce((s,i) => s+i.quantity, 0);
+        const tp = cart.reduce((s,i) => s+i.price*i.quantity, 0);
+        document.getElementById('cart-count').textContent = tq;
+        const el = document.getElementById('cart-items');
+        if (!el) return;
+        el.innerHTML = tq === 0
+            ? `<div style="text-align:center;padding:48px 0;color:var(--text-muted);"><i class="fas fa-shopping-bag" style="font-size:28px;margin-bottom:16px;display:block;opacity:.3;"></i><p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;">Your bag is empty</p></div>`
+            : cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">Rs. ${item.price.toLocaleString()}</div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button class="cart-qty-btn" onclick="updateQuantity('${item.id}',-1)"><i class="fas fa-minus"></i></button>
+                        <span class="cart-qty">${item.quantity}</span>
+                        <button class="cart-qty-btn" onclick="updateQuantity('${item.id}',1)"><i class="fas fa-plus"></i></button>
+                        <button class="cart-remove" onclick="removeFromCart('${item.id}')"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                </div>`).join('');
+        document.getElementById('cart-total').textContent = 'Rs. ' + tp.toLocaleString();
+    }
+
+    /* ── Modals ── */
+    function openModal(id) {
+        const o=document.getElementById(id), p=o.querySelector('.modal-panel,.auth-panel');
+        o.classList.add('active'); setTimeout(()=>p.classList.add('visible'),10);
+        document.body.style.overflow='hidden';
+    }
+    function closeModal(id) {
+        const o=document.getElementById(id), p=o.querySelector('.modal-panel,.auth-panel');
+        p.classList.remove('visible');
+        setTimeout(()=>{o.classList.remove('active');document.body.style.overflow='';},350);
+    }
+    function handleOverlayClick(e,id){ if(e.target===e.currentTarget) closeModal(id); }
+    function toggleCart(){ const o=document.getElementById('cart-modal'); o.classList.contains('active')?closeModal('cart-modal'):openModal('cart-modal'); }
+    function toggleAuth(){ const o=document.getElementById('auth-modal'); o.classList.contains('active')?closeModal('auth-modal'):openModal('auth-modal'); }
+    function switchToSignup(){ document.getElementById('login-form').classList.add('hidden'); document.getElementById('signup-form').classList.remove('hidden'); document.getElementById('auth-title').textContent='Create Account'; }
+    function switchToLogin(){ document.getElementById('signup-form').classList.add('hidden'); document.getElementById('login-form').classList.remove('hidden'); document.getElementById('auth-title').textContent='Login'; }
+
+    /* ── Mobile Menu ── */
+    function toggleMobileMenu(){
+        const nav=document.getElementById('mobile-nav'), burger=document.getElementById('hamburger');
+        const isOpen=nav.classList.contains('open');
+        nav.classList.toggle('open'); burger.classList.toggle('open');
+        document.body.style.overflow=isOpen?'':'hidden';
+    }
+
+    /* ── Search ── */
+    function toggleSearch(){
+        const bar=document.getElementById('search-bar'); bar.classList.toggle('open');
+        if(bar.classList.contains('open')) document.getElementById('search-input').focus();
+    }
+
+    /* ── Scroll reveal ── */
+    const revealObs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revealObs.unobserve(e.target); } });
+    }, { threshold:0.07 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    /* ── Header shadow ── */
+    window.addEventListener('scroll',()=>{ document.getElementById('site-header').style.boxShadow=window.scrollY>40?'0 4px 32px rgba(0,0,0,0.6)':''; });
+
+    /* ── Keyboard ── */
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeModal('cart-modal'); closeModal('auth-modal'); } });
+
+    /* ── Responsive ── */
+    function handleResize(){ document.getElementById('mobile-logo').style.display=window.innerWidth<=900?'block':'none'; }
+    window.addEventListener('resize',handleResize); handleResize();
+
+    /* ── Init ── */
+    document.addEventListener('DOMContentLoaded', updateCartUI);
+</script>
+</body>
+</html>
