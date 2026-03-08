@@ -221,7 +221,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 <div align="center">
 
-Made with ❤️ for Libaas Studio — Kaeachi, Pakistan
+Made with ❤️ for Libaas Studio — Karachi, Pakistan
 
 ⭐ Star this repo if you found it helpful!
 
